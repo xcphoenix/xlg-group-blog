@@ -1,4 +1,4 @@
-package top.xcphoenix.groupblog.model;
+package top.xcphoenix.groupblog.model.dao;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,8 +17,8 @@ public class User {
     String password;
     long blogType;
     String blogUrl;
-    long lastPubBlogTime;
-    int category;
-    int auth;
+    long lastPubTime;
+    int categoryId;
+    int authority;
 
 }

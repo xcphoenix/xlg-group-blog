@@ -1,4 +1,4 @@
-package top.xcphoenix.groupblog.model;
+package top.xcphoenix.groupblog.model.dao;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
