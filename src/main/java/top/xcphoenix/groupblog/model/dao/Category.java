@@ -12,7 +12,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public class Category {
 
-    private long categoryId;
+    private int categoryId;
     private String name;
 
 }

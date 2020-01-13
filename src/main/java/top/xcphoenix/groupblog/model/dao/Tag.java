@@ -12,7 +12,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public class Tag {
 
-    private long tagId;
+    private int tagId;
     private String tagName;
 
 }

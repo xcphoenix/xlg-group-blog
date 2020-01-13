@@ -1,5 +1,6 @@
 package top.xcphoenix.groupblog.service.blog.content.impl;
 
+import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -19,7 +20,7 @@ import java.text.SimpleDateFormat;
  * @version 1.0
  * @date 2020/1/12 上午12:41
  */
-@Service("csdn")
+@Service("content-csdn")
 @Slf4j
 @PropertySource(value = "classpath:config/content/csdnBlogRule.properties", encoding = "UTF-8")
 public class CsdnBlogContentServiceImpl implements BlogContentService {
@@ -43,32 +44,50 @@ public class CsdnBlogContentServiceImpl implements BlogContentService {
 
     @Override
     public Blog getBlogFromHtml(String webContent) throws ParseException {
+
         Blog blog = new Blog();
+        this.getBlogFromHtml(webContent, blog);
+
+        return blog;
+    }
+
+    @Override
+    public void getBlogFromHtml(String webContent, Blog blog) throws ParseException {
+
+        log.info("get blog data from web content");
+
+        if (blog == null) {
+            blog = new Blog();
+        }
         Document document = Jsoup.parse(webContent);
 
         SimpleDateFormat pubDateFormat = new SimpleDateFormat(pubTimeFormat);
 
-        blog.setTitle(document.select(titleRule).first().text());
-        blog.setAuthor(document.select(authorRule).first().text());
-        blog.setOriginal(originalFlag.equals(document.select(isOriginalRule).first().text()));
-
-        String timeStr = document.select(pubTimeRule).first().text();
-        blog.setPubTime(new Timestamp(pubDateFormat.parse(timeStr).getTime()));
+        if (blog.getTitle() == null) {
+            blog.setTitle(document.select(titleRule).first().text());
+        }
+        if (blog.getAuthor() == null) {
+            blog.setAuthor(document.select(authorRule).first().text());
+        }
+        if (blog.getPubTime() == null) {
+            String timeStr = document.select(pubTimeRule).first().text();
+            blog.setPubTime(new Timestamp(pubDateFormat.parse(timeStr).getTime()));
+        }
 
         String content = document.select(contentRule).first().text();
-
         blog.setContent(content);
 
-        // if summary is null
-        blog.setSummary(
-                HtmlUtil.delSpace(
-                    HtmlUtil.delHtmlTag(content)
-                ).substring(0, summaryWordLimit)
-        );
+        if (blog.getSummary() == null) {
+            blog.setSummary(
+                    HtmlUtil.delSpace(
+                            HtmlUtil.delHtmlTag(content)
+                    ).substring(0, summaryWordLimit)
+            );
+        }
 
-        // originalLink and summary set before parse web content
+        blog.setOriginal(originalFlag.equals(document.select(isOriginalRule).first().text()));
 
-        return blog;
+        log.debug(JSON.toJSONString(blog));
     }
 
 }

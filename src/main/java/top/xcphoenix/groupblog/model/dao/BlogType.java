@@ -13,15 +13,21 @@ import java.util.regex.Pattern;
 @Getter
 public class BlogType {
 
-    private long typeId;
+    private int typeId;
     private String typeName;
+    private String userZoneRegex;
+    private String blogPageRegex;
+
     private Pattern userZonePattern;
     private Pattern blogPagePattern;
 
-    public BlogType(String name, String userZoneRegex, String blogPageRegex) {
-        this.typeName = name;
-        this.userZonePattern = Pattern.compile(userZoneRegex);
+    public BlogType(int typeId, String typeName, String userZoneRegex, String blogPageRegex) {
+        this.typeId = typeId;
+        this.typeName = typeName;
+        this.userZoneRegex = userZoneRegex;
+        this.blogPageRegex = blogPageRegex;
         this.blogPagePattern = Pattern.compile(blogPageRegex);
+        this.userZonePattern = Pattern.compile(userZoneRegex);
     }
 
 }

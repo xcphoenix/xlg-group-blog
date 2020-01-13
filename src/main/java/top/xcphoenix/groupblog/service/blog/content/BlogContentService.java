@@ -20,4 +20,13 @@ public interface BlogContentService {
      */
     Blog getBlogFromHtml(String webContent) throws ParseException;
 
+    /**
+     * 获取博客信息并修改至blog
+     *
+     * @param webContent web 页面内容
+     * @param blog 博客数据
+     * @throws ParseException 时间解析
+     */
+    void getBlogFromHtml(String webContent, Blog blog) throws ParseException;
+
 }

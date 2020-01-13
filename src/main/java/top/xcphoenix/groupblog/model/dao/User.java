@@ -15,7 +15,7 @@ public class User {
     long uid;
     String username;
     String password;
-    long blogType;
+    int blogType;
     String blogUrl;
     long lastPubTime;
     int categoryId;

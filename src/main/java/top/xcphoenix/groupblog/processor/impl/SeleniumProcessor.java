@@ -29,7 +29,7 @@ import java.util.Objects;
  * @date 2019/12/8 下午7:09
  */
 @Slf4j
-@Component
+@Component("selenium")
 @PropertySource("classpath:config/processor.properties")
 public class SeleniumProcessor implements Processor {
 
@@ -39,7 +39,7 @@ public class SeleniumProcessor implements Processor {
 
     @Override
     public String processor(String url) {
-        log.info("processor[" + this.getClass() + "] exec...");
+        log.info("processor[" + this.getClass() + "] get url page content: " + url);
 
         driver.get(url);
         return driver.getPageSource();
