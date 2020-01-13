@@ -30,11 +30,11 @@ import java.util.Objects;
  */
 @Slf4j
 @Component
-@PropertySource("classpath:processor.properties")
+@PropertySource("classpath:config/processor.properties")
 public class SeleniumProcessor implements Processor {
 
     private WebDriver driver;
-    @Value("${processor.selenium.chrome-driver.location}")
+    @Value("${processor.selenium.chrome-driver.location:./chromedriver}")
     private String driverLocation;
 
     @Override
