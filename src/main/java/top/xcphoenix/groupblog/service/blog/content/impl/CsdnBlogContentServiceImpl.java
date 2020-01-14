@@ -74,7 +74,7 @@ public class CsdnBlogContentServiceImpl implements BlogContentService {
             blog.setPubTime(new Timestamp(pubDateFormat.parse(timeStr).getTime()));
         }
 
-        String content = document.select(contentRule).first().text();
+        String content = document.select(contentRule).first().html();
         blog.setContent(content);
 
         if (blog.getSummary() == null) {

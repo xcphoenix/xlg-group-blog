@@ -39,15 +39,19 @@ public class SeleniumProcessor implements Processor {
 
     @Override
     public String processor(String url) {
+        long startTime = System.currentTimeMillis();
         log.info("processor[" + this.getClass() + "] get url page content: " + url);
 
         driver.get(url);
-        return driver.getPageSource();
+        String webContent =  driver.getPageSource();
+
+        log.info("processor[" + this.getClass() + "] get web content finished, time used " + (System.currentTimeMillis() - startTime));
+        return webContent;
     }
 
     @PostConstruct
     private void init() throws UnsupportedEncodingException {
-        log.info("processor[" + this.getClass() + "] destroy");
+        log.info("processor[" + this.getClass() + "] init");
 
         File driverFile;
         if (!driverLocation.startsWith("/")) {
@@ -85,9 +89,6 @@ public class SeleniumProcessor implements Processor {
 
         driver = new ChromeDriver(chromeOptions);
         driver.manage().window().maximize();
-
-        long start = System.currentTimeMillis();
-        log.info("processor time => " + (System.currentTimeMillis() - start));
     }
 
     @PreDestroy
