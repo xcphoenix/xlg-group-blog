@@ -1,4 +1,4 @@
-package top.xcphoenix.groupblog.manager;
+package top.xcphoenix.groupblog.manager.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
+import top.xcphoenix.groupblog.mapper.BlogMapper;
 import top.xcphoenix.groupblog.model.dao.Blog;
 import top.xcphoenix.groupblog.processor.Processor;
 import top.xcphoenix.groupblog.service.blog.content.BlogContentService;
@@ -22,7 +23,7 @@ import java.util.List;
  */
 @Slf4j
 @Component("manager-csdn")
-public class CsdnManager {
+public class CsdnManager implements BlogManager {
 
     @Resource(name = "content-csdn")
     private BlogContentService blogContentService;
@@ -33,12 +34,23 @@ public class CsdnManager {
     @Resource(name = "selenium")
     private Processor processor;
 
-    private UrlBuilder urlBuilder;
+    @Resource
+    private BlogMapper blogMapper;
 
+    private UrlBuilder urlBuilder;
+    private long uid;
+
+    @Override
+    public void setUid(long uid) {
+        this.uid = uid;
+    }
+
+    @Override
     public void setUrl(String url) {
         this.urlBuilder = new UrlBuilder(url);
     }
 
+    @Override
     public void exec() throws ParseException {
         if (this.urlBuilder == null) {
             throw new IllegalArgumentException("url not configure");
@@ -52,8 +64,16 @@ public class CsdnManager {
                 break;
             }
             for (Blog blog : blogList) {
+                if (blogMapper.exists(blog.getBlogId())) {
+                    log.warn("blog exists, jump");
+                    continue;
+                }
+
+                blog.setUid(uid);
                 String webContent = processor.processor(blog.getOriginalLink());
                 blogContentService.getBlogFromHtml(webContent, blog);
+
+                blogMapper.addBlog(blog);
             }
 
             log.info("blogs >> " + JSON.toJSONString(blogList, SerializerFeature.PrettyFormat));
