@@ -18,6 +18,7 @@ import java.sql.Timestamp;
 public class Blog {
 
     private long blogId;
+    private long uid;
     private String title;
     private String author;
     private boolean isOriginal;

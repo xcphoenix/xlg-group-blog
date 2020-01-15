@@ -2,6 +2,7 @@ package top.xcphoenix.groupblog.model.dao;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 /**
  * @author      xuanc
@@ -9,6 +10,7 @@ import lombok.Getter;
  * @version     1.0
  */
 @Getter
+@NoArgsConstructor
 @AllArgsConstructor
 public class Category {
 

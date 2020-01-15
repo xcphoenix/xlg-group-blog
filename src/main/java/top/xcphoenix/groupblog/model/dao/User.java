@@ -2,6 +2,9 @@ package top.xcphoenix.groupblog.model.dao;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.sql.Timestamp;
 
 /**
  * @author      xuanc
@@ -9,6 +12,7 @@ import lombok.Data;
  * @version     1.0
  */
 @Data
+@NoArgsConstructor
 @AllArgsConstructor
 public class User {
 
@@ -16,8 +20,11 @@ public class User {
     String username;
     String password;
     int blogType;
-    String blogUrl;
-    long lastPubTime;
+    /**
+     * use json str
+     */
+    String blogArg;
+    Timestamp lastPubTime;
     int categoryId;
     int authority;
 

@@ -2,6 +2,7 @@ package top.xcphoenix.groupblog.model.dao;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.regex.Pattern;
 
@@ -11,23 +12,18 @@ import java.util.regex.Pattern;
  * @date 2020/1/10 下午6:13
  */
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class BlogType {
 
     private int typeId;
     private String typeName;
-    private String userZoneRegex;
-    private String blogPageRegex;
-
-    private Pattern userZonePattern;
-    private Pattern blogPagePattern;
-
-    public BlogType(int typeId, String typeName, String userZoneRegex, String blogPageRegex) {
-        this.typeId = typeId;
-        this.typeName = typeName;
-        this.userZoneRegex = userZoneRegex;
-        this.blogPageRegex = blogPageRegex;
-        this.blogPagePattern = Pattern.compile(blogPageRegex);
-        this.userZonePattern = Pattern.compile(userZoneRegex);
-    }
+    private String userZoneRule;
+    private String blogPageRule;
+    private String rssRule;
+    /**
+     * split by ','
+     */
+    private String needArg;
 
 }
