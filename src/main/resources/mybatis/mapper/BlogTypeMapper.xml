@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="top.xcphoenix.groupblog.mapper.BlogTypeMapper">
+	
+	<select id="getBlogType" resultType="top.xcphoenix.groupblog.model.dao.BlogType">
+		SELECT type_id, type_name, user_zone_rule, blog_page_rule, rss_rule, need_arg
+		FROM blog_type
+		WHERE type_id = #{typeId}
+	</select>
+	
+</mapper>

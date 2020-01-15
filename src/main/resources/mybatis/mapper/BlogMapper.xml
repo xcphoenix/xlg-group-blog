@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="top.xcphoenix.groupblog.mapper.BlogMapper">
+	
+	<insert id="addBlog">
+		INSERT INTO blog(blog_id, uid, title, author, is_original, pub_time, summary, content, original_link,
+		                        tags)
+		VALUES (#{blog.blogId}, #{blog.uid}, #{blog.title}, #{blog.author}, #{blog.isOriginal},
+		       #{blog.pubTime}, #{blog.summary}, #{blog.content}, #{blog.originalLink}, #{blog.tags})
+		
+	</insert>
+	
+	<select id="exists" resultType="boolean">
+		SELECT COUNT(*) FROM blog WHERE blog_id = #{blogId}
+	</select>
+
+</mapper>
