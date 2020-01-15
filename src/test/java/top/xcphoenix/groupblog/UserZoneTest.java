@@ -3,9 +3,8 @@ package top.xcphoenix.groupblog;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import top.xcphoenix.groupblog.manager.CsdnManager;
+import top.xcphoenix.groupblog.manager.impl.CsdnManager;
 import top.xcphoenix.groupblog.service.blog.userzone.UserZoneService;
-import top.xcphoenix.groupblog.service.blog.userzone.impl.CsdnUserZoneServiceImpl;
 
 import javax.annotation.Resource;
 import java.text.ParseException;
