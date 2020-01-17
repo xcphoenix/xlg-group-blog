@@ -51,7 +51,7 @@ public class CsdnManager implements BlogManager {
     }
 
     @Override
-    public void exec() throws ParseException {
+    public void exec() throws Exception {
         if (this.urlBuilder == null) {
             throw new IllegalArgumentException("url not configure");
         }
@@ -70,7 +70,7 @@ public class CsdnManager implements BlogManager {
                 }
 
                 blog.setUid(uid);
-                String webContent = processor.processor(blog.getOriginalLink());
+                String webContent = (String) processor.processor(blog.getOriginalLink());
                 blogContentService.getBlogFromHtml(webContent, blog);
 
                 blogMapper.addBlog(blog);

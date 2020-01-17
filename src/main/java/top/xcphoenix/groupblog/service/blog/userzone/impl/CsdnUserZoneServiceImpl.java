@@ -47,10 +47,11 @@ public class CsdnUserZoneServiceImpl implements UserZoneService {
     private String noDataFlag;
 
     @Override
-    public List<Blog> getPageBlogUrls(String userZoneUrl) throws ParseException {
+    public List<Blog> getPageBlogUrls(String userZoneUrl) throws Exception {
         List<Blog> blogs = new ArrayList<>();
 
-        String webContent = processor.processor(userZoneUrl);
+        // use selenium
+        String webContent = (String) processor.processor(userZoneUrl);
         Document document = Jsoup.parse(webContent);
         List<Element> elements = document.getElementsByClass(blogTagRule);
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(dateFormat);
@@ -59,7 +60,6 @@ public class CsdnUserZoneServiceImpl implements UserZoneService {
 
         for (Element element : elements) {
             Blog blog = new Blog();
-            // blog.setTitle(element.select(titleRule).first().text());
             String originalLink = element.select(linkRule).first().attr("href");
             blog.setOriginalLink(originalLink);
             blog.setSummary(element.select(summaryRule).first().text());

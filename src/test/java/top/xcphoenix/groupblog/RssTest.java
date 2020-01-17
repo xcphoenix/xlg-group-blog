@@ -6,9 +6,15 @@ import com.rometools.rome.io.SyndFeedInput;
 import com.rometools.rome.io.XmlReader;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import top.xcphoenix.groupblog.service.blog.userzone.UserZoneService;
 
+import javax.annotation.Resource;
+import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author      xuanc
@@ -18,13 +24,24 @@ import java.net.URL;
 @SpringBootTest
 public class RssTest {
 
+    @Resource(name = "rss-csdn")
+    private UserZoneService userZoneService;
+
     @Test
     void romeTest() throws IOException, FeedException {
-        String rssUrl = "https://blog.csdn.net/xuancbm/rss/list";
+        String rssUrl = "https://phoenixxc.gitee.io/atom.xml";
         URL url = new URL(rssUrl);
         SyndFeedInput input = new SyndFeedInput();
         SyndFeed feed = input.build(new XmlReader(url));
-        System.out.println(feed);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        List<String> strings =  feed.getEntries().stream().map(i -> i.getPublishedDate()).map(sdf::format).collect(Collectors.toList());
+        System.out.println(strings);
+    }
+
+    @Test
+    void rssServiceTest() throws Exception {
+        String userzone = "https://blog.csdn.net/xuancbm/rss/list";
+        System.out.println(userZoneService.getPageBlogUrls(userzone));
     }
 
 }

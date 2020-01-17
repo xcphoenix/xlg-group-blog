@@ -26,13 +26,13 @@ public class UserZoneTest {
     private CsdnManager csdnManager;
 
     @Test
-    void tmp() throws ParseException {
+    void tmp() throws Exception {
         userZoneService.getPageBlogUrls("https://blog.csdn.net/qq_17034925?t=1");
     }
 
     @Test
     @Ignore
-    void getUserBlogs() throws ParseException {
+    void getUserBlogs() throws Exception {
         csdnManager.setUrl("https://blog.csdn.net/lalala323/article/list");
         csdnManager.exec();
     }

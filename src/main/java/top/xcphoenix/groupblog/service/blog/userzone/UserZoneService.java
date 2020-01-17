@@ -17,8 +17,8 @@ public interface UserZoneService {
      *
      * @param userZoneUrl 用户博客主页
      * @return blog url
-     * @throws ParseException 时间解析异常
+     * @throws Exception 时间解析异常
      */
-    List<Blog> getPageBlogUrls(String userZoneUrl) throws ParseException;
+    List<Blog> getPageBlogUrls(String userZoneUrl) throws Exception;
 
 }

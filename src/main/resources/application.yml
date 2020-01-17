@@ -12,7 +12,7 @@ spring:
     # 生产环境中开启
     cache: false
     check-template-location: true
-    mode: HTML5
+    mode: HTML
     
 
 # mybatis
