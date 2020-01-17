@@ -1,8 +1,12 @@
 # idea
 .idea
+*.iml
 
-# maven
-mvnm.*
+# maven 
+HELP.md
+.mvn/ 
+mvnw
+mvnw.cmd
 
 # Compiled class file
 *.class
