@@ -1,5 +1,6 @@
 package top.xcphoenix.groupblog;
 
+import jdk.nashorn.internal.ir.annotations.Ignore;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,6 +20,7 @@ public class CrawlTest {
     private CrawlBlogService crawlBlogService;
 
     @Test
+    @Ignore
     void testCrawlAll() throws Exception {
         int uid = 10000;
         crawlBlogService.crawlAll(uid);

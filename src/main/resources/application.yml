@@ -8,7 +8,13 @@ spring:
     username:          group_blog
     password:          grouppass
     driver-class-name: com.mysql.cj.jdbc.Driver
+  thymeleaf:
+    # 生产环境中开启
+    cache: false
+    check-template-location: true
+    mode: HTML5
     
+
 # mybatis
 mybatis:
   #  configuration:

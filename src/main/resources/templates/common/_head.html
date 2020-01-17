@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-cn"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head(title)">
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <meta name="theme-color" content="#222">
+
+    <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+    <script src="/lib/jquery/index.js"></script>
+    <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+    <meta http-equiv="Cache-Control" content="no-transform"/>
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+
+    <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+    <link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css"/>
+    <link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css"/>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+    <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+    <meta name="keywords" content="XiyouLinuxGroup, GroupBlog, 西邮Linux兴趣小组, 群博"/>
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="GroupBlog">
+    <meta property="og:url" content="http://blog.xiyoulinux.org/">
+    <meta property="og:site_name" content="GroupBlog">
+    <meta property="article:author" content="XiyouLinuxGroup">
+    <meta name="twitter:card" content="summary">
+
+    <script type="text/javascript" id="hexo.configurations">
+        var NexT = window.NexT || {};
+        var CONFIG = {
+            root: '/',
+            scheme: 'Pisces',
+            version: '5.1.4',
+            sidebar: {
+                "position": "left",
+                "display": "post",
+                "offset": 12,
+                "b2t": false,
+                "scrollpercent": false,
+                "onmobile": false
+            },
+            fancybox: true,
+            tabs: true,
+            motion: {
+                "enable": true,
+                "async": false,
+                "transition": {
+                    "post_block": "fadeIn",
+                    "post_header": "slideDownIn",
+                    "post_body": "slideDownIn",
+                    "coll_header": "slideLeftIn",
+                    "sidebar": "slideUpIn"
+                }
+            }
+        };
+    </script>
+    <link rel="canonical" href="http://blog.xiyoulinux.org/"/>
+    <title th:text="${title}">GroupBlog</title>
+    <meta name="generator" content="Hexo 4.2.0">
+</head>
+<body>
+
+</body>
+</html>

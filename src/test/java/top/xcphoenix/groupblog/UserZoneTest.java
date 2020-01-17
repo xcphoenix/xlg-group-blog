@@ -1,5 +1,6 @@
 package top.xcphoenix.groupblog;
 
+import jdk.nashorn.internal.ir.annotations.Ignore;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -30,6 +31,7 @@ public class UserZoneTest {
     }
 
     @Test
+    @Ignore
     void getUserBlogs() throws ParseException {
         csdnManager.setUrl("https://blog.csdn.net/lalala323/article/list");
         csdnManager.exec();

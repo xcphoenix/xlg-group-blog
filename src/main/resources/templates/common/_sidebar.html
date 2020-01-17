@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-cn"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div class="sidebar-toggle" th:fragment="sidebar-toggle" >
+    <div class="sidebar-toggle-line-wrap">
+        <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+        <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+        <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+</div>
+
+<aside id="sidebar" class="sidebar" th:fragment="sidebar">
+    <div class="sidebar-inner">
+        <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+            <div class="site-overview">
+                <div class="site-author motion-element" itemprop="author" itemscope
+                     itemtype="http://schema.org/Person">
+                    <img class="site-author-image" itemprop="image"
+                         src="/images/logo.png"
+                         alt="XiyouLinuxGroup"/>
+                    <p class="site-author-name" itemprop="name">XiyouLinuxGroup</p>
+                    <p class="site-description motion-element" itemprop="description"></p>
+                </div>
+
+                <nav class="site-state motion-element">
+                    <!-- TODO 动态获取属性 {url,num,name} -->
+                    <div class="site-state-item site-state-posts">
+                        <a href="/archives/%20%7C%7C%20archive">
+                            <span class="site-state-item-count">2</span>
+                            <span class="site-state-item-name">日志</span>
+                        </a>
+                    </div>
+                </nav>
+
+                <div class="links-of-author motion-element">
+                    <span class="links-of-author-item">
+                    <a href="https://www.xiyoulinux.org/" target="_blank" title="官网">
+                        <i class="fa fa-fw fa-chrome"></i>小组官网
+                    </a>
+                    </span>
+                    <span class="links-of-author-item">
+                    <a href="https://groups.google.com/forum/#!forum/xiyoulinux" target="_blank" title="邮件列表">
+                        <i class="fa fa-fw fa-envelope"></i>邮件列表
+                    </a>
+                    </span>
+                </div>
+            </div>
+        </section>
+
+
+    </div>
+</aside>
+
+</body>
+</html>

@@ -30,4 +30,5 @@ hs_err_pid*
 
 # Project
 logs/ 
-target/
+target/*
+classes/

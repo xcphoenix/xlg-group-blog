@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-cn"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<header th:fragment="header(index)"
+        th:with="title='GroupBlog'"
+        id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+    <div class="header-inner">
+        <div class="site-brand-wrapper">
+            <div class="site-meta custom-logo">
+                <div class="custom-logo-site-title">
+                    <a href="/" class="brand" rel="start">
+                        <span class="logo-line-before"><i></i></span>
+                        <span class="site-title" th:text="${title}">GroupBlog</span>
+                        <span class="logo-line-after"><i></i></span>
+                    </a>
+                </div>
+                <p class="site-subtitle"></p>
+            </div>
+
+            <div class="site-nav-toggle">
+                <button>
+                    <span class="btn-bar"></span>
+                    <span class="btn-bar"></span>
+                    <span class="btn-bar"></span>
+                </button>
+            </div>
+        </div>
+
+        <nav class="site-nav">
+            <ul id="menu" class="menu">
+                <li class="menu-item menu-item-home">
+                    <a href="/%20" rel="section">
+                        <i class="menu-item-icon fa fa-fw fa-home"></i> <br/>
+                        首页
+                    </a>
+                </li>
+
+                <li class="menu-item menu-item-about">
+                    <a href="/about/%20" rel="section">
+                        <i class="menu-item-icon fa fa-fw fa-user"></i> <br/>
+                        关于
+                    </a>
+                </li>
+
+                <li class="menu-item menu-item-tags">
+                    <a href="/tags/%20" rel="section">
+                        <i class="menu-item-icon fa fa-fw fa-tags"></i> <br/>
+                        标签
+                    </a>
+                </li>
+                <li class="menu-item menu-item-categories">
+                    <a href="/categories/%20" rel="section">
+                        <i class="menu-item-icon fa fa-fw fa-th"></i> <br/>
+                        分类
+                    </a>
+                </li>
+
+                <li class="menu-item menu-item-archives">
+                    <a href="/archives/%20" rel="section">
+                        <i class="menu-item-icon fa fa-fw fa-archive"></i> <br/>
+                        归档
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <script th:inline="javascript">
+        $("ul#menu.menu li:eq(" + [[${index}]] + ")").addClass("menu-item-active");
+    </script>
+</header>
+
+</body>
+</html>
