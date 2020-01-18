@@ -16,14 +16,10 @@ import java.text.ParseException;
 @Service("content-hexo")
 public class HexoBlogContentServiceImpl implements BlogContentService {
 
+
     @Override
-    public Blog getBlogFromHtml(String webContent) {
+    public Blog getBlog(String url, Blog blog) throws Exception {
         return null;
-    }
-
-    @Override
-    public void getBlogFromHtml(String webContent, Blog blog) throws ParseException {
-
     }
 
 }

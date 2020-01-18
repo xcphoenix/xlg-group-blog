@@ -4,7 +4,8 @@
 <mapper namespace="top.xcphoenix.groupblog.mapper.BlogMapper">
 	
 	<insert id="addBlog">
-		INSERT INTO blog(blog_id, uid, title, author, is_original, pub_time, summary, content, original_link,
+		<!-- 忽略冲突 -->
+		INSERT IGNORE INTO blog(blog_id, uid, title, author, is_original, pub_time, summary, content, original_link,
 		                        tags)
 		VALUES (#{blog.blogId}, #{blog.uid}, #{blog.title}, #{blog.author}, #{blog.isOriginal},
 		       #{blog.pubTime}, #{blog.summary}, #{blog.content}, #{blog.originalLink}, #{blog.tags})

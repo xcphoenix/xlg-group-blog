@@ -15,4 +15,12 @@ public interface CrawlBlogService {
      */
     void crawlAll(long uid) throws Exception;
 
+    /**
+     * 增量获取用户博客
+     *
+     * @param uid 用户id
+     * @throws Exception 抓取产生的异常
+     */
+    void crawlIncrement(long uid) throws Exception;
+
 }

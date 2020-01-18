@@ -3,20 +3,26 @@ package top.xcphoenix.groupblog.manager.impl;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
-import top.xcphoenix.groupblog.mapper.BlogMapper;
 import top.xcphoenix.groupblog.model.dao.Blog;
-import top.xcphoenix.groupblog.processor.Processor;
+import top.xcphoenix.groupblog.model.dao.BlogType;
+import top.xcphoenix.groupblog.model.dao.User;
+import top.xcphoenix.groupblog.model.dto.PageBlogs;
 import top.xcphoenix.groupblog.service.blog.content.BlogContentService;
 import top.xcphoenix.groupblog.service.blog.userzone.UserZoneService;
+import top.xcphoenix.groupblog.service.dao.BlogService;
+import top.xcphoenix.groupblog.service.dao.UserService;
+import top.xcphoenix.groupblog.utils.UrlUtil;
 
-import javax.annotation.Resource;
-import java.text.ParseException;
+import java.sql.Timestamp;
 import java.util.List;
 
 /**
+ * TODO
+ *  - manager, service 层遵循 Alibaba 规范
  * @author      xuanc
  * @date        2020/1/13 下午5:40
  * @version     1.0
@@ -25,60 +31,113 @@ import java.util.List;
 @Component("manager-csdn")
 public class CsdnManager implements BlogManager {
 
-    @Resource(name = "content-csdn")
     private BlogContentService blogContentService;
+    private UserZoneService seleniumUserZoneService;
+    private UserZoneService rssZoneService;
+    private BlogService blogService;
+    private UserService userService;
 
-    @Resource(name = "zone-csdn")
-    private UserZoneService userZoneService;
+    public CsdnManager(@Qualifier("content-csdn") BlogContentService blogContentService,
+                       @Qualifier("zone-csdn") UserZoneService seleniumUserZoneService,
+                       @Qualifier("rss-csdn") UserZoneService rssZoneService,
+                       BlogService blogService, UserService userService) {
 
-    @Resource(name = "selenium")
-    private Processor processor;
-
-    @Resource
-    private BlogMapper blogMapper;
-
-    private UrlBuilder urlBuilder;
-    private long uid;
-
-    @Override
-    public void setUid(long uid) {
-        this.uid = uid;
+        this.blogContentService = blogContentService;
+        this.seleniumUserZoneService = seleniumUserZoneService;
+        this.rssZoneService = rssZoneService;
+        this.blogService = blogService;
+        this.userService = userService;
     }
 
     @Override
-    public void setUrl(String url) {
-        this.urlBuilder = new UrlBuilder(url);
-    }
+    public void execFull(User user, BlogType blogType) throws Exception {
+        log.info("exec full blog catch...");
 
-    @Override
-    public void exec() throws Exception {
-        if (this.urlBuilder == null) {
-            throw new IllegalArgumentException("url not configure");
-        }
+        UrlUtil urlUtil = new UrlUtil(user.getBlogArg(), blogType);
+        UrlBuilder urlBuilder = new UrlBuilder(urlUtil.getUserZoneUrl());
 
-        log.info("begin get blogs from url: " + this.urlBuilder);
+        log.info("begin get blogs from url: " + urlBuilder);
         while (true) {
             String url = urlBuilder.nextUrl();
-            List<Blog> blogList = userZoneService.getPageBlogUrls(url);
-            if (blogList == null) {
+            PageBlogs pageBlogs = seleniumUserZoneService.getPageBlogUrls(url);
+            if (pageBlogs == null) {
                 break;
             }
+
+            List<Blog> blogList = pageBlogs.getBlogs();
             for (Blog blog : blogList) {
-                if (blogMapper.exists(blog.getBlogId())) {
+                if (blogService.exists(blog.getBlogId())) {
                     log.warn("blog exists, jump");
                     continue;
                 }
 
-                blog.setUid(uid);
-                String webContent = (String) processor.processor(blog.getOriginalLink());
-                blogContentService.getBlogFromHtml(webContent, blog);
-
-                blogMapper.addBlog(blog);
+                blog.setUid(user.getUid());
+                blogService.addBlog(blogContentService.getBlog(blog.getOriginalLink(), blog));
             }
-
-            log.info("blogs >> " + JSON.toJSONString(blogList, SerializerFeature.PrettyFormat));
+            log.debug("blogs >> " + JSON.toJSONString(blogList, SerializerFeature.PrettyFormat));
         }
         log.info("get blogs end");
+    }
+
+    @Override
+    public void execIncrement(User user, BlogType blogType) throws Exception {
+        log.info("exec increment blog catch...");
+
+        UrlUtil urlUtil = new UrlUtil(user.getBlogArg(), blogType);
+        UrlBuilder urlBuilder = new UrlBuilder(urlUtil.getUserZoneUrl());
+
+        log.info("begin get blogs from url: " + urlBuilder);
+
+        Timestamp lastPubTime = userService.getLastPubTime(user.getUid());
+        PageBlogs pageBlogs = rssZoneService.getPageBlogUrls(urlUtil.getRssUrl());
+
+        if (lastPubTime.getTime() >= pageBlogs.getLastTime().getTime()) {
+            log.info("no new blog");
+        }
+        else if (lastPubTime.getTime() >= pageBlogs.getOldTime().getTime() &&
+            lastPubTime.getTime() < pageBlogs.getLastTime().getTime()) {
+            log.info("some blogs in rss need be crawled");
+
+            for (Blog blog : pageBlogs.getBlogs()) {
+                // 时间相同的博客可能会被忽略
+                if (blog.getPubTime().getTime() <= lastPubTime.getTime()) {
+                    continue;
+                }
+                if (blogService.exists(blog.getBlogId())) {
+                    log.warn("blog exists, jump");
+                    continue;
+                }
+
+                blog.setUid(user.getUid());
+                blogService.addBlog(blogContentService.getBlog(blog.getOriginalLink(), blog));
+            }
+        }
+        else {
+            log.info("there are blogs that not in rss should be crawled");
+
+            while (true) {
+                String url = urlBuilder.nextUrl();
+                PageBlogs seleniumPageBlogs = seleniumUserZoneService.getPageBlogUrls(url);
+
+                if (seleniumPageBlogs == null ||
+                        lastPubTime.getTime() >= seleniumPageBlogs.getLastTime().getTime()) {
+                    break;
+                }
+
+                List<Blog> blogList = seleniumPageBlogs.getBlogs();
+                for (Blog blog : blogList) {
+                    if (blogService.exists(blog.getBlogId())) {
+                        log.warn("blog exists, jump");
+                        continue;
+                    }
+
+                    blog.setUid(user.getUid());
+                    blogService.addBlog(blogContentService.getBlog(blog.getOriginalLink(), blog));
+                }
+                log.debug("blogs >> " + JSON.toJSONString(blogList, SerializerFeature.PrettyFormat));
+            }
+        }
+
     }
 
 }

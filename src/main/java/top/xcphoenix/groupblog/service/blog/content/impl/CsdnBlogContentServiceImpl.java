@@ -4,10 +4,12 @@ import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 import top.xcphoenix.groupblog.model.dao.Blog;
+import top.xcphoenix.groupblog.processor.Processor;
 import top.xcphoenix.groupblog.service.blog.content.BlogContentService;
 import top.xcphoenix.groupblog.utils.HtmlUtil;
 
@@ -42,19 +44,18 @@ public class CsdnBlogContentServiceImpl implements BlogContentService {
     @Value("${blog.summary.word.limit:200}")
     private int summaryWordLimit;
 
-    @Override
-    public Blog getBlogFromHtml(String webContent) throws ParseException {
+    private Processor processor;
 
-        Blog blog = new Blog();
-        this.getBlogFromHtml(webContent, blog);
-
-        return blog;
+    public CsdnBlogContentServiceImpl(@Qualifier("selenium") Processor processor) {
+        this.processor = processor;
     }
 
     @Override
-    public void getBlogFromHtml(String webContent, Blog blog) throws ParseException {
+    public Blog getBlog(String url, Blog blog) throws Exception {
 
         log.info("get blog data from web content");
+
+        String webContent = (String) processor.processor(url);
 
         if (blog == null) {
             blog = new Blog();
@@ -88,6 +89,7 @@ public class CsdnBlogContentServiceImpl implements BlogContentService {
         blog.setOriginal(originalFlag.equals(document.select(isOriginalRule).first().text()));
 
         log.debug(JSON.toJSONString(blog));
+        return blog;
     }
 
 }

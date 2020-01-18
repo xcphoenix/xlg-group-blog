@@ -10,9 +10,6 @@ import top.xcphoenix.groupblog.mapper.UserMapper;
 import top.xcphoenix.groupblog.model.dao.BlogType;
 import top.xcphoenix.groupblog.model.dao.User;
 import top.xcphoenix.groupblog.service.crawl.CrawlBlogService;
-import top.xcphoenix.groupblog.utils.UrlUtil;
-
-import javax.annotation.Resource;
 
 /**
  * @author      xuanc
@@ -37,10 +34,14 @@ class CrawlBlogServiceImpl implements CrawlBlogService {
     public void crawlAll(long uid) throws Exception {
         User user = userMapper.getUserBlogArgs(uid);
         BlogType blogType = blogTypeMapper.getBlogType(user.getBlogType());
-        String userZoneUrl = new UrlUtil(user.getBlogArg(), blogType).getUserZoneUrl();
-        blogManager.setUid(uid);
-        blogManager.setUrl(userZoneUrl);
-        blogManager.exec();
+        blogManager.execFull(user, blogType);
+    }
+
+    @Override
+    public void crawlIncrement(long uid) throws Exception {
+        User user = userMapper.getUserBlogArgs(uid);
+        BlogType blogType = blogTypeMapper.getBlogType(user.getBlogType());
+        blogManager.execIncrement(user, blogType);
     }
 
 }

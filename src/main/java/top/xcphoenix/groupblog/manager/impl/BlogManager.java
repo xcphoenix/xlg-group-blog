@@ -1,5 +1,8 @@
 package top.xcphoenix.groupblog.manager.impl;
 
+import top.xcphoenix.groupblog.model.dao.BlogType;
+import top.xcphoenix.groupblog.model.dao.User;
+
 import java.text.ParseException;
 
 /**
@@ -10,24 +13,21 @@ import java.text.ParseException;
 public interface BlogManager {
 
     /**
-     * 设置用户id
+     * 全量更新
      *
-     * @param uid 用户id
-     */
-    void setUid(long uid);
-
-    /**
-     * 设置url
-     *
-     * @param url 链接
-     */
-    void setUrl(String url);
-
-    /**
-     * 执行任务
-     *
+     * @param user 用户信息
+     * @param blogType 博客类型
      * @throws Exception 产生的异常
      */
-    void exec() throws Exception;
+    void execFull(User user, BlogType blogType) throws Exception;
+
+    /**
+     * 增量更新
+     *
+     * @param user 用户信息
+     * @param blogType 博客类型
+     * @throws Exception 产生的异常
+     */
+    void execIncrement(User user, BlogType blogType) throws Exception;
 
 }

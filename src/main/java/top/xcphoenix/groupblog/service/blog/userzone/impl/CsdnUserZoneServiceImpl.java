@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 import top.xcphoenix.groupblog.model.dao.Blog;
+import top.xcphoenix.groupblog.model.dto.PageBlogs;
 import top.xcphoenix.groupblog.processor.Processor;
 import top.xcphoenix.groupblog.service.blog.userzone.UserZoneService;
 
@@ -19,9 +20,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author      xuanc
- * @date        2020/1/13 下午3:50
- * @version     1.0
+ * @author xuanc
+ * @version 1.0
+ * @date 2020/1/13 下午3:50
  */
 @Slf4j
 @Service("zone-csdn")
@@ -47,7 +48,7 @@ public class CsdnUserZoneServiceImpl implements UserZoneService {
     private String noDataFlag;
 
     @Override
-    public List<Blog> getPageBlogUrls(String userZoneUrl) throws Exception {
+    public PageBlogs getPageBlogUrls(String userZoneUrl) throws Exception {
         List<Blog> blogs = new ArrayList<>();
 
         // use selenium
@@ -58,23 +59,37 @@ public class CsdnUserZoneServiceImpl implements UserZoneService {
 
         boolean hasData = document.select(noDataFlag).size() == 0;
 
+        Timestamp oldTime = new Timestamp(System.currentTimeMillis());
+        Timestamp newTime = new Timestamp(0L);
+
         for (Element element : elements) {
             Blog blog = new Blog();
             String originalLink = element.select(linkRule).first().attr("href");
             blog.setOriginalLink(originalLink);
             blog.setSummary(element.select(summaryRule).first().text());
             blog.setBlogId(Long.parseLong(originalLink.substring(originalLink.lastIndexOf("/") + 1)));
-            blog.setPubTime(
-                    new Timestamp(simpleDateFormat.parse(
-                            element.select(dateRule).first().text()
-                    ).getTime())
+
+            Timestamp currentTime = new Timestamp(
+                    simpleDateFormat.parse(
+                        element.select(dateRule).first().text()
+                    ).getTime()
             );
+            blog.setPubTime(currentTime);
+
+            long timeValue = currentTime.getTime();
+            if (timeValue > newTime.getTime()) {
+                newTime = currentTime;
+            }
+            if (timeValue < oldTime.getTime()) {
+                oldTime = currentTime;
+            }
+
             blogs.add(blog);
         }
         if (!hasData || elements.size() == 0) {
             return null;
         }
-        return blogs;
+        return new PageBlogs(oldTime, newTime, blogs);
     }
 
 }

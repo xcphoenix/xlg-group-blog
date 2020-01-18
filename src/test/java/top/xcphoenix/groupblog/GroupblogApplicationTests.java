@@ -26,9 +26,7 @@ class GroupblogApplicationTests {
     @Test
     @Ignore
     void contextLoads() throws ParseException {
-        String webContent =
-                processor.processor("https://blog.csdn.net/bitcarmanlee/article/details/71057226");
-        log.info(JSON.toJSONString(blogContentService.getBlogFromHtml(webContent)));
+
     }
 
 }

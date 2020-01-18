@@ -22,8 +22,8 @@ public class CrawlTest {
     @Test
     @Ignore
     void testCrawlAll() throws Exception {
-        int uid = 10000;
-        crawlBlogService.crawlAll(uid);
+        int uid = 10001;
+        crawlBlogService.crawlIncrement(uid);
     }
 
 }

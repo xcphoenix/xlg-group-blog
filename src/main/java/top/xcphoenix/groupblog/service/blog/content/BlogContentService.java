@@ -14,19 +14,13 @@ public interface BlogContentService {
     /**
      * 获取博客信息
      *
-     * @param webContent web 页面内容
+     * @param url 博客url
+     * @param blog 博客初始信息
+     *             若blog不为空，保留原有数据
+     *             若blog==null，返回页面解析数据
      * @return 博客信息
-     * @throws ParseException 时间解析
+     * @throws Exception 时间解析
      */
-    Blog getBlogFromHtml(String webContent) throws ParseException;
-
-    /**
-     * 获取博客信息并修改至blog
-     *
-     * @param webContent web 页面内容
-     * @param blog 博客数据
-     * @throws ParseException 时间解析
-     */
-    void getBlogFromHtml(String webContent, Blog blog) throws ParseException;
+    Blog getBlog(String url, Blog blog) throws Exception;
 
 }

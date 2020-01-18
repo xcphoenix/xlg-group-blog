@@ -1,6 +1,7 @@
 package top.xcphoenix.groupblog.service.blog.userzone;
 
 import top.xcphoenix.groupblog.model.dao.Blog;
+import top.xcphoenix.groupblog.model.dto.PageBlogs;
 
 import java.text.ParseException;
 import java.util.List;
@@ -19,6 +20,6 @@ public interface UserZoneService {
      * @return blog url
      * @throws Exception 时间解析异常
      */
-    List<Blog> getPageBlogUrls(String userZoneUrl) throws Exception;
+    PageBlogs getPageBlogUrls(String userZoneUrl) throws Exception;
 
 }

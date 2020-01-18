@@ -30,11 +30,4 @@ public class UserZoneTest {
         userZoneService.getPageBlogUrls("https://blog.csdn.net/qq_17034925?t=1");
     }
 
-    @Test
-    @Ignore
-    void getUserBlogs() throws Exception {
-        csdnManager.setUrl("https://blog.csdn.net/lalala323/article/list");
-        csdnManager.exec();
-    }
-
 }
