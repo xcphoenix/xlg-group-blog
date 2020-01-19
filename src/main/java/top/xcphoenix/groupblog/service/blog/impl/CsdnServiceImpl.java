@@ -1,4 +1,4 @@
-package top.xcphoenix.groupblog.service.blog;
+package top.xcphoenix.groupblog.service.blog.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
@@ -7,13 +7,15 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
+import top.xcphoenix.groupblog.manager.dao.BlogManager;
 import top.xcphoenix.groupblog.model.dao.Blog;
 import top.xcphoenix.groupblog.model.dao.BlogType;
 import top.xcphoenix.groupblog.model.dao.User;
 import top.xcphoenix.groupblog.model.dto.PageBlogs;
-import top.xcphoenix.groupblog.manager.blog.content.BlogContentService;
-import top.xcphoenix.groupblog.manager.blog.userzone.UserZoneService;
-import top.xcphoenix.groupblog.manager.dao.UserService;
+import top.xcphoenix.groupblog.manager.blog.content.BlogContentManager;
+import top.xcphoenix.groupblog.manager.blog.userzone.UserZoneManager;
+import top.xcphoenix.groupblog.manager.dao.UserManager;
+import top.xcphoenix.groupblog.service.blog.BlogService;
 import top.xcphoenix.groupblog.utils.UrlUtil;
 
 import java.sql.Timestamp;
@@ -27,25 +29,25 @@ import java.util.List;
  * @version     1.0
  */
 @Slf4j
-@Component("manager-csdn")
+@Component("service-csdn")
 public class CsdnServiceImpl implements BlogService {
 
-    private BlogContentService blogContentService;
-    private UserZoneService seleniumUserZoneService;
-    private UserZoneService rssZoneService;
-    private top.xcphoenix.groupblog.manager.dao.BlogService blogService;
-    private UserService userService;
+    private BlogContentManager blogContentManager;
+    private UserZoneManager seleniumUserZoneService;
+    private UserZoneManager rssZoneService;
+    private BlogManager blogManager;
+    private UserManager userManager;
 
-    public CsdnServiceImpl(@Qualifier("content-csdn") BlogContentService blogContentService,
-                           @Qualifier("zone-csdn") UserZoneService seleniumUserZoneService,
-                           @Qualifier("rss-csdn") UserZoneService rssZoneService,
-                           top.xcphoenix.groupblog.manager.dao.BlogService blogService, UserService userService) {
+    public CsdnServiceImpl(@Qualifier("content-csdn") BlogContentManager blogContentManager,
+                           @Qualifier("zone-csdn") UserZoneManager seleniumUserZoneService,
+                           @Qualifier("rss-csdn") UserZoneManager rssZoneService,
+                           BlogManager blogManager, UserManager userManager) {
 
-        this.blogContentService = blogContentService;
+        this.blogContentManager = blogContentManager;
         this.seleniumUserZoneService = seleniumUserZoneService;
         this.rssZoneService = rssZoneService;
-        this.blogService = blogService;
-        this.userService = userService;
+        this.blogManager = blogManager;
+        this.userManager = userManager;
     }
 
     @Override
@@ -65,13 +67,13 @@ public class CsdnServiceImpl implements BlogService {
 
             List<Blog> blogList = pageBlogs.getBlogs();
             for (Blog blog : blogList) {
-                if (blogService.exists(blog.getBlogId())) {
+                if (blogManager.exists(blog.getBlogId())) {
                     log.warn("blog exists, jump");
                     continue;
                 }
 
                 blog.setUid(user.getUid());
-                blogService.addBlog(blogContentService.getBlog(blog.getOriginalLink(), blog));
+                blogManager.addBlog(blogContentManager.getBlog(blog.getOriginalLink(), blog));
             }
             log.debug("blogs >> " + JSON.toJSONString(blogList, SerializerFeature.PrettyFormat));
         }
@@ -87,7 +89,7 @@ public class CsdnServiceImpl implements BlogService {
 
         log.info("begin get blogs from url: " + urlBuilder);
 
-        Timestamp lastPubTime = userService.getLastPubTime(user.getUid());
+        Timestamp lastPubTime = userManager.getLastPubTime(user.getUid());
         PageBlogs pageBlogs = rssZoneService.getPageBlogUrls(urlUtil.getRssUrl());
 
         if (lastPubTime.getTime() >= pageBlogs.getLastTime().getTime()) {
@@ -102,13 +104,13 @@ public class CsdnServiceImpl implements BlogService {
                 if (blog.getPubTime().getTime() <= lastPubTime.getTime()) {
                     continue;
                 }
-                if (blogService.exists(blog.getBlogId())) {
+                if (blogManager.exists(blog.getBlogId())) {
                     log.warn("blog exists, jump");
                     continue;
                 }
 
                 blog.setUid(user.getUid());
-                blogService.addBlog(blogContentService.getBlog(blog.getOriginalLink(), blog));
+                blogManager.addBlog(blogContentManager.getBlog(blog.getOriginalLink(), blog));
             }
         }
         else {
@@ -125,13 +127,13 @@ public class CsdnServiceImpl implements BlogService {
 
                 List<Blog> blogList = seleniumPageBlogs.getBlogs();
                 for (Blog blog : blogList) {
-                    if (blogService.exists(blog.getBlogId())) {
+                    if (blogManager.exists(blog.getBlogId())) {
                         log.warn("blog exists, jump");
                         continue;
                     }
 
                     blog.setUid(user.getUid());
-                    blogService.addBlog(blogContentService.getBlog(blog.getOriginalLink(), blog));
+                    blogManager.addBlog(blogContentManager.getBlog(blog.getOriginalLink(), blog));
                 }
                 log.debug("blogs >> " + JSON.toJSONString(blogList, SerializerFeature.PrettyFormat));
             }

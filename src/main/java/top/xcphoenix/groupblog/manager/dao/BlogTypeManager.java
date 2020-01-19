@@ -7,7 +7,7 @@ import top.xcphoenix.groupblog.model.dao.BlogType;
  * @date        2020/1/18 下午4:23
  * @version     1.0
  */ 
-public interface BlogTypeService {
+public interface BlogTypeManager {
 
     /**
      * 获取博客类型信息

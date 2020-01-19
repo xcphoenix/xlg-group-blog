@@ -1,5 +1,7 @@
 package top.xcphoenix.groupblog;
 
+import jdk.nashorn.internal.ir.annotations.Ignore;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,6 +20,7 @@ public class UserMapperTest {
     private UserMapper userMapper;
 
     @Test
+    @Disabled
     void testTmp() {
         long uid = 10000;
         User user = userMapper.getUserBlogArgs(uid);

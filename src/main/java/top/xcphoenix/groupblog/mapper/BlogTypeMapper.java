@@ -18,4 +18,12 @@ public interface BlogTypeMapper {
      */
     BlogType getBlogType(@Param("typeId") int typeId);
 
+    /**
+     * 获取博客类型对应执行抓取任务的 bean
+     *
+     * @param typeId 类型id
+     * @return bean name
+     */
+    String getBlogCrawlBean(@Param("typeId") int typeId);
+
 }

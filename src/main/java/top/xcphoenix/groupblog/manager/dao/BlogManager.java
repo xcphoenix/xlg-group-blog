@@ -7,7 +7,7 @@ import top.xcphoenix.groupblog.model.dao.Blog;
  * @date        2020/1/17 下午6:17
  * @version     1.0
  */ 
-public interface BlogService {
+public interface BlogManager {
 
     /**
      * 添加博客

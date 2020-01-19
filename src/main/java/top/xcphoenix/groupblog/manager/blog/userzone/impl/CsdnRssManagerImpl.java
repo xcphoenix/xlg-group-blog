@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import top.xcphoenix.groupblog.model.dao.Blog;
 import top.xcphoenix.groupblog.model.dto.PageBlogs;
 import top.xcphoenix.groupblog.processor.Processor;
-import top.xcphoenix.groupblog.manager.blog.userzone.UserZoneService;
+import top.xcphoenix.groupblog.manager.blog.userzone.UserZoneManager;
 
 import javax.annotation.Resource;
 import java.sql.Timestamp;
@@ -19,7 +19,7 @@ import java.util.List;
  * @date 2020/1/17 下午1:30
  */
 @Service("rss-csdn")
-public class CsdnRssServiceImpl implements UserZoneService {
+public class CsdnRssManagerImpl implements UserZoneManager {
 
     @Resource(name = "rss")
     private Processor processor;

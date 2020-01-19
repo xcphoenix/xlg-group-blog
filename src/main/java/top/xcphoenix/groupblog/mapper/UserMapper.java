@@ -3,8 +3,10 @@ package top.xcphoenix.groupblog.mapper;
 import org.apache.ibatis.annotations.Param;
 import org.bouncycastle.util.Times;
 import top.xcphoenix.groupblog.model.dao.User;
+import top.xcphoenix.groupblog.model.dto.UserSummary;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 /**
  * @author xuanc
@@ -36,5 +38,12 @@ public interface UserMapper {
      * @return 最近博客的推送时间
      */
     Timestamp getLastPubTime(@Param("uid") long uid);
+
+    /**
+     * 获取用户概要
+     *
+     * @return 用户id,用户对应博客的执行bean
+     */
+    List<UserSummary> getUsersSummary();
 
 }

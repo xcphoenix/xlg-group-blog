@@ -25,5 +25,6 @@ public class BlogType {
      * split by ','
      */
     private String needArg;
+    private String beanName;
 
 }

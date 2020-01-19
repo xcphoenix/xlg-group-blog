@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import top.xcphoenix.groupblog.model.dao.Blog;
 import top.xcphoenix.groupblog.model.dto.PageBlogs;
 import top.xcphoenix.groupblog.processor.Processor;
-import top.xcphoenix.groupblog.manager.blog.userzone.UserZoneService;
+import top.xcphoenix.groupblog.manager.blog.userzone.UserZoneManager;
 
 import javax.annotation.Resource;
 import java.sql.Timestamp;
@@ -26,7 +26,7 @@ import java.util.List;
 @Slf4j
 @Service("zone-csdn")
 @PropertySource(value = "classpath:config/userzone/csdnBlogRule.properties", encoding = "utf-8")
-public class CsdnUserZoneServiceImpl implements UserZoneService {
+public class CsdnUserZoneManagerImpl implements UserZoneManager {
 
     @Resource(name = "selenium")
     private Processor processor;

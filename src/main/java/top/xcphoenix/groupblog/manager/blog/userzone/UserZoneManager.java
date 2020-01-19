@@ -7,7 +7,7 @@ import top.xcphoenix.groupblog.model.dto.PageBlogs;
  * @date        2020/1/13 下午3:47
  * @version     1.0
  */ 
-public interface UserZoneService {
+public interface UserZoneManager {
 
     /**
      * 获取用户中心博客 url

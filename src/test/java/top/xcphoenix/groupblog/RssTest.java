@@ -6,10 +6,9 @@ import com.rometools.rome.io.SyndFeedInput;
 import com.rometools.rome.io.XmlReader;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import top.xcphoenix.groupblog.service.blog.userzone.UserZoneService;
+import top.xcphoenix.groupblog.manager.blog.userzone.UserZoneManager;
 
 import javax.annotation.Resource;
-import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -25,7 +24,7 @@ import java.util.stream.Collectors;
 public class RssTest {
 
     @Resource(name = "rss-csdn")
-    private UserZoneService userZoneService;
+    private UserZoneManager userZoneService;
 
     @Test
     void romeTest() throws IOException, FeedException {

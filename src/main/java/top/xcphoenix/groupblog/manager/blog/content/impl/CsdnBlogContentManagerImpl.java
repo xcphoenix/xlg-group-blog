@@ -10,7 +10,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 import top.xcphoenix.groupblog.model.dao.Blog;
 import top.xcphoenix.groupblog.processor.Processor;
-import top.xcphoenix.groupblog.manager.blog.content.BlogContentService;
+import top.xcphoenix.groupblog.manager.blog.content.BlogContentManager;
 import top.xcphoenix.groupblog.utils.HtmlUtil;
 
 import java.sql.Timestamp;
@@ -24,7 +24,7 @@ import java.text.SimpleDateFormat;
 @Service("content-csdn")
 @Slf4j
 @PropertySource(value = "classpath:config/content/csdnBlogRule.properties", encoding = "UTF-8")
-public class CsdnBlogContentServiceImpl implements BlogContentService {
+public class CsdnBlogContentManagerImpl implements BlogContentManager {
 
     @Value("${blog.rule.title}")
     private String titleRule;
@@ -45,7 +45,7 @@ public class CsdnBlogContentServiceImpl implements BlogContentService {
 
     private Processor processor;
 
-    public CsdnBlogContentServiceImpl(@Qualifier("selenium") Processor processor) {
+    public CsdnBlogContentManagerImpl(@Qualifier("selenium") Processor processor) {
         this.processor = processor;
     }
 

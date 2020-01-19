@@ -3,9 +3,11 @@ package top.xcphoenix.groupblog.manager.dao.impl;
 import org.springframework.stereotype.Service;
 import top.xcphoenix.groupblog.mapper.UserMapper;
 import top.xcphoenix.groupblog.model.dao.User;
-import top.xcphoenix.groupblog.manager.dao.UserService;
+import top.xcphoenix.groupblog.manager.dao.UserManager;
+import top.xcphoenix.groupblog.model.dto.UserSummary;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 /**
  * @author      xuanc
@@ -13,11 +15,11 @@ import java.sql.Timestamp;
  * @version     1.0
  */
 @Service
-public class UserServiceImpl implements UserService {
+public class UserManagerImpl implements UserManager {
 
     private UserMapper userMapper;
 
-    public UserServiceImpl(UserMapper userMapper) {
+    public UserManagerImpl(UserMapper userMapper) {
         this.userMapper = userMapper;
     }
 
@@ -35,4 +37,10 @@ public class UserServiceImpl implements UserService {
     public Timestamp getLastPubTime(long uid) {
         return userMapper.getLastPubTime(uid);
     }
+
+    @Override
+    public List<UserSummary> getUsersSummary() {
+        return userMapper.getUsersSummary();
+    }
+
 }

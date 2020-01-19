@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service;
 import top.xcphoenix.groupblog.mapper.BlogMapper;
 import top.xcphoenix.groupblog.mapper.UserMapper;
 import top.xcphoenix.groupblog.model.dao.Blog;
-import top.xcphoenix.groupblog.manager.dao.BlogService;
+import top.xcphoenix.groupblog.manager.dao.BlogManager;
 
 import java.sql.Timestamp;
 
@@ -14,12 +14,12 @@ import java.sql.Timestamp;
  * @version     1.0
  */
 @Service
-public class BlogServiceImpl implements BlogService {
+public class BlogManagerImpl implements BlogManager {
 
     private BlogMapper blogMapper;
     private UserMapper userMapper;
 
-    public BlogServiceImpl(BlogMapper blogMapper, UserMapper userMapper) {
+    public BlogManagerImpl(BlogMapper blogMapper, UserMapper userMapper) {
         this.blogMapper = blogMapper;
         this.userMapper = userMapper;
     }

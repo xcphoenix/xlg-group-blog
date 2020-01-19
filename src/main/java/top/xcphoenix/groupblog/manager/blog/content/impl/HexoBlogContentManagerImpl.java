@@ -3,7 +3,7 @@ package top.xcphoenix.groupblog.manager.blog.content.impl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import top.xcphoenix.groupblog.model.dao.Blog;
-import top.xcphoenix.groupblog.manager.blog.content.BlogContentService;
+import top.xcphoenix.groupblog.manager.blog.content.BlogContentManager;
 
 /**
  * @author      xuanc
@@ -12,7 +12,7 @@ import top.xcphoenix.groupblog.manager.blog.content.BlogContentService;
  */
 @Slf4j
 @Service("content-hexo")
-public class HexoBlogContentServiceImpl implements BlogContentService {
+public class HexoBlogContentManagerImpl implements BlogContentManager {
 
 
     @Override

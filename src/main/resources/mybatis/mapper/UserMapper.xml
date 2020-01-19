@@ -18,5 +18,10 @@
 		WHERE uid = #{uid}
 	</select>
 
-
+	<select id="getUsersSummary" resultType="top.xcphoenix.groupblog.model.dto.UserSummary">
+		SELECT `uid`, `bean_name`
+		FROM `user`, `blog_type`
+		WHERE `user`.`blog_type` = `blog_type`.`type_id`
+	</select>
+	
 </mapper>

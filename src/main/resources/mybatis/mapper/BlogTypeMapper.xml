@@ -8,4 +8,10 @@
 		WHERE type_id = #{typeId}
 	</select>
 	
+	<select id="getBlogCrawlBean" resultType="String">
+		SELECT bean_name
+		FROM blog_type
+		WHERE type_id = #{typeId}
+	</select>
+	
 </mapper>

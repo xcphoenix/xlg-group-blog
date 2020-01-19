@@ -3,7 +3,7 @@ package top.xcphoenix.groupblog.manager.dao.impl;
 import org.springframework.stereotype.Service;
 import top.xcphoenix.groupblog.mapper.BlogTypeMapper;
 import top.xcphoenix.groupblog.model.dao.BlogType;
-import top.xcphoenix.groupblog.manager.dao.BlogTypeService;
+import top.xcphoenix.groupblog.manager.dao.BlogTypeManager;
 
 /**
  * @author      xuanc
@@ -11,11 +11,11 @@ import top.xcphoenix.groupblog.manager.dao.BlogTypeService;
  * @version     1.0
  */
 @Service
-public class BlogTypeServiceImpl implements BlogTypeService {
+public class BlogTypeManagerImpl implements BlogTypeManager {
 
     private BlogTypeMapper blogTypeMapper;
 
-    public BlogTypeServiceImpl(BlogTypeMapper blogTypeMapper) {
+    public BlogTypeManagerImpl(BlogTypeMapper blogTypeMapper) {
         this.blogTypeMapper = blogTypeMapper;
     }
 

@@ -1,4 +1,4 @@
-package top.xcphoenix.groupblog.manager.impl;
+package top.xcphoenix.groupblog.service.blog;
 
 import top.xcphoenix.groupblog.model.dao.BlogType;
 import top.xcphoenix.groupblog.model.dao.User;
@@ -10,7 +10,7 @@ import java.text.ParseException;
  * @version 1.0
  * @date 2020/1/15 下午3:25
  */
-public interface BlogManager {
+public interface BlogService {
 
     /**
      * 全量更新

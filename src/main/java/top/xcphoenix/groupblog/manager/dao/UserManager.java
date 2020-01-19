@@ -1,15 +1,17 @@
 package top.xcphoenix.groupblog.manager.dao;
 
 import top.xcphoenix.groupblog.model.dao.User;
+import top.xcphoenix.groupblog.model.dto.UserSummary;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 /**
  * @author      xuanc
  * @date        2020/1/17 下午7:49
  * @version     1.0
  */ 
-public interface UserService {
+public interface UserManager {
     /**
      * 获取用户博客参数
      *
@@ -32,5 +34,12 @@ public interface UserService {
      * @return 最近博客的推送时间
      */
     Timestamp getLastPubTime(long uid);
+
+    /**
+     * 获取用户概要信息
+     *
+     * @return 用户id,执行抓取任务需要的bean
+     */
+    List<UserSummary> getUsersSummary();
 
 }

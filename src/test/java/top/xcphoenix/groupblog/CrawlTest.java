@@ -22,7 +22,7 @@ public class CrawlTest {
     @Test
     @Ignore
     void testCrawlAll() throws Exception {
-        int uid = 10001;
+        int uid = 10074;
         crawlBlogService.crawlIncrement(uid);
     }
 
