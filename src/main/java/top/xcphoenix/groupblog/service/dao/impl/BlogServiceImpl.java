@@ -2,8 +2,11 @@ package top.xcphoenix.groupblog.service.dao.impl;
 
 import org.springframework.stereotype.Service;
 import top.xcphoenix.groupblog.mapper.BlogMapper;
+import top.xcphoenix.groupblog.mapper.UserMapper;
 import top.xcphoenix.groupblog.model.dao.Blog;
 import top.xcphoenix.groupblog.service.dao.BlogService;
+
+import java.sql.Timestamp;
 
 /**
  * @author      xuanc
@@ -14,14 +17,21 @@ import top.xcphoenix.groupblog.service.dao.BlogService;
 public class BlogServiceImpl implements BlogService {
 
     private BlogMapper blogMapper;
+    private UserMapper userMapper;
 
-    public BlogServiceImpl(BlogMapper blogMapper) {
+    public BlogServiceImpl(BlogMapper blogMapper, UserMapper userMapper) {
         this.blogMapper = blogMapper;
+        this.userMapper = userMapper;
     }
 
     @Override
     public void addBlog(Blog blog) {
-        blogMapper.addBlog(blog);
+        if (blogMapper.addBlog(blog) != 0) {
+            Timestamp lastPubTime = userMapper.getLastPubTime(blog.getUid());
+            if (lastPubTime.getTime() < blog.getPubTime().getTime()) {
+                userMapper.updateLastPubTime(blog.getPubTime(), blog.getUid());
+            }
+        }
     }
 
     @Override

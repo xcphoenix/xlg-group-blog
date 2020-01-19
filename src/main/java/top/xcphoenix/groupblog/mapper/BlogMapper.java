@@ -14,8 +14,9 @@ public interface BlogMapper {
      * 添加博客
      *
      * @param blog 博客数据
+     * @return 影响的行数
      */
-    void addBlog(@Param("blog") Blog blog);
+    int addBlog(@Param("blog") Blog blog);
 
     /**
      * 检索博客是否存在
