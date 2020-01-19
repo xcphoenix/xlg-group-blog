@@ -1,11 +1,9 @@
-package top.xcphoenix.groupblog.service.blog.content.impl;
+package top.xcphoenix.groupblog.manager.blog.content.impl;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import top.xcphoenix.groupblog.model.dao.Blog;
-import top.xcphoenix.groupblog.service.blog.content.BlogContentService;
-
-import java.text.ParseException;
+import top.xcphoenix.groupblog.manager.blog.content.BlogContentService;
 
 /**
  * @author      xuanc

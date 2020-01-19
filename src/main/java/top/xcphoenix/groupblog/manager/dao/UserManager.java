@@ -1,4 +1,4 @@
-package top.xcphoenix.groupblog.service.dao;
+package top.xcphoenix.groupblog.manager.dao;
 
 import top.xcphoenix.groupblog.model.dao.User;
 

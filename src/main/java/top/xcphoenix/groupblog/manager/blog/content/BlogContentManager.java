@@ -1,8 +1,6 @@
-package top.xcphoenix.groupblog.service.blog.content;
+package top.xcphoenix.groupblog.manager.blog.content;
 
 import top.xcphoenix.groupblog.model.dao.Blog;
-
-import java.text.ParseException;
 
 /**
  * @author      xuanc

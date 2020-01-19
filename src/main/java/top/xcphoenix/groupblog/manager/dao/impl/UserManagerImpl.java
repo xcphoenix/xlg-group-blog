@@ -1,9 +1,9 @@
-package top.xcphoenix.groupblog.service.dao.impl;
+package top.xcphoenix.groupblog.manager.dao.impl;
 
 import org.springframework.stereotype.Service;
 import top.xcphoenix.groupblog.mapper.UserMapper;
 import top.xcphoenix.groupblog.model.dao.User;
-import top.xcphoenix.groupblog.service.dao.UserService;
+import top.xcphoenix.groupblog.manager.dao.UserService;
 
 import java.sql.Timestamp;
 

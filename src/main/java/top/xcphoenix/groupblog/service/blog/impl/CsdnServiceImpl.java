@@ -1,4 +1,4 @@
-package top.xcphoenix.groupblog.manager.impl;
+package top.xcphoenix.groupblog.service.blog;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
@@ -11,10 +11,9 @@ import top.xcphoenix.groupblog.model.dao.Blog;
 import top.xcphoenix.groupblog.model.dao.BlogType;
 import top.xcphoenix.groupblog.model.dao.User;
 import top.xcphoenix.groupblog.model.dto.PageBlogs;
-import top.xcphoenix.groupblog.service.blog.content.BlogContentService;
-import top.xcphoenix.groupblog.service.blog.userzone.UserZoneService;
-import top.xcphoenix.groupblog.service.dao.BlogService;
-import top.xcphoenix.groupblog.service.dao.UserService;
+import top.xcphoenix.groupblog.manager.blog.content.BlogContentService;
+import top.xcphoenix.groupblog.manager.blog.userzone.UserZoneService;
+import top.xcphoenix.groupblog.manager.dao.UserService;
 import top.xcphoenix.groupblog.utils.UrlUtil;
 
 import java.sql.Timestamp;
@@ -29,18 +28,18 @@ import java.util.List;
  */
 @Slf4j
 @Component("manager-csdn")
-public class CsdnManager implements BlogManager {
+public class CsdnServiceImpl implements BlogService {
 
     private BlogContentService blogContentService;
     private UserZoneService seleniumUserZoneService;
     private UserZoneService rssZoneService;
-    private BlogService blogService;
+    private top.xcphoenix.groupblog.manager.dao.BlogService blogService;
     private UserService userService;
 
-    public CsdnManager(@Qualifier("content-csdn") BlogContentService blogContentService,
-                       @Qualifier("zone-csdn") UserZoneService seleniumUserZoneService,
-                       @Qualifier("rss-csdn") UserZoneService rssZoneService,
-                       BlogService blogService, UserService userService) {
+    public CsdnServiceImpl(@Qualifier("content-csdn") BlogContentService blogContentService,
+                           @Qualifier("zone-csdn") UserZoneService seleniumUserZoneService,
+                           @Qualifier("rss-csdn") UserZoneService rssZoneService,
+                           top.xcphoenix.groupblog.manager.dao.BlogService blogService, UserService userService) {
 
         this.blogContentService = blogContentService;
         this.seleniumUserZoneService = seleniumUserZoneService;

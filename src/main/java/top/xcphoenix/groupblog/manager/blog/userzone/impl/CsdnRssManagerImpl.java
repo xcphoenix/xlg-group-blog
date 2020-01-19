@@ -1,4 +1,4 @@
-package top.xcphoenix.groupblog.service.blog.userzone.impl;
+package top.xcphoenix.groupblog.manager.blog.userzone.impl;
 
 import com.rometools.rome.feed.synd.SyndEntry;
 import com.rometools.rome.feed.synd.SyndFeed;
@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import top.xcphoenix.groupblog.model.dao.Blog;
 import top.xcphoenix.groupblog.model.dto.PageBlogs;
 import top.xcphoenix.groupblog.processor.Processor;
-import top.xcphoenix.groupblog.service.blog.userzone.UserZoneService;
+import top.xcphoenix.groupblog.manager.blog.userzone.UserZoneService;
 
 import javax.annotation.Resource;
 import java.sql.Timestamp;
