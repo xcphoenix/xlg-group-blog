@@ -28,6 +28,7 @@ public class SiteSchema implements Cloneable {
     private String siteTitle;
     private String siteSubTitle;
 
+    private String avatarUrl;
     private boolean isInAuthor;
     private NumStatics numStatics;
 
