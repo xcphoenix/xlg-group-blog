@@ -1,0 +1,20 @@
+site:
+  siteTitle: XiyouLinuxGroup群博
+  siteSubTitle: Free Open Share
+  isInAuthor: false
+  author-schema:
+    author: XiyouLinuxGroup
+    signature: "<i class='fa fa-map-marker' aria-hidden='true'> \u4E1C\u533A\u9038\u592B\u697C FZ103</i>"
+  side-bar-links:
+    index-url: /
+    about-url: /about
+    tag-url: /tag
+    category-url: /category
+    archive-url: /archive
+  friend-links:
+    - desc: 小组官网
+      link: https://www.xiyoulinux.org/
+      icon-class: fa fa-fw fa-chrome
+    - desc: 邮件列表
+      link: https://groups.google.com/forum/#!forum/xiyoulinux
+      icon-class: fa fa-fw fa-envelope
