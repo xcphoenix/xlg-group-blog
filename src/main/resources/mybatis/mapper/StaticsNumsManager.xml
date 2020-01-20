@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="top.xcphoenix.groupblog.mapper.StaticsNumsMapper">
+	
+	<select id="getSiteStaticsNum" resultType="top.xcphoenix.groupblog.model.dto.NumStatics">
+		SELECT (SELECT COUNT(*) FROM blog)     blogNum,
+		       (SELECT COUNT(*) FROM category) categoryNum,
+		       (SELECT COUNT(*) FROM tag)      tagNum
+	</select>
+	
+	<select id="getUserStaticsNum" resultType="java.lang.Integer">
+		SELECT COUNT(*)
+		FROM blog
+		WHERE uid = #{uid}
+	</select>
+
+</mapper>

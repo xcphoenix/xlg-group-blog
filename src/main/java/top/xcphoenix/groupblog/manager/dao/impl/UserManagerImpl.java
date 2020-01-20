@@ -43,4 +43,9 @@ public class UserManagerImpl implements UserManager {
         return userMapper.getUsersSummary();
     }
 
+    @Override
+    public User getUserDesc(long uid) {
+        return userMapper.getUserDesc(uid);
+    }
+
 }

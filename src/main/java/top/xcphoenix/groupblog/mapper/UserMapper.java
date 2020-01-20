@@ -42,8 +42,16 @@ public interface UserMapper {
     /**
      * 获取用户概要
      *
-     * @return 用户id,用户对应博客的执行bean
+     * @return 用户id, 用户对应博客的执行bean
      */
     List<UserSummary> getUsersSummary();
+
+    /**
+     * 获取用户描述：用户名、用户个性签名
+     *
+     * @param uid 用户id
+     * @return 用户描述
+     */
+    User getUserDesc(@Param("uid") long uid);
 
 }

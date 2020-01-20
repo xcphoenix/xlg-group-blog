@@ -42,4 +42,12 @@ public interface UserManager {
      */
     List<UserSummary> getUsersSummary();
 
+    /**
+     * 获取用户描述
+     *
+     * @param uid 用户id
+     * @return 用户描述
+     */
+    User getUserDesc(long uid);
+
 }

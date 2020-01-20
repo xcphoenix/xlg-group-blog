@@ -4,6 +4,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
+import top.xcphoenix.groupblog.model.vo.SiteSchema;
+import top.xcphoenix.groupblog.service.view.SiteService;
+
+import java.util.Map;
 
 /**
  * @author      xuanc
@@ -13,9 +18,17 @@ import org.springframework.web.bind.annotation.RestController;
 @Controller
 public class HelloController {
 
-    @GetMapping("/hello")
-    public String hello() {
-        return "Hello";
+    private SiteService siteService;
+
+    public HelloController(SiteService siteService) {
+        this.siteService = siteService;
+    }
+
+    @GetMapping("/")
+    public String hello(Map<String, Object> map) throws CloneNotSupportedException {
+        SiteSchema siteSchema = siteService.getSiteSchemaWithUser(10074L);
+        map.put("siteSchema", siteSchema);
+        return "index";
     }
 
 }

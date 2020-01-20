@@ -8,7 +8,7 @@
 </head>
 <body>
 
-<div class="sidebar-toggle" th:fragment="sidebar-toggle" >
+<div class="sidebar-toggle" th:fragment="sidebar-toggle">
     <div class="sidebar-toggle-line-wrap">
         <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
         <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
@@ -25,30 +25,45 @@
                     <img class="site-author-image" itemprop="image"
                          src="/images/logo.png"
                          alt="XiyouLinuxGroup"/>
-                    <p class="site-author-name" itemprop="name">XiyouLinuxGroup</p>
-                    <p class="site-description motion-element" itemprop="description"></p>
+                    <p class="site-author-name" itemprop="name" th:text="${siteSchema.getAuthorSchema().getAuthor()}">XiyouLinuxGroup</p>
+                    <p class="site-description motion-element" itemprop="description"
+                       th:if="${siteSchema.isInAuthor()}"
+                       th:text="${siteSchema.getAuthorSchema().getSignature()}">
+                    </p>
+                    <p class="site-description motion-element" itemprop="description"
+                       th:unless="${siteSchema.isInAuthor()}"
+                       th:utext="${siteSchema.getAuthorSchema().getSignature()}">
+                    </p>
                 </div>
 
                 <nav class="site-state motion-element">
-                    <!-- TODO 动态获取属性 {url,num,name} -->
-                    <div class="site-state-item site-state-posts">
-                        <a href="/archives/%20%7C%7C%20archive">
-                            <span class="site-state-item-count">2</span>
-                            <span class="site-state-item-name">日志</span>
+                    <div class="site-state-item site-state-posts" th:if="${siteSchema.getNumStatics().getBlogNum() != 0}">
+                        <a th:href="@{${siteSchema.getSidebarLinks().getArchiveUrl()}}">
+                            <span class="site-state-item-count" th:text="${siteSchema.getNumStatics().getBlogNum()}"></span>
+                            <span class="site-state-item-name">博客</span>
+                        </a>
+                    </div>
+                    <div class="site-state-item site-state-categories" th:if="${siteSchema.getNumStatics().getCategoryNum() != 0}">
+                        <a th:href="@{${siteSchema.getSidebarLinks().getCategoryUrl()}}">
+                            <span class="site-state-item-count" th:text="${siteSchema.getNumStatics().getCategoryNum()}"></span>
+                            <span class="site-state-item-name">分类</span>
+                        </a>
+                    </div>
+                    <div class="site-state-item site-state-tags" th:if="${siteSchema.getNumStatics().getTagNum() != 0}">
+                        <a th:href="@{${siteSchema.getSidebarLinks().getTagUrl()}}">
+                            <span class="site-state-item-count" th:text="${siteSchema.getNumStatics().getTagNum()}"></span>
+                            <span class="site-state-item-name">标签</span>
                         </a>
                     </div>
                 </nav>
 
                 <div class="links-of-author motion-element">
-                    <span class="links-of-author-item">
-                    <a href="https://www.xiyoulinux.org/" target="_blank" title="官网">
-                        <i class="fa fa-fw fa-chrome"></i>小组官网
-                    </a>
-                    </span>
-                    <span class="links-of-author-item">
-                    <a href="https://groups.google.com/forum/#!forum/xiyoulinux" target="_blank" title="邮件列表">
-                        <i class="fa fa-fw fa-envelope"></i>邮件列表
-                    </a>
+                    <span class="links-of-author-item"
+                          th:each="friendLink, item: ${siteSchema.getFriendLinks()}">
+                        <a th:href="@{${friendLink.getLink()}}" target="_blank" th:title="${friendLink.getDesc()}">
+                            <i th:class="${friendLink.getIconClass()}"></i>
+                            [[${friendLink.getDesc()}]]
+                        </a>
                     </span>
                 </div>
             </div>

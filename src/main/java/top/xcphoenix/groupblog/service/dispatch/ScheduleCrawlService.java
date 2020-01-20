@@ -12,6 +12,10 @@ import top.xcphoenix.groupblog.utils.BeanUtil;
 import java.util.List;
 
 /**
+ * TODO
+ *   - 全量更新（CSDN全量更新策略）
+ *   - 随机延迟
+ *
  * @author      xuanc
  * @date        2020/1/19 下午1:27
  * @version     1.0
@@ -29,7 +33,7 @@ public class ScheduleCrawlService {
     /**
      * 定时增量抓取
      */
-    @Scheduled(cron = "* * 9,16 * * *")
+    @Scheduled(cron = "0 0 9,21 * * *")
     public void crawlIncr() throws Exception {
         log.info("exec cron task...");
 

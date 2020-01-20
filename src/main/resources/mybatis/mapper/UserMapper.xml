@@ -24,4 +24,10 @@
 		WHERE `user`.`blog_type` = `blog_type`.`type_id`
 	</select>
 	
+	<select id="getUserDesc" resultType="top.xcphoenix.groupblog.model.dao.User">
+		SELECT username, signature
+		FROM user
+		WHERE uid = #{uid}
+	</select>
+
 </mapper>
