@@ -53,6 +53,8 @@ public class SiteServiceImpl implements SiteService {
         User user = userManager.getUserDesc(uid);
         siteSchema.setAuthorSchema(new AuthorSchema(user.getUsername(), user.getSignature()));
 
+        siteSchema.setAvatarUrl(userManager.getUserAvatar(uid));
+
         // 以后加
         siteSchema.setFriendLinks(null);
         return siteSchema;

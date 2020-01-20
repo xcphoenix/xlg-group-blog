@@ -29,5 +29,11 @@
 		FROM user
 		WHERE uid = #{uid}
 	</select>
+	
+	<select id="getUserQQ" resultType="java.lang.String">
+		SELECT qq
+		FROM user
+		WHERE uid = #{uid}
+	</select>
 
 </mapper>

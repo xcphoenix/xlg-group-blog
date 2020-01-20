@@ -50,4 +50,12 @@ public interface UserManager {
      */
     User getUserDesc(long uid);
 
+    /**
+     * 获取用户头像链接
+     *
+     * @param uid 用户id
+     * @return 用户头像url
+     */
+    String getUserAvatar(long uid);
+
 }

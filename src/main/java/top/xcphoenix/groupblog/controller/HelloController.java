@@ -26,7 +26,8 @@ public class HelloController {
 
     @GetMapping("/")
     public String hello(Map<String, Object> map) throws CloneNotSupportedException {
-        SiteSchema siteSchema = siteService.getSiteSchemaWithUser(10074L);
+        // SiteSchema siteSchema = siteService.getSiteSchemaWithUser(10074L);
+        SiteSchema siteSchema = siteService.getSiteSchema();
         map.put("siteSchema", siteSchema);
         return "index";
     }

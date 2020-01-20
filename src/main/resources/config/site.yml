@@ -1,7 +1,8 @@
 site:
-  siteTitle: XiyouLinuxGroup群博
-  siteSubTitle: Free Open Share
-  isInAuthor: false
+  site-title: XiyouLinuxGroup群博
+  site-sub-title: Free Open Share
+  avatar-url: /images/logo.png
+  is-in-author: false
   author-schema:
     author: XiyouLinuxGroup
     signature: "<i class='fa fa-map-marker' aria-hidden='true'> \u4E1C\u533A\u9038\u592B\u697C FZ103</i>"

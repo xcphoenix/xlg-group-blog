@@ -48,4 +48,13 @@ public class UserManagerImpl implements UserManager {
         return userMapper.getUserDesc(uid);
     }
 
+    @Override
+    public String getUserAvatar(long uid) {
+        String qq = userMapper.getUserQQ(uid);
+        if (qq == null) {
+            return "/images/anonymous.svg";
+        }
+        return "http://q1.qlogo.cn/g?b=qq&nk=" + qq + "&s=100";
+    }
+
 }

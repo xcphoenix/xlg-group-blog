@@ -2,6 +2,7 @@ package top.xcphoenix.groupblog.model.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * 用户数据
@@ -12,14 +13,15 @@ import lombok.Data;
  * @version     1.0
  */
 @Data
+@NoArgsConstructor
 @AllArgsConstructor
 public class AuthorSchema {
 
-    String author;
+    private String author;
     /**
      * 用户：个性签名，转义Html
      * 站点：不转义html
      */
-    String signature;
+    private String signature;
 
 }

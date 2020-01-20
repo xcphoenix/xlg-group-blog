@@ -23,9 +23,11 @@
                 <div class="site-author motion-element" itemprop="author" itemscope
                      itemtype="http://schema.org/Person">
                     <img class="site-author-image" itemprop="image"
-                         src="/images/logo.png"
-                         alt="XiyouLinuxGroup"/>
-                    <p class="site-author-name" itemprop="name" th:text="${siteSchema.getAuthorSchema().getAuthor()}">XiyouLinuxGroup</p>
+                         th:src="${siteSchema.getAvatarUrl()}"/>
+                    <p class="site-author-name" itemprop="name"
+                       th:text="${siteSchema.getAuthorSchema().getAuthor()}">
+                        XiyouLinuxGroup
+                    </p>
                     <p class="site-description motion-element" itemprop="description"
                        th:if="${siteSchema.isInAuthor()}"
                        th:text="${siteSchema.getAuthorSchema().getSignature()}">

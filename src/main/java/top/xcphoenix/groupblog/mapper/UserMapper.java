@@ -54,4 +54,12 @@ public interface UserMapper {
      */
     User getUserDesc(@Param("uid") long uid);
 
+    /**
+     * 获取用户 QQ
+     *
+     * @param uid 用户id
+     * @return 用户QQ
+     */
+    String getUserQQ(@Param("uid") long uid);
+
 }

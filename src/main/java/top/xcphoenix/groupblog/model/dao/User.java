@@ -23,6 +23,7 @@ public class User {
     long uid;
     String username;
     String password;
+    String qq;
     String signature;
     int blogType;
     /**
