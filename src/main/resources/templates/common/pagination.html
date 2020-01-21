@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-cn"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<!-- 分页栏 -->
+<!--
+    - 若为第一页，不显示前一页
+    - 若为最后一页，不显示后一页
+ -->
+<nav class="pagination" style="opacity: 1; display: block;"
+     th:fragment="pagniation(page)"
+     th:if="${page.getPageTotal() > 1}">
+    <!-- 前一页 -->
+    <a class="extend prev" rel="prev"
+       th:if="${page.isHasPrev()}"
+       th:href="@{${page.getPrevLink()}}" >
+        <i class="fa fa-angle-left"></i>
+    </a>
+
+    <div th:remove="tag" th:each="pageLink, itemCount:${page.getPageLinks()}">
+        <!-- 当前页 -->
+        <span class="page-number current"
+              th:if="${pageLink.getNum() == page.getCurrentPage()}">
+            [[${pageLink.getNum()}}]]
+        </span>
+        <!-- 后一页 -->
+        <a class="page-number"
+           th:href="@{${pageLink.getLink()}}"
+           th:unless="${pageLink.getNum() == page.getCurrentPage()}">
+            [[${pageLink.getNum()}]]
+        </a>
+    </div>
+
+    <!-- 后一页 -->
+    <a class="extend next" rel="next"
+       th:if="${page.isHaveNext()}"
+       th:href="@{${page.getNextLink()}}">
+        <i class="fa fa-angle-right"></i>
+    </a>
+</nav>
+
+</body>
+</html>

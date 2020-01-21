@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh-cn"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<!--
+    数据定义：
+    - siteSchema: 站点数据/用户数据
+    - pagination: 分页数据
+    - pageType: 页面类型
+    - blogDataList: overview 页面（List）
+    - blogData: post 页面
+
+    ----------
+    需要数据
+    - 页面类型: pageType
+      - overview(index, 指定用户、标签、分类): 1
+        - 分页
+        - 几篇博客的摘要信息
+      - post: 2
+        - 指定的博客信息
+        - 前一篇、后一篇
+      - tag: 3
+        - 词云（获取所有的tag，设置随机属性）
+      - about: 4
+        - 写好的关于信息
+      - category: 5
+        - 手风琴样式
+      - archive: 6
+        - 时间轴
+    - 分页数据
+    - 内容数据
+-->
+<div class="content-wrap">
+    <div id="content" class="content" th:with="type=${pageType.getType()}">
+        <!-- 博客概要 -->
+        <div id="posts" class="posts-expand">
+            <div th:replace="tag"
+                 th:switch="${type}">
+
+                <!-- overview: 博客列表数据 -->
+                <div th:case="1" th:remove="tag">
+                    <article class="post post-type-normal"
+                             th:each="blogData, itemCount:${blogDataList}">
+                        <div class="post-block" style="opacity: 1; display: block;">
+                            <!-- 博客数据头 -->
+                            <header th:replace="this::post-header(true)"></header>
+                            <!-- 博客概要 -->
+                            <div class="post-body" style="opacity: 1; display: block; transform: translateY(0px);">
+                                [[${blogData.getSummary()}]]
+                                <!-- 阅读全文按钮 -->
+                                <div class="post-button text-center">
+                                    <a class="btn" th:href="@{${blogData.getBlogLink()}}">阅读全文 »</a>
+                                </div>
+                            </div>
+                            <!-- 博客间分割线 -->
+                            <footer class="post-footer">
+                                <div class="post-eof"></div>
+                            </footer>
+                        </div>
+                    </article>
+                </div>
+
+                <!-- post: 博客数据 -->
+                <div th:case="2" th:remove="tag">
+                    <!-- 博客内容 -->
+                    <article class="post post-type-normal">
+                        <div class="post-block" style="opacity: 1; display: block;">
+                            <header th:replace="this::post-header(false)"></header>
+                            <!-- 博客内容 -->
+                            <div class="post-body" style="opacity: 1; display: block; transform: translateY(0px);">
+                                [(${blogData.getContent()}})]
+                            </div>
+                            <!-- TODO 博客脚注 -->
+<!--                            <footer class="post-footer">-->
+<!--                                &lt;!&ndash; 标签 &ndash;&gt;-->
+<!--                                <div class="post-tags">-->
+<!--                                    <a href="/tags/Note/" rel="tag"># Note</a>-->
+<!--                                    <a href="/tags/SpringBoot/" rel="tag"># SpringBoot</a>-->
+<!--                                </div>-->
+<!--                                &lt;!&ndash; 相关文章 &ndash;&gt;-->
+<!--                                <div class="post-nav">-->
+<!--                                    &lt;!&ndash; 前一篇 &ndash;&gt;-->
+<!--                                    <div class="post-nav-next post-nav-item">-->
+<!--                                        <a href="/posts/18e9d6ab/" rel="next" title="SpringBoot之日志">-->
+<!--                                            <i class="fa fa-chevron-left"></i> SpringBoot之日志-->
+<!--                                        </a>-->
+<!--                                    </div>-->
+<!--                                    &lt;!&ndash; 中间分割块 &ndash;&gt;-->
+<!--                                    <span class="post-nav-divider"></span>-->
+<!--                                    &lt;!&ndash; 后一篇 &ndash;&gt;-->
+<!--                                    <div class="post-nav-prev post-nav-item">-->
+<!--                                        <a href="/posts/d90473f8/" rel="prev" title="MyBatis的解析和运行原理">-->
+<!--                                            MyBatis的解析和运行原理-->
+<!--                                            <i class="fa fa-chevron-right"></i>-->
+<!--                                        </a>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </footer>-->
+                        </div>
+                    </article>
+                    <!-- post页底部白条 -->
+                    <div class="post-spread"></div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- 分页 -->
+        <nav th:if="${type == 1 or type == 2}"
+                th:replace="pagination::pagniation(page)"></nav>
+    </div>
+</div>
+
+<!-- 博客数据头 -->
+<header class="post-header" th:fragment="post-header(list)"
+        style="opacity: 1; display: block; transform: translateY(0px);">
+    <!-- 标题 -->
+    <h1 class="post-title">
+        <a th:if="${list}" class="post-title-link"
+           th:href="@{${blogData.getBlogLink()}}">
+           [[${blogData.getTitle()}]]
+        </a>
+        <span th:unless="${list}">
+            [[${blogData.getTitle()}]]
+        </span>
+    </h1>
+    <!-- 分类等博客元数据 -->
+    <div class="post-meta">
+        <span class="post-flag">
+            <span th:class="${blogData.isOriginal() ? 'layui-badge layui-bg-gray' : 'layui-badge-rim'}">
+                [[${blogData.getFlagDesc()}]]
+            </span>
+        </span>
+        <span class="post-author">
+            <span class="post-meta-item-icon">
+                <i class="fa fa-user-o" aria-hidden="true"></i>
+            </span>
+            <span class="post-meta-item-text">作者</span>
+            <span>
+                <a th:href="@{${blogData.getAuthorLink()}}">[[${blogData.getAuthor()}]]</a>
+            </span>
+        </span>
+        <span class="post-time">
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time>[[${blogData.getPubTime()}]]</time>
+        </span>
+        <span class="post-category">
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+            </span>
+            <span class="post-meta-item-text">分类于</span>
+            <span>
+                <a th:href="@{${blogData.getCategoryLink()}}">
+                    <span>[[${blogData.getCategory()}]]</span>
+                </a>
+            </span>
+        </span>
+    </div>
+</header>
+
+</body>
+</html>
