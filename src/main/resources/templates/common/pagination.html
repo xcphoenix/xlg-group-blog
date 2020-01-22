@@ -14,8 +14,9 @@
     - 若为最后一页，不显示后一页
  -->
 <nav class="pagination" style="opacity: 1; display: block;"
-     th:fragment="pagniation(page)"
-     th:if="${page.getPageTotal() > 1}">
+     th:fragment="pagniation"
+     th:if="${page != null and page.getPageTotal() > 1}" >
+
     <!-- 前一页 -->
     <a class="extend prev" rel="prev"
        th:if="${page.isHasPrev()}"
@@ -27,7 +28,7 @@
         <!-- 当前页 -->
         <span class="page-number current"
               th:if="${pageLink.getNum() == page.getCurrentPage()}">
-            [[${pageLink.getNum()}}]]
+            [[${pageLink.getNum()}]]
         </span>
         <!-- 后一页 -->
         <a class="page-number"
@@ -39,7 +40,7 @@
 
     <!-- 后一页 -->
     <a class="extend next" rel="next"
-       th:if="${page.isHaveNext()}"
+       th:if="${page.isHasNext()}"
        th:href="@{${page.getNextLink()}}">
         <i class="fa fa-angle-right"></i>
     </a>

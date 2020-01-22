@@ -5,15 +5,116 @@
 	
 	<insert id="addBlog">
 		<!-- 忽略冲突 -->
-		INSERT IGNORE INTO blog(blog_id, uid, title, author, is_original, pub_time, summary, content, original_link,
-		                        tags)
-		VALUES (#{blog.blogId}, #{blog.uid}, #{blog.title}, #{blog.author}, #{blog.isOriginal},
-		       #{blog.pubTime}, #{blog.summary}, #{blog.content}, #{blog.originalLink}, #{blog.tags})
-		
+		INSERT IGNORE INTO blog(
+			blog_id, uid, title, author, is_original,
+			pub_time, summary, content, original_link,
+			tags
+		)
+		VALUES
+		(
+			#{blog.blogId}, #{blog.uid}, #{blog.title},
+			#{blog.author}, #{blog.isOriginal}, #{blog.pubTime},
+			#{blog.summary}, #{blog.content}, #{blog.originalLink},
+			#{blog.tags}
+		)
+	
 	</insert>
 	
 	<select id="exists" resultType="boolean">
-		SELECT COUNT(*) FROM blog WHERE blog_id = #{blogId}
+		SELECT COUNT(*)
+		FROM blog
+		WHERE blog_id = #{blogId}
+	</select>
+	
+	<select id="getBlogSummaryAsTime" resultType="top.xcphoenix.groupblog.model.vo.BlogData">
+		SELECT `blog_id`,
+		       `user`.`uid`,
+		       `username`,
+		       `category`.`category_id`,
+		       `name`        as category,
+		       `title`,
+		       `is_original` as original,
+		       `pub_time`,
+		       `summary`
+		FROM (
+			     SELECT `blog_id`,
+			            `uid`,
+			            `title`,
+			            `is_original`,
+			            `pub_time`,
+			            `summary`
+			     FROM `blog`
+			     ORDER BY `pub_time` DESC
+			     LIMIT #{pageSize} OFFSET #{pageOffset}
+		     ) as P
+			     LEFT JOIN `user` ON `user`.`uid` = P.`uid`
+			     LEFT JOIN `category` ON `category`.`category_id` = `user`.`category_id`
+	</select>
+	
+	<select id="getBlog" resultType="top.xcphoenix.groupblog.model.vo.BlogData">
+		SELECT
+			`blog_id`,
+			`user`.`uid`,
+			`username`,
+			`category`.`category_id`,
+			`name` as category,
+			`title`,
+			`is_original` as original,
+			`pub_time`,
+			`summary`,
+			`content`,
+			`original_link`,
+			`tags`
+		FROM
+			(
+				SELECT
+					`blog_id`,
+					`uid`,
+					`title`,
+					`is_original`,
+					`pub_time`,
+					`summary`,
+					`content`,
+					`original_link`,
+					`tags`
+				FROM
+					`blog`
+				where
+					`blog_id` = #{blogId}
+			) as P
+				LEFT JOIN `user` ON `user`.`uid` = P.`uid`
+				LEFT JOIN `category` ON `category`.`category_id` = `user`.`category_id`
+	</select>
+	
+	<select id="getBlogNum" resultType="java.lang.Long">
+		SELECT COUNT(*)
+		FROM `blog`
+	</select>
+	
+	<select id="getNearbyBlogs" resultType="top.xcphoenix.groupblog.model.dao.Blog">
+		(
+			SELECT `blog_id`,
+			       `title`,
+				   `pub_time`
+			FROM `blog`
+			WHERE `pub_time`
+				      &gt;
+				  #{time}
+			ORDER BY `pub_time`
+			LIMIT
+				1
+		)
+		UNION
+		(
+			SELECT `blog_id`,
+			       `title`,
+			       `pub_time`
+			FROM `blog`
+			WHERE `pub_time` &lt; #{time}
+			ORDER BY `pub_time` DESC
+			LIMIT
+				1
+		)
 	</select>
 
 </mapper>

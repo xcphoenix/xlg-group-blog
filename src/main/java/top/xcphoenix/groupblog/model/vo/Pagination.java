@@ -17,6 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 public class Pagination {
 
+    private int pageSize;
     private int pageTotal;
     private int currentPage;
     private boolean hasPrev;
@@ -24,9 +25,10 @@ public class Pagination {
     private String baseLink;
     private List<PageLink> pageLinks;
 
-    public Pagination(int pageTotal, int currentPage, String baseLink) {
+    public Pagination(int pageTotal, int currentPage, int pageSize, String baseLink) {
         this.pageTotal = pageTotal;
         this.currentPage = currentPage;
+        this.pageSize = pageSize;
         this.baseLink = baseLink;
         this.hasPrev = currentPage - 1 > 0;
         this.hasNext = currentPage + 1 <= pageTotal;
@@ -42,7 +44,7 @@ public class Pagination {
     }
 
     private String getLink(int page) {
-        return baseLink + "/" + page;
+        return baseLink + "?pageNum=" + page + "&pageSize=" + this.pageSize;
     }
 
     private List<PageLink> makeLinks() {

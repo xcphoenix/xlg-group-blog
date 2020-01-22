@@ -5,8 +5,10 @@ import top.xcphoenix.groupblog.mapper.BlogMapper;
 import top.xcphoenix.groupblog.mapper.UserMapper;
 import top.xcphoenix.groupblog.model.dao.Blog;
 import top.xcphoenix.groupblog.manager.dao.BlogManager;
+import top.xcphoenix.groupblog.model.vo.BlogData;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 /**
  * @author      xuanc
@@ -37,6 +39,26 @@ public class BlogManagerImpl implements BlogManager {
     @Override
     public boolean exists(long blogId) {
         return blogMapper.exists(blogId);
+    }
+
+    @Override
+    public List<BlogData> getBlogSummaries(int pageSize, int pageOffset) {
+        return blogMapper.getBlogSummaryAsTime(pageSize, pageOffset);
+    }
+
+    @Override
+    public BlogData getBlog(long blogId) {
+        return blogMapper.getBlog(blogId);
+    }
+
+    @Override
+    public long getBlogNum() {
+        return blogMapper.getBlogNum();
+    }
+
+    @Override
+    public List<Blog> getNearbyBlogs(Timestamp time) {
+        return blogMapper.getNearbyBlogs(time);
     }
 
 }

@@ -8,6 +8,25 @@ spring:
     username:          group_blog
     password:          grouppass
     driver-class-name: com.mysql.cj.jdbc.Driver
+    tomcat:
+      # 说明参考：https://blog.csdn.net/xiaolyuh123/article/details/73331093
+      # 最大空闲连接
+      max-idle: 10
+      # 最大等待时间
+      max-wait: 10000
+      # 最小空闲连接
+      min-idle: 5
+      # 初始化连接数量
+      initial-size: 5
+      # SQL查询,用来验证从连接池取出的连接
+      validation-query: SELECT 1
+      # 是否在从池中取出连接前进行检验,如果检验失败,则从池中去除连接并尝试取出另一个
+      test-on-borrow: false
+      # 指明连接是否被空闲连接回收器(如果有)进行检验.如果检测失败,则连接将被从池中去除.
+      test-while-idle: true
+      # 在空闲连接回收器线程运行期间休眠的时间值,以毫秒为单位.如果设置为非正数,则不运行空闲连接回收器线程
+      time-between-eviction-runs-millis: 18800
+    type: org.apache.tomcat.jdbc.pool.DataSource
   thymeleaf:
     # 生产环境中开启
     cache: false
@@ -21,5 +40,7 @@ mybatis:
   #    map-underscore-to-camel-case: true
   mapper-locations: classpath:mybatis/mapper/*.xml
   config-location: classpath:mybatis/mybatis-config.xml
-
   
+pagehelper:
+  offset-as-page-num: true
+  reasonable: true

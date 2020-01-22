@@ -16,12 +16,16 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 public class BlogData {
 
+    private long uid;
+    private int categoryId;
+    private long blogId;
     private String title;
     private String blogLink;
+    private String originalLink;
     private boolean original;
     private String flagDesc;
     private Timestamp pubTime;
-    private String user;
+    private String username;
     private String userLink;
     private String category;
     private String categoryLink;

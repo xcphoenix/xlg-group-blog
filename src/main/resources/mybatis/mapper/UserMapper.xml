@@ -25,7 +25,7 @@
 	</select>
 	
 	<select id="getUserDesc" resultType="top.xcphoenix.groupblog.model.dao.User">
-		SELECT username, signature
+		SELECT uid, username, signature
 		FROM user
 		WHERE uid = #{uid}
 	</select>
