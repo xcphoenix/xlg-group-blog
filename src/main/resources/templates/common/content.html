@@ -64,6 +64,12 @@
                             </footer>
                         </div>
                     </article>
+                    <article class="post post-type-normal"
+                             th:if="${blogDataList.size() == 0}">
+                        <div class="post-block" style="opacity: 1; display: block;">
+                            <h1 style="text-align: center">什么都没有 (ﾟ´Д｀ﾟ)ﾟ</h1>
+                        </div>
+                    </article>
                 </div>
 
                 <!-- post: 博客数据 -->
@@ -108,10 +114,11 @@
                 </div>
 
             </div>
+
         </div>
 
         <!-- 分页 -->
-        <div th:if="${type == 1}" th:remove="tag">
+        <div th:if="${type == 1 and blogDataList.size() != 0}" th:remove="tag">
             <nav th:replace="/common/pagination::pagniation"></nav>
         </div>
 
