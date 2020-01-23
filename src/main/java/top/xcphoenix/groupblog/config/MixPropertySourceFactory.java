@@ -1,6 +1,5 @@
 package top.xcphoenix.groupblog.config;
 
-import lombok.NonNull;
 import org.springframework.beans.factory.config.YamlPropertiesFactoryBean;
 import org.springframework.core.env.PropertiesPropertySource;
 import org.springframework.core.env.PropertySource;

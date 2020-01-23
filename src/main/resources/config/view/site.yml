@@ -5,7 +5,7 @@ site:
   is-in-author: false
   author-schema:
     author: XiyouLinuxGroup
-    signature: "<i class='fa fa-map-marker' aria-hidden='true'> \u4E1C\u533A\u9038\u592B\u697C FZ103</i>"
+    signature: "<i class='fa fa-map-marker' aria-hidden='true'> 东区逸夫楼 FZ103</i>"
   side-bar-links:
     index-url: /
     about-url: /about

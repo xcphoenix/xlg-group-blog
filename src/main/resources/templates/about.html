@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html class="theme-next pisces use-motion" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" lang="zh-Hans">
+
+<head th:replace="common/_head::head('关于 | GroupBlog')">
+    <title>GroupBlog</title>
+</head>
+
+<body lang="zh-Hans">
+
+<div class="container sidebar-position-left
+  page-home">
+    <div class="headband"></div>
+
+    <header th:replace="common/_header::header(${siteSchema})"></header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div th:replace="common/content::content"></div>
+            <div th:replace="common/_sidebar::sidebar-toggle"></div>
+            <div th:replace="common/_sidebar::sidebar"></div>
+        </div>
+    </main>
+
+    <!-- 脚注 -->
+    <footer th:replace="common/_footer::_footer"></footer>
+
+    <!-- 回到开头 -->
+    <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+    </div>
+
+</div>
+
+<div th:replace="common/_script::script"></div>
+
+</body>
+</html>

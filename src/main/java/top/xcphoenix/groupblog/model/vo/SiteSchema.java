@@ -1,6 +1,5 @@
 package top.xcphoenix.groupblog.model.vo;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -21,7 +20,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @Component
-@PropertySource(value = {"classpath:config/site.yml"}, factory = MixPropertySourceFactory.class)
+@PropertySource(value = {"classpath:config/view/site.yml"}, factory = MixPropertySourceFactory.class)
 @ConfigurationProperties(prefix = "site")
 public class SiteSchema implements Cloneable {
 
