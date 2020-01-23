@@ -10,27 +10,31 @@ public enum PageType {
     /**
      * 首页
      */
-    OVERVIEW(1),
-    /**
-     * 博客页面
-     */
-    POST(2),
-    /**
-     * 标签页
-     */
-    TAG(3),
+    INDEX(0),
     /**
      * 关于
      */
-    ABOUT(4),
+    ABOUT(1),
+    /**
+     * 标签页
+     */
+    TAG(2),
     /**
      * 分类
      */
-    CATEGORY(5),
+    CATEGORY(3),
     /**
      * 归档
      */
-    ARCHIVE(6);
+    ARCHIVE(4),
+    /**
+     * 总览页面
+     */
+    OVERVIEW(5),
+    /**
+     * 博客页面
+     */
+    POST(6);
 
     private int type;
 

@@ -20,19 +20,16 @@
     <div class="sidebar-inner">
         <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
             <div class="site-overview">
-                <div class="site-author motion-element" itemprop="author" itemscope
-                     itemtype="http://schema.org/Person">
-                    <img class="site-author-image" itemprop="image"
-                         th:src="${siteSchema.getAvatarUrl()}"/>
-                    <p class="site-author-name" itemprop="name"
-                       th:text="${siteSchema.getAuthorSchema().getAuthor()}">
+                <div class="site-author motion-element">
+                    <img class="site-author-image" th:src="${siteSchema.getAvatarUrl()}"/>
+                    <p class="site-author-name" th:text="${siteSchema.getAuthorSchema().getAuthor()}">
                         XiyouLinuxGroup
                     </p>
-                    <p class="site-description motion-element" itemprop="description"
+                    <p class="site-description motion-element"
                        th:if="${siteSchema.isInAuthor()}"
                        th:text="${siteSchema.getAuthorSchema().getSignature()}">
                     </p>
-                    <p class="site-description motion-element" itemprop="description"
+                    <p class="site-description motion-element"
                        th:unless="${siteSchema.isInAuthor()}"
                        th:utext="${siteSchema.getAuthorSchema().getSignature()}">
                     </p>

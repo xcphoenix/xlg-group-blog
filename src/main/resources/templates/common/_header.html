@@ -8,8 +8,9 @@
 </head>
 <body>
 
-<header th:fragment="header(siteSchema, index)"
-        id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+<header th:fragment="header(siteSchema)"
+        th:with="index=${pageType.getType()}"
+        id="header" class="header">
     <div class="header-inner">
         <div class="site-brand-wrapper">
             <div class="site-meta custom-logo">

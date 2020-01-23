@@ -15,6 +15,7 @@
     - pageType: 页面类型
     - blogDataList: overview 页面（List）
     - blogData: post 页面
+    - aboutData: 关于信息
 
     ----------
     需要数据
@@ -39,12 +40,12 @@
 <div class="content-wrap" th:fragment="content">
     <div id="content" class="content" th:with="type=${pageType.getType()}">
         <!-- 博客概要 -->
-        <div id="posts" class="posts-expand">
+        <div id="posts" class="posts-expand" th:with="type=${type == 0 ? 5 : type}">
             <div th:remove="tag"
                  th:switch="${type}">
 
                 <!-- overview: 博客列表数据 -->
-                <div th:case="1" th:remove="tag">
+                <div th:case="5" th:remove="tag">
                     <article class="post post-type-normal"
                              th:each="blogData, itemCount:${blogDataList}">
                         <div class="post-block" style="opacity: 1; display: block;">
@@ -73,7 +74,7 @@
                 </div>
 
                 <!-- post: 博客数据 -->
-                <div th:case="2" th:remove="tag">
+                <div th:case="6" th:remove="tag">
                     <!-- 博客内容 -->
                     <article class="post post-type-normal">
                         <div class="post-block" style="opacity: 1; display: block;">
@@ -84,10 +85,10 @@
                             </div>
                             <footer class="post-footer">
                                 <!-- TODO 标签 -->
-<!--                                <div class="post-tags">-->
-<!--                                    <a href="/tags/Note/" rel="tag"># Note</a>-->
-<!--                                    <a href="/tags/SpringBoot/" rel="tag"># SpringBoot</a>-->
-<!--                                </div>-->
+                                <!--                                <div class="post-tags">-->
+                                <!--                                    <a href="/tags/Note/" rel="tag"># Note</a>-->
+                                <!--                                    <a href="/tags/SpringBoot/" rel="tag"># SpringBoot</a>-->
+                                <!--                                </div>-->
                                 <!-- 相关文章 -->
                                 <div class="post-nav" th:if="${nearbyBlogs != null}">
                                     <!-- 前一篇 -->
@@ -113,12 +114,27 @@
                     <div class="post-spread"></div>
                 </div>
 
+                <!-- 关于 -->
+                <div th:case="1" th:remove="tag">
+                    <div class="post-block page" style="opacity: 1; display: block;">
+                        <header class="post-header" style="opacity: 1; display: block; transform: translateY(0px);">
+                            <h1 class="post-title">[[${postData.getPostTitle()}]]</h1>
+                            <div class="post-meta">
+                                <div class="post-description">[[${postData.getPostMeta().get("description")}]]</div>
+                            </div>
+                        </header>
+                        <div class="post-body" style="opacity: 1; display: block; transform: translateY(0px);">
+                            <p>[(${postData.getPostBody()})]</p>
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
         </div>
 
         <!-- 分页 -->
-        <div th:if="${type == 1 and blogDataList.size() != 0}" th:remove="tag">
+        <div th:if="${(type == 0 or type == 5) and blogDataList.size() != 0}" th:remove="tag">
             <nav th:replace="/common/pagination::pagniation"></nav>
         </div>
 
@@ -129,11 +145,11 @@
 <header class="post-header" th:fragment="post-header(list)"
         style="opacity: 1; display: block; transform: translateY(0px);">
     <!-- 标题 -->
-    <h1 class="post-title" th:title="${list ? '' : '查看原文'}" >
+    <h1 class="post-title" th:title="${list ? '' : '查看原文'}">
         <a class="post-title-link"
            th:target="${list ? '_self' : '_blank'}"
            th:href="@{${list ? blogData.getBlogLink() : blogData.getOriginalLink()}}">
-           [[${blogData.getTitle()}]]
+            [[${blogData.getTitle()}]]
         </a>
     </h1>
     <!-- 分类等博客元数据 -->
