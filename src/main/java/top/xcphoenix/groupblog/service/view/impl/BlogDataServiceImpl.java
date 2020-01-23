@@ -47,16 +47,15 @@ public class BlogDataServiceImpl implements BlogDataService {
     @Override
     public List<Blog> getNearbyBlogs(Timestamp time) {
         List<Blog> blogs = blogManager.getNearbyBlogs(time);
-        if (blogs.size() == 0) {
-            return null;
-        }
-        else if (blogs.size() == 1) {
-            if (blogs.get(0).getPubTime().getTime() < time.getTime()) {
-                blogs.add(blogs.get(0));
-                blogs.set(0, null);
-            }
-        }
-        return blogs;
+
+        return generateNearbyBlogs(blogs, time);
+    }
+
+    @Override
+    public List<Blog> getNearbyBlogsAsUser(Timestamp time, long uid) {
+        List<Blog> blogs = blogManager.getNearbyBlogsAsUser(time, uid);
+
+        return generateNearbyBlogs(blogs, time);
     }
 
     @Override
@@ -71,19 +70,15 @@ public class BlogDataServiceImpl implements BlogDataService {
         pageNum = Math.max(pageNum, 1);
         List<BlogData> blogDataList = blogManager.getBlogSummaries(pageSize, pageSize * (pageNum - 1));
 
-        for (BlogData blogData : blogDataList) {
-            blogData.setBlogLink(blogLink(blogData.getBlogId()));
-            blogData.setUserLink(userLink(blogData.getUid()));
-            blogData.setCategoryLink(categoryLink(blogData.getCategoryId()));
-            blogData.setFlagDesc(ORIGINAL_FLAG.get(blogData.isOriginal()));
-        }
-
-        return blogDataList;
+        return generateBlogDataLists(blogDataList, BLOG_LINK_PREFIX);
     }
 
     @Override
-    public List<BlogData> getBlogDataByUser(long uid, long pageNum, int pageSize) {
-        return null;
+    public List<BlogData> getBlogDataByUser(long uid, int pageNum, int pageSize) {
+        pageNum = Math.max(pageNum, 1);
+        List<BlogData> blogDataList = blogManager.getBlogSummariesAsUser(pageSize, pageSize * (pageNum - 1), uid);
+
+        return generateBlogDataLists(blogDataList, blogPrefixLinkOnUser(uid));
     }
 
     @Override
@@ -96,8 +91,37 @@ public class BlogDataServiceImpl implements BlogDataService {
         return null;
     }
 
-    private String blogLink(long blogId) {
-        return BLOG_LINK_PREFIX + "/" + blogId;
+    private List<BlogData> generateBlogDataLists(List<BlogData> blogDataList, String prefix) {
+        for (BlogData blogData : blogDataList) {
+            blogData.setBlogLink(blogLink(prefix, blogData.getBlogId()));
+            blogData.setUserLink(userLink(blogData.getUid()));
+            blogData.setCategoryLink(categoryLink(blogData.getCategoryId()));
+            blogData.setFlagDesc(ORIGINAL_FLAG.get(blogData.isOriginal()));
+        }
+
+        return blogDataList;
+    }
+
+    private List<Blog> generateNearbyBlogs(List<Blog> blogs, Timestamp time) {
+        if (blogs.size() == 0) {
+            return null;
+        }
+        else if (blogs.size() == 1) {
+            if (blogs.get(0).getPubTime().getTime() < time.getTime()) {
+                blogs.add(blogs.get(0));
+                blogs.set(0, null);
+            }
+        }
+
+        return blogs;
+    }
+
+    private String blogLink(String prefix, long blogId) {
+        return prefix + "/" + blogId;
+    }
+
+    private String blogPrefixLinkOnUser(long uid) {
+        return USER_LINK_PREFIX + "/" + uid + BLOG_LINK_PREFIX;
     }
 
     private String userLink(long uid) {

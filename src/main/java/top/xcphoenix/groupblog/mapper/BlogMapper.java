@@ -33,11 +33,15 @@ public interface BlogMapper {
     /**
      * 依据时间获取博客摘要信息
      *
-     * @param pageSize 大小
+     * @param pageSize   大小
      * @param pageOffset 偏移量
+     * @param uid        用户id
+     *                   如果有则为过滤条件
      * @return 博客数据
      */
-    List<BlogData> getBlogSummaryAsTime(@Param("pageSize") int pageSize, @Param("pageOffset") int pageOffset);
+    List<BlogData> getBlogSummaryAsTime(@Param("pageSize") int pageSize,
+                                        @Param("pageOffset") int pageOffset,
+                                        @Param("uid") Long uid);
 
     /**
      * 获取指定博客的数据
@@ -56,12 +60,14 @@ public interface BlogMapper {
 
     /**
      * 获取附近博客数据
-     *
+     * <p>
      * TODO 自定义字段、值与过滤条件
      *
      * @param time 博客的时间
+     * @param uid 用户id
+     *            如果有，则为限制条件
      * @return 上一篇和下一篇博客信息
      */
-    List<Blog> getNearbyBlogs(Timestamp time);
+    List<Blog> getNearbyBlogs(@Param("time") Timestamp time, @Param("uid") Long uid);
 
 }

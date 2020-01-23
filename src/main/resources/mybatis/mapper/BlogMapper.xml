@@ -44,6 +44,9 @@
 			            `pub_time`,
 			            `summary`
 			     FROM `blog`
+				 <if test="uid != null">
+					 WHERE uid = #{uid}
+				 </if>
 			     ORDER BY `pub_time` DESC
 			     LIMIT #{pageSize} OFFSET #{pageOffset}
 		     ) as P
@@ -97,9 +100,10 @@
 			       `title`,
 				   `pub_time`
 			FROM `blog`
-			WHERE `pub_time`
-				      &gt;
-				  #{time}
+			WHERE `pub_time` &gt; #{time}
+				<if test="uid != null">
+					AND `uid` = #{uid}
+				</if>
 			ORDER BY `pub_time`
 			LIMIT
 				1
@@ -111,6 +115,9 @@
 			       `pub_time`
 			FROM `blog`
 			WHERE `pub_time` &lt; #{time}
+				<if test="uid != null">
+					AND `uid` = #{uid}
+				</if>
 			ORDER BY `pub_time` DESC
 			LIMIT
 				1

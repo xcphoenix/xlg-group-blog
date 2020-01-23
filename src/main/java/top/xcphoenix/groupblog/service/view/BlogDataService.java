@@ -1,7 +1,5 @@
 package top.xcphoenix.groupblog.service.view;
 
-import org.bouncycastle.util.Times;
-import sun.security.timestamp.Timestamper;
 import top.xcphoenix.groupblog.model.dao.Blog;
 import top.xcphoenix.groupblog.model.vo.BlogData;
 import top.xcphoenix.groupblog.model.vo.Pagination;
@@ -35,6 +33,15 @@ public interface BlogDataService {
     List<Blog> getNearbyBlogs(Timestamp time);
 
     /**
+     * 获取指定用户附近的博客数据
+     *
+     * @param time 博客时间
+     * @param uid 用户id
+     * @return 博客数据
+     */
+    List<Blog> getNearbyBlogsAsUser(Timestamp time, long uid);
+
+    /**
      * 通过id获取博客数据
      *
      * @param blogId 博客id
@@ -59,7 +66,7 @@ public interface BlogDataService {
      * @param pageSize 页大小
      * @return 博客列表数据
      */
-    List<BlogData> getBlogDataByUser(long uid, long pageNum, int pageSize);
+    List<BlogData> getBlogDataByUser(long uid, int pageNum, int pageSize);
 
     /**
      * 获取指定标签博客列表数据

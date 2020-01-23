@@ -38,6 +38,17 @@ public interface BlogManager {
     List<BlogData> getBlogSummaries(int pageSize, int pageOffset);
 
     /**
+     * 依据时间获取指定用户博客摘要信息
+     *
+     * @param pageSize 页大小
+     * @param pageOffset 偏移量
+     * @param uid 用户id
+     * @return 博客数据
+     */
+    List<BlogData> getBlogSummariesAsUser(int pageSize, int pageOffset, long uid);
+
+
+    /**
      * 获取指定博客的数据
      *
      * @param blogId 博客id
@@ -59,5 +70,14 @@ public interface BlogManager {
      * @return 上一篇和下一篇的博客
      */
     List<Blog> getNearbyBlogs(Timestamp time);
+
+    /**
+     * 获取指定用户附近时间的博客
+     *
+     * @param time 时间
+     * @param uid 用户id
+     * @return 上一篇和下一篇的博客
+     */
+    List<Blog> getNearbyBlogsAsUser(Timestamp time, long uid);
 
 }

@@ -43,7 +43,12 @@ public class BlogManagerImpl implements BlogManager {
 
     @Override
     public List<BlogData> getBlogSummaries(int pageSize, int pageOffset) {
-        return blogMapper.getBlogSummaryAsTime(pageSize, pageOffset);
+        return blogMapper.getBlogSummaryAsTime(pageSize, pageOffset, null);
+    }
+
+    @Override
+    public List<BlogData> getBlogSummariesAsUser(int pageSize, int pageOffset, long uid) {
+        return blogMapper.getBlogSummaryAsTime(pageSize, pageOffset, uid);
     }
 
     @Override
@@ -58,7 +63,12 @@ public class BlogManagerImpl implements BlogManager {
 
     @Override
     public List<Blog> getNearbyBlogs(Timestamp time) {
-        return blogMapper.getNearbyBlogs(time);
+        return blogMapper.getNearbyBlogs(time, null);
+    }
+
+    @Override
+    public List<Blog> getNearbyBlogsAsUser(Timestamp time, long uid) {
+        return blogMapper.getNearbyBlogs(time, uid);
     }
 
 }
