@@ -30,7 +30,7 @@ import java.util.Objects;
  */
 @Slf4j
 @Component("selenium")
-@PropertySource("classpath:config/processor.properties")
+@PropertySource("file:${config-dir}/processor.properties")
 public class SeleniumProcessor implements Processor {
 
     private WebDriver driver;
@@ -54,16 +54,10 @@ public class SeleniumProcessor implements Processor {
         log.info("processor[" + this.getClass() + "] init");
 
         File driverFile;
-        if (!driverLocation.startsWith("/")) {
-            String classpath =
-                    Objects.requireNonNull(
-                            this.getClass().getClassLoader().getResource(".")
-                    ).getPath();
-            classpath = URLDecoder.decode(classpath, StandardCharsets.UTF_8.name());
-            driverFile = new File(classpath, driverLocation);
-        } else {
-            driverFile = new File(driverLocation);
-        }
+        /*
+         * Jar包无法获取文件
+         */
+        driverFile = new File(driverLocation);
 
         if (!driverFile.exists()) {
             throw new ProcessorException("driver not found, file: " + driverLocation);
