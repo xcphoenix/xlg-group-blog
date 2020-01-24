@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import top.xcphoenix.groupblog.service.crawl.CrawlBlogService;
+import top.xcphoenix.groupblog.service.dispatch.ScheduleCrawlService;
 
 import javax.annotation.Resource;
 
@@ -17,13 +18,12 @@ import javax.annotation.Resource;
 public class CrawlTest {
 
     @Autowired
-    private CrawlBlogService crawlBlogService;
+    private ScheduleCrawlService scheduleCrawlService;
 
     @Test
     @Ignore
     void testCrawlAll() throws Exception {
-        int uid = 10074;
-        crawlBlogService.crawlIncrement(uid);
+        scheduleCrawlService.crawlIncr();
     }
 
 }

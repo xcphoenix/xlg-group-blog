@@ -23,7 +23,7 @@ import java.text.SimpleDateFormat;
  */
 @Service("content-csdn")
 @Slf4j
-@PropertySource(value = "classpath:config/content/csdnBlogRule.properties", encoding = "UTF-8")
+@PropertySource(value = "file:${config-dir}/content/csdnBlogRule.properties", encoding = "UTF-8")
 public class CsdnBlogContentManagerImpl implements BlogContentManager {
 
     @Value("${blog.rule.title}")

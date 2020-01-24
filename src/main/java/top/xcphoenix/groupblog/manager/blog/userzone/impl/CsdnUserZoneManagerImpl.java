@@ -25,7 +25,7 @@ import java.util.List;
  */
 @Slf4j
 @Service("zone-csdn")
-@PropertySource(value = "classpath:config/userzone/csdnBlogRule.properties", encoding = "utf-8")
+@PropertySource(value = "file:${config-dir}/userzone/csdnBlogRule.properties", encoding = "utf-8")
 public class CsdnUserZoneManagerImpl implements UserZoneManager {
 
     @Resource(name = "selenium")

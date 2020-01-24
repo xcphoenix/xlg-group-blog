@@ -135,7 +135,7 @@
 
         <!-- 分页 -->
         <div th:if="${(type == 0 or type == 5) and blogDataList.size() != 0}" th:remove="tag">
-            <nav th:replace="/common/pagination::pagniation"></nav>
+            <nav th:replace="~{common/pagination::pagination}"></nav>
         </div>
 
     </div>

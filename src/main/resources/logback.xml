@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configuration debug="true" scan="true" scanPeriod="1 seconds">
+<configuration debug="true" scan="false" scanPeriod="1 seconds">
 	
 	<contextName>logback</contextName>
 	<!--定义参数,后面可以通过${app.name}使用-->

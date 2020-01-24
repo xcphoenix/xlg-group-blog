@@ -37,7 +37,7 @@ public class AboutServiceImpl implements AboutService {
 }
 
 @Component("aboutData")
-@PropertySource(value = {"classpath:config/view/about.yml"},
+@PropertySource(value = {"file:${config-dir}/view/about.yml"},
         factory = MixPropertySourceFactory.class)
 @ConfigurationProperties(prefix = "about")
 class AboutData extends PostData {
