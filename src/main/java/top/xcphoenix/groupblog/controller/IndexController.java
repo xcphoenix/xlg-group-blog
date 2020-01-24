@@ -65,4 +65,10 @@ public class IndexController {
         return "about";
     }
 
+    @GetMapping("/test")
+    public String test(Map<String, Object> map) {
+        map.put("pageType", PageType.ABOUT);
+        return "test";
+    }
+
 }

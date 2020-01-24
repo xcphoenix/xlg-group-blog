@@ -64,6 +64,14 @@ public interface BlogManager {
     long getBlogNum();
 
     /**
+     * 获取博客总数
+     * @param uid 用户id
+     *
+     * @return 博客总数
+     */
+    long getBlogNumAsUser(long uid);
+
+    /**
      * 获取附近时间的博客
      *
      * @param time 时间

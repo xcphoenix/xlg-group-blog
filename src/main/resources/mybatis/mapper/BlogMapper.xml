@@ -94,6 +94,12 @@
 		FROM `blog`
 	</select>
 	
+	<select id="getBlogNumAsUser" resultType="long">
+		SELECT COUNT(*)
+		FROM `blog`
+		WHERE uid = #{uid}
+	</select>
+	
 	<select id="getNearbyBlogs" resultType="top.xcphoenix.groupblog.model.dao.Blog">
 		(
 			SELECT `blog_id`,
@@ -123,5 +129,5 @@
 				1
 		)
 	</select>
-
+	
 </mapper>

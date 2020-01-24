@@ -45,7 +45,7 @@ public class UserController {
                                    int pageNum) throws CloneNotSupportedException {
         SiteSchema siteSchema = siteService.getSiteSchemaWithUser(uid);
         List<BlogData> blogDataList = blogDataService.getBlogDataByUser(uid, pageNum, pageSize);
-        Pagination pagination = blogDataService.getPagination(pageNum, pageSize, request.getServletPath());
+        Pagination pagination = blogDataService.getPaginationAsUser(pageNum, pageSize, request.getServletPath(), uid);
 
         map.put("siteSchema", siteSchema);
         map.put("blogDataList", blogDataList);

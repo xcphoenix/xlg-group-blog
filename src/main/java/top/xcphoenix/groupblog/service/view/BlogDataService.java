@@ -8,6 +8,7 @@ import java.sql.Timestamp;
 import java.util.List;
 
 /**
+ * TODO 分页数据没有加过滤条件
  * @author xuanc
  * @version 1.0
  * @date 2020/1/21 下午5:21
@@ -23,6 +24,17 @@ public interface BlogDataService {
      * @return 分页数据
      */
     Pagination getPagination(int pageNum, int pageSize, String baseLink);
+
+    /**
+     * 获取分页数据
+     *
+     * @param pageNum 页数
+     * @param pageSize　页大小
+     * @param baseLink 基础链接
+     * @param uid 用户id
+     * @return 分页数据
+     */
+    Pagination getPaginationAsUser(int pageNum, int pageSize, String baseLink, long uid);
 
     /**
      * 获取附近的博客数据

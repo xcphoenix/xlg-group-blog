@@ -3,4 +3,4 @@ about:
   postMeta: {description: 项目说明}
   postBody: |
     <strong>后端</strong>：基于 <code>SpringBoot</code> 开发，使用 Selenium 和 JSoup 对网页进行解析、提取<br />
-    <strong>前端</strong>：基于 <code>Thymeleaf</code> 技术堆 Hexo Next 主题进行二次开发
+    <strong>前端</strong>：基于 <code>Thymeleaf</code> 技术对 Hexo Next 主题进行二次开发

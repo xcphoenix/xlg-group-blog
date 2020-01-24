@@ -59,13 +59,21 @@ public interface BlogMapper {
     long getBlogNum();
 
     /**
+     * 获取用户博客总数
+     *
+     * @param uid 用户id
+     * @return 博客数
+     */
+    long getBlogNumAsUser(@Param("uid") long uid);
+
+    /**
      * 获取附近博客数据
      * <p>
      * TODO 自定义字段、值与过滤条件
      *
      * @param time 博客的时间
-     * @param uid 用户id
-     *            如果有，则为限制条件
+     * @param uid  用户id
+     *             如果有，则为限制条件
      * @return 上一篇和下一篇博客信息
      */
     List<Blog> getNearbyBlogs(@Param("time") Timestamp time, @Param("uid") Long uid);

@@ -45,6 +45,13 @@ public class BlogDataServiceImpl implements BlogDataService {
     }
 
     @Override
+    public Pagination getPaginationAsUser(int pageNum, int pageSize, String baseLink, long uid) {
+        long blogNums = blogManager.getBlogNumAsUser(uid);
+        int pageTotal = (int)(blogNums / pageSize);
+        return new Pagination(pageTotal, pageNum, pageSize, baseLink);
+    }
+
+    @Override
     public List<Blog> getNearbyBlogs(Timestamp time) {
         List<Blog> blogs = blogManager.getNearbyBlogs(time);
 
