@@ -69,6 +69,7 @@ public class BlogDataServiceImpl implements BlogDataService {
     public BlogData getBlogById(long blogId) {
         BlogData blogData = blogManager.getBlog(blogId);
         blogData.setFlagDesc(ORIGINAL_FLAG.get(blogData.isOriginal()));
+        blogData.setUserLink(userLink(blogData.getUid()));
         return blogData;
     }
 
