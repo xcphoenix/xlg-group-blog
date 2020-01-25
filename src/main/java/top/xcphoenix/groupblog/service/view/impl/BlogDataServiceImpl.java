@@ -4,10 +4,12 @@ import com.google.common.collect.ImmutableMap;
 import org.springframework.stereotype.Service;
 import top.xcphoenix.groupblog.manager.dao.BlogManager;
 import top.xcphoenix.groupblog.manager.dao.CategoryManager;
+import top.xcphoenix.groupblog.manager.dao.StaticsNumsManager;
 import top.xcphoenix.groupblog.model.dao.Blog;
 import top.xcphoenix.groupblog.model.vo.BlogData;
 import top.xcphoenix.groupblog.model.vo.Pagination;
 import top.xcphoenix.groupblog.service.view.BlogDataService;
+import top.xcphoenix.groupblog.service.view.LinkGeneratorService;
 import top.xcphoenix.groupblog.service.view.SiteService;
 
 import java.sql.Timestamp;
@@ -23,32 +25,13 @@ import java.util.Map;
 public class BlogDataServiceImpl implements BlogDataService {
 
     private BlogManager blogManager;
-    private CategoryManager categoryManager;
-    private SiteService siteService;
+    private LinkGeneratorService linkGeneratorService;
 
-    private static final String BLOG_LINK_PREFIX = "/blog";
-    private static final String USER_LINK_PREFIX = "/user";
-    private static final String CATEGORY_LINK_PREFIX = "/category";
     private static final Map<Boolean, String> ORIGINAL_FLAG = ImmutableMap.of(true, "原", false, "转");
 
-    public BlogDataServiceImpl(BlogManager blogManager, CategoryManager categoryManager, SiteService siteService) {
+    public BlogDataServiceImpl(BlogManager blogManager, LinkGeneratorService linkGeneratorService) {
         this.blogManager = blogManager;
-        this.categoryManager = categoryManager;
-        this.siteService = siteService;
-    }
-
-    @Override
-    public Pagination getPagination(int pageNum, int pageSize, String baseLink) {
-        long blogNums = blogManager.getBlogNum();
-        int pageTotal = (int)(blogNums / pageSize);
-        return new Pagination(pageTotal, pageNum, pageSize, baseLink);
-    }
-
-    @Override
-    public Pagination getPaginationAsUser(int pageNum, int pageSize, String baseLink, long uid) {
-        long blogNums = blogManager.getBlogNumAsUser(uid);
-        int pageTotal = (int)(blogNums / pageSize);
-        return new Pagination(pageTotal, pageNum, pageSize, baseLink);
+        this.linkGeneratorService = linkGeneratorService;
     }
 
     @Override
@@ -69,7 +52,7 @@ public class BlogDataServiceImpl implements BlogDataService {
     public BlogData getBlogById(long blogId) {
         BlogData blogData = blogManager.getBlog(blogId);
         blogData.setFlagDesc(ORIGINAL_FLAG.get(blogData.isOriginal()));
-        blogData.setUserLink(userLink(blogData.getUid()));
+        blogData.setUserLink(linkGeneratorService.getUserLink(blogData.getUid()));
         return blogData;
     }
 
@@ -78,7 +61,7 @@ public class BlogDataServiceImpl implements BlogDataService {
         pageNum = Math.max(pageNum, 1);
         List<BlogData> blogDataList = blogManager.getBlogSummaries(pageSize, pageSize * (pageNum - 1));
 
-        return generateBlogDataLists(blogDataList, BLOG_LINK_PREFIX);
+        return generateBlogDataLists(blogDataList, null);
     }
 
     @Override
@@ -86,7 +69,7 @@ public class BlogDataServiceImpl implements BlogDataService {
         pageNum = Math.max(pageNum, 1);
         List<BlogData> blogDataList = blogManager.getBlogSummariesAsUser(pageSize, pageSize * (pageNum - 1), uid);
 
-        return generateBlogDataLists(blogDataList, blogPrefixLinkOnUser(uid));
+        return generateBlogDataLists(blogDataList, linkGeneratorService.getBlogPrefixLinkOnUser(uid));
     }
 
     @Override
@@ -101,9 +84,9 @@ public class BlogDataServiceImpl implements BlogDataService {
 
     private List<BlogData> generateBlogDataLists(List<BlogData> blogDataList, String prefix) {
         for (BlogData blogData : blogDataList) {
-            blogData.setBlogLink(blogLink(prefix, blogData.getBlogId()));
-            blogData.setUserLink(userLink(blogData.getUid()));
-            blogData.setCategoryLink(categoryLink(blogData.getCategoryId()));
+            blogData.setBlogLink(linkGeneratorService.getBlogLink(prefix, blogData.getBlogId()));
+            blogData.setUserLink(linkGeneratorService.getUserLink(blogData.getUid()));
+            blogData.setCategoryLink(linkGeneratorService.getCategoryLink(blogData.getCategoryId()));
             blogData.setFlagDesc(ORIGINAL_FLAG.get(blogData.isOriginal()));
         }
 
@@ -120,24 +103,7 @@ public class BlogDataServiceImpl implements BlogDataService {
                 blogs.set(0, null);
             }
         }
-
         return blogs;
-    }
-
-    private String blogLink(String prefix, long blogId) {
-        return prefix + "/" + blogId;
-    }
-
-    private String blogPrefixLinkOnUser(long uid) {
-        return USER_LINK_PREFIX + "/" + uid + BLOG_LINK_PREFIX;
-    }
-
-    private String userLink(long uid) {
-        return USER_LINK_PREFIX + "/" + uid;
-    }
-
-    private String categoryLink(int categoryId) {
-        return CATEGORY_LINK_PREFIX + "/" + categoryId;
     }
 
 }

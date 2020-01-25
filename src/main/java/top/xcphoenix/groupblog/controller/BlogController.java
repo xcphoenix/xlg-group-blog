@@ -36,8 +36,7 @@ public class BlogController {
     public String blog(Map<String, Object> map, @PathVariable("blogId") long blogId) throws CloneNotSupportedException {
         BlogData blogData = blogDataService.getBlogById(blogId);
         List<Blog> nearbyBlogs = blogDataService.getNearbyBlogs(blogData.getPubTime());
-        long uid = blogData.getUid();
-        SiteSchema siteSchema = siteService.getSiteSchemaWithUser(uid);
+        SiteSchema siteSchema = siteService.getSiteSchemaWithUser(blogData.getUid());
 
         map.put("siteSchema", siteSchema);
         map.put("blogData", blogData);

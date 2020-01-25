@@ -6,9 +6,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import top.xcphoenix.groupblog.model.dao.Blog;
 import top.xcphoenix.groupblog.model.vo.*;
-import top.xcphoenix.groupblog.service.view.AboutService;
-import top.xcphoenix.groupblog.service.view.BlogDataService;
-import top.xcphoenix.groupblog.service.view.SiteService;
+import top.xcphoenix.groupblog.service.view.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -25,11 +23,15 @@ public class IndexController {
     private SiteService siteService;
     private BlogDataService blogDataService;
     private AboutService aboutService;
+    private PaginationService paginationService;
+    private LinkGeneratorService linkGeneratorService;
 
-    public IndexController(SiteService siteService, BlogDataService blogDataService, AboutService aboutService) {
+    public IndexController(SiteService siteService, BlogDataService blogDataService, AboutService aboutService, PaginationService paginationService, LinkGeneratorService linkGeneratorService) {
         this.siteService = siteService;
         this.blogDataService = blogDataService;
         this.aboutService = aboutService;
+        this.paginationService = paginationService;
+        this.linkGeneratorService = linkGeneratorService;
     }
 
     @GetMapping("/")
@@ -41,7 +43,8 @@ public class IndexController {
                                 int pageNum) {
         SiteSchema siteSchema = siteService.getSiteSchema();
         List<BlogData> blogDataList = blogDataService.getBlogDataForIndex(pageNum, pageSize);
-        Pagination pagination = blogDataService.getPagination(pageNum, pageSize, "/");
+        Pagination pagination = paginationService.getPagination(pageNum, pageSize,
+                linkGeneratorService.getIndexLinkPrefix());
 
         map.put("siteSchema", siteSchema);
         map.put("blogDataList", blogDataList);

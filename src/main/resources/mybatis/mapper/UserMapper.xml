@@ -4,36 +4,48 @@
 <mapper namespace="top.xcphoenix.groupblog.mapper.UserMapper">
 	
 	<select id="getUserBlogArgs" resultType="top.xcphoenix.groupblog.model.dao.User">
-		SELECT uid, blog_type, blog_arg FROM user WHERE uid = #{uid}
+		SELECT uid, blog_type, blog_arg
+		FROM `user`
+		WHERE uid = #{uid}
 	</select>
 	
 	<update id="updateLastPubTime">
-		UPDATE user SET last_pub_time = #{lastPubTime}
+		UPDATE `user`
+		SET last_pub_time = #{lastPubTime}
 		WHERE uid = #{uid}
 	</update>
 	
 	<select id="getLastPubTime" resultType="java.sql.Timestamp">
 		SELECT last_pub_time
-		FROM user
+		FROM `user`
 		WHERE uid = #{uid}
 	</select>
-
+	
 	<select id="getUsersSummary" resultType="top.xcphoenix.groupblog.model.dto.UserSummary">
 		SELECT `uid`, `bean_name`
-		FROM `user`, `blog_type`
+		FROM `user`,
+		     `blog_type`
 		WHERE `user`.`blog_type` = `blog_type`.`type_id`
 	</select>
 	
 	<select id="getUserDesc" resultType="top.xcphoenix.groupblog.model.dao.User">
 		SELECT uid, username, signature
-		FROM user
+		FROM `user`
 		WHERE uid = #{uid}
 	</select>
 	
 	<select id="getUserQQ" resultType="java.lang.String">
 		SELECT qq
-		FROM user
+		FROM `user`
 		WHERE uid = #{uid}
+	</select>
+	
+	<select id="getUsersAsCategory" resultType="top.xcphoenix.groupblog.model.dao.User">
+		SELECT uid,
+		       username,
+		       qq
+		FROM `user`
+		WHERE category_id = #{categoryId}
 	</select>
 
 </mapper>

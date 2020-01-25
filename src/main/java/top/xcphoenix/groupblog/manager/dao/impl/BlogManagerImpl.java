@@ -57,16 +57,6 @@ public class BlogManagerImpl implements BlogManager {
     }
 
     @Override
-    public long getBlogNum() {
-        return blogMapper.getBlogNum();
-    }
-
-    @Override
-    public long getBlogNumAsUser(long uid) {
-        return blogMapper.getBlogNumAsUser(uid);
-    }
-
-    @Override
     public List<Blog> getNearbyBlogs(Timestamp time) {
         return blogMapper.getNearbyBlogs(time, null);
     }

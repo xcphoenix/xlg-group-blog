@@ -62,4 +62,12 @@ public interface UserMapper {
      */
     String getUserQQ(@Param("uid") long uid);
 
+    /**
+     * 根据分类获取用户信息
+     *
+     * @param categoryId 分类id
+     * @return 指定分类下的用户信息
+     */
+    List<User> getUsersAsCategory(@Param("categoryId") int categoryId);
+
 }

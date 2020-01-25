@@ -10,9 +10,7 @@ import top.xcphoenix.groupblog.model.vo.BlogData;
 import top.xcphoenix.groupblog.model.vo.PageType;
 import top.xcphoenix.groupblog.model.vo.Pagination;
 import top.xcphoenix.groupblog.model.vo.SiteSchema;
-import top.xcphoenix.groupblog.service.view.AboutService;
-import top.xcphoenix.groupblog.service.view.BlogDataService;
-import top.xcphoenix.groupblog.service.view.SiteService;
+import top.xcphoenix.groupblog.service.view.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -29,15 +27,18 @@ public class UserController {
 
     private SiteService siteService;
     private BlogDataService blogDataService;
+    private PaginationService paginationService;
+    private LinkGeneratorService linkGeneratorService;
 
-    public UserController(SiteService siteService, BlogDataService blogDataService) {
+    public UserController(SiteService siteService, BlogDataService blogDataService, PaginationService paginationService, LinkGeneratorService linkGeneratorService) {
         this.siteService = siteService;
         this.blogDataService = blogDataService;
+        this.paginationService = paginationService;
+        this.linkGeneratorService = linkGeneratorService;
     }
 
     @GetMapping("/{userId}")
     public String userZone(Map<String, Object> map,
-                           HttpServletRequest request,
                            @PathVariable("userId") long uid,
                            @RequestParam(value = "pageSize", required = false, defaultValue = "10")
                                    int pageSize,
@@ -45,7 +46,8 @@ public class UserController {
                                    int pageNum) throws CloneNotSupportedException {
         SiteSchema siteSchema = siteService.getSiteSchemaWithUser(uid);
         List<BlogData> blogDataList = blogDataService.getBlogDataByUser(uid, pageNum, pageSize);
-        Pagination pagination = blogDataService.getPaginationAsUser(pageNum, pageSize, request.getServletPath(), uid);
+        Pagination pagination = paginationService.getPaginationAsUser(pageNum, pageSize,
+                linkGeneratorService.getUserLink(uid), uid);
 
         map.put("siteSchema", siteSchema);
         map.put("blogDataList", blogDataList);
