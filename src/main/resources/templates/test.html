@@ -2,8 +2,8 @@
 <html class="theme-next pisces use-motion" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org" lang="zh-Hans">
 
-<head th:replace="common/_head::head('关于 | GroupBlog')">
-    <title>GroupBlog</title>
+<head>
+    <div th:replace="common/_head::head('GroupBlog')"></div>
 </head>
 
 <body lang="zh-Hans">
@@ -14,66 +14,32 @@
 
     <main id="main" class="main">
         <div class="main-inner">
-<!--            <div th:replace="common/content::content"></div>-->
-            <div class="htmleaf-container">
 
-                <div class="demo">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-md-offset-3 col-md-6">
-                                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                                    <div class="panel panel-default">
-                                        <div class="panel-heading" role="tab" id="headingOne">
-                                            <h4 class="panel-title">
-                                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne" class="collapsed">2019级</a>
-                                            </h4>
-                                        </div>
-                                        <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne" aria-expanded="false" style="height: 0px;">
-                                            <div class="panel-body">
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent nisl lorem, dictum id pellentesque at, vestibulum ut arcu. Curabitur erat libero, egestas eu tincidunt ac, rutrum ac justo. Vivamus condimentum laoreet lectus, blandit posuere tortor aliquam vitae. Curabitur molestie eros. </p>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="panel panel-default">
-                                        <div class="panel-heading" role="tab" id="headingTwo">
-                                            <h4 class="panel-title">
-                                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                                    Section 2
-                                                </a>
-                                            </h4>
-                                        </div>
-                                        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo" aria-expanded="false" style="height: 0px;">
-                                            <div class="panel-body">
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent nisl lorem, dictum id pellentesque at, vestibulum ut arcu. Curabitur erat libero, egestas eu tincidunt ac, rutrum ac justo. Vivamus condimentum laoreet lectus, blandit posuere tortor aliquam vitae. Curabitur molestie eros. </p>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="panel panel-default">
-                                        <div class="panel-heading" role="tab" id="headingThree">
-                                            <h4 class="panel-title">
-                                                <a class="" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
-                                                    Section 3
-                                                </a>
-                                            </h4>
-                                        </div>
-                                        <div id="collapseThree" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingThree" aria-expanded="true" style="">
-                                            <div class="panel-body">
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent nisl lorem, dictum id pellentesque at, vestibulum ut arcu. Curabitur erat libero, egestas eu tincidunt ac, rutrum ac justo. Vivamus condimentum laoreet lectus, blandit posuere tortor aliquam vitae. Curabitur molestie eros. </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+            <section class="accordion">
+                <div>
+                    <input id="ac-1" name="ac-radio" type="radio" onclick="doAccordion(this)">
+                    <label class="category-title" for="ac-1">
+                        Item Title
+                    </label>
+                    <div class="sub-content">
+                        <div>sub content</div>
+                        <div>sub content</div>
+                        <div>sub content</div>
                     </div>
                 </div>
-
-            </div>
-
-            <script src="/js/jquery-1.11.0.min.js" type="text/javascript"></script>
-            <script src="https://cdn.bootcss.com/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+                <div>
+                    <input id="ac-2" name="ac-radio" type="radio" onclick="doAccordion(this)">
+                    <label class="category-title" for="ac-2">Item Title</label>
+                    <div class="sub-content">
+                        <div>sub content</div>
+                        <div>sub content</div>
+                        <div>sub content</div>
+                        <div>sub content</div>
+                        <div>sub content</div>
+                        <div>sub content</div>
+                    </div>
+                </div>
+            </section>
 
         </div>
     </main>
@@ -87,6 +53,19 @@
     </div>
 
 </div>
+
+<script>
+    var openSubContent = self.parentNode.querySelector(".sub-content")
+    openSubContent.style.height = openSubContent.scrollHeight + "px";
+
+    var allSubContent = document.querySelector(".accordion")
+        .querySelectorAll(".sub-content");
+    var i = 0;
+    while (i < allSubContent.length) {
+        allSubContent[i].style.height = 0;
+        i++;
+    }
+</script>
 
 <div th:replace="common/_script::script"></div>
 
