@@ -2,6 +2,9 @@ package top.xcphoenix.groupblog.mapper;
 
 import org.apache.ibatis.annotations.Param;
 import top.xcphoenix.groupblog.model.dao.Category;
+import top.xcphoenix.groupblog.model.vo.CategoryData;
+
+import java.util.List;
 
 /**
  * @author      xuanc
@@ -17,5 +20,12 @@ public interface CategoryMapper {
      * @return 分类信息
      */
     Category getCategory(@Param("categoryId") int categoryId);
+
+    /**
+     * 获取所有的分类信息
+     *
+     * @return 分类信息
+     */
+    List<CategoryData> getAllCategory();
 
 }

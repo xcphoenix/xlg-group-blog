@@ -129,6 +129,36 @@
                     </div>
                 </div>
 
+                <!-- 分类 -->
+                <div th:case="3" th:remove="tag">
+                    <div class="post-block page" style="opacity: 1; display: block;">
+                        <header class="post-header" style="opacity: 1; display: block; transform: translateY(0px);">
+                            <h1 class="post-title">[[${postData.getPostTitle()}]]</h1>
+                            <div class="post-meta">
+                                <div class="post-description">[[${postData.getPostMeta().get("description")}]]</div>
+                            </div>
+                        </header>
+                        <div class="post-body" style="opacity: 1; display: block; transform: translateY(0px);">
+                            <div class="verticalAccordion">
+                                <ul>
+                                    <li th:each="item, itemCount: ${postData.getPostBody()}">
+                                        <h3>
+<!--                                        <a class="extra-a" th:href="@{${item.getCategoryLink()}}" target="_blank">-->
+                                                [[${item.getCategoryName()}]]
+<!--                                        </a>-->
+                                        </h3>
+                                        <div th:each="userItem, userItemCount : ${item.getUserItemList()}">
+                                            <a class="extra-a" th:href="@{${userItem.getUserLink()}}" target="_blank">
+                                                [[${userItem.getUserName()}]]
+                                            </a>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
         </div>

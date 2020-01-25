@@ -4,6 +4,98 @@
 
 <head>
     <div th:replace="common/_head::head('GroupBlog')"></div>
+    <style>
+        .verticalAccordion {
+            margin: 0 auto;
+        }
+
+        .verticalAccordion ul {
+            width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        .verticalAccordion li {
+            list-style: none outside none;
+            display: block;
+            margin: 0;
+            padding: 0;
+            height: 40px;
+            width: 100%;
+            overflow: hidden;
+            background: #fafafa;
+            -moz-transition: height 0.3s ease-in-out;
+            -webkit-transition: height 0.3s ease-in-out;
+            -o-transition: height 0.3s ease-in-out;
+            transition: height 0.3s ease-in-out;
+        }
+
+        .verticalAccordion h3 {
+            font-size: 1.1em;
+            margin: 0;
+            margin-top: 0px;
+            margin-right: 0px;
+            margin-bottom: 0px;
+            margin-left: 0px;
+            padding: 10px;
+            /* border-top: 1px solid #f0f0f0; */
+            /* text-transform: uppercase; */
+            color: #434343;
+            background: #fff;
+            cusor: pointer;
+            position: relative;
+            /* border-bottom: 1px; */
+            background: -moz-linear-gradient(top, #999999, #cccccc);
+            /* background: -webkit-gradient(linear, left top, left bottom, from(#999999), to(#cccccc)); */
+            /* background: -webkit-linear-gradient(top, #999999, #cccccc); */
+            background: -o-linear-gradient(top, #999999, #cccccc);
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#ff999999, endColorstr=#ffcccccc);
+            -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#ff999999, endColorstr=#ffcccccc)";
+        }
+
+        .verticalAccordion h3:before {
+            content: "";
+            border: 5px solid #1b1a1a;
+            border-color: #434343 transparent transparent;
+            position: absolute;
+            right: 10px;
+            top: 15px;
+            width: 0;
+            height: 0;
+        }
+
+        .verticalAccordion div {
+            margin: 0;
+            voerflow: auto;
+            padding: 0px 10px;
+            height: auto;
+            border-radius: 0px 0px 5px 5px;
+            border-left: 4px dashed #ccc;
+        }
+
+        .verticalAccordion li:hover {
+            height: auto;
+        }
+
+        .verticalAccordion li:hover h3 {
+            font-size: 1.1em;
+            color: #fff;
+            background: rgb(65, 65, 65);
+        }
+
+        .verticalAccordion li:hover h3:before {
+            border-color: transparent transparent transparent #fff;
+        }
+
+        .extra-a {
+            color: inherit;
+            border-bottom: 0;
+        }
+        .extra-a:hover {
+            color: inherit;
+            border-bottom: 1px solid #999;
+        }
+    </style>
 </head>
 
 <body lang="zh-Hans">

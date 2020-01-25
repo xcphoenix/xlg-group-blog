@@ -4,6 +4,7 @@ import org.apache.ibatis.annotations.Param;
 import org.bouncycastle.util.Times;
 import top.xcphoenix.groupblog.model.dao.User;
 import top.xcphoenix.groupblog.model.dto.UserSummary;
+import top.xcphoenix.groupblog.model.vo.UserItem;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -63,11 +64,11 @@ public interface UserMapper {
     String getUserQQ(@Param("uid") long uid);
 
     /**
-     * 根据分类获取用户信息
+     * 获取分类用户数据元素
      *
      * @param categoryId 分类id
-     * @return 指定分类下的用户信息
+     * @return 用户数据
      */
-    List<User> getUsersAsCategory(@Param("categoryId") int categoryId);
+    List<UserItem> getUserItem(@Param("categoryId") int categoryId);
 
 }

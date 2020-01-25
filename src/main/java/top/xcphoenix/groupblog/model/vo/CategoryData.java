@@ -2,8 +2,8 @@ package top.xcphoenix.groupblog.model.vo;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import top.xcphoenix.groupblog.model.dao.Category;
-import top.xcphoenix.groupblog.model.dao.User;
+
+import java.util.List;
 
 /**
  * @author      xuanc
@@ -14,10 +14,10 @@ import top.xcphoenix.groupblog.model.dao.User;
 @NoArgsConstructor
 public class CategoryData {
 
-    private User user;
-    private Category category;
-
-    private String userLink;
+    private int categoryId;
+    private String categoryName;
     private String categoryLink;
+
+    List<UserItem> userItemList;
 
 }

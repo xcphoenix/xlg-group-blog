@@ -1,6 +1,7 @@
 package top.xcphoenix.groupblog.model.vo;
 
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.Map;
@@ -12,10 +13,10 @@ import java.util.Map;
  */
 @Data
 @NoArgsConstructor
-public class PostData {
+public class PostData<T> {
 
     String postTitle;
     Map<String, Object> postMeta;
-    String postBody;
+    T postBody;
 
 }

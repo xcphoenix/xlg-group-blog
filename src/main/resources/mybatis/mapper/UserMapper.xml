@@ -3,6 +3,11 @@
 		"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="top.xcphoenix.groupblog.mapper.UserMapper">
 	
+	<resultMap id="userItem" type="top.xcphoenix.groupblog.model.vo.UserItem">
+		<collection property="user" column="uid"
+		             select="getUserDesc" />
+	</resultMap>
+	
 	<select id="getUserBlogArgs" resultType="top.xcphoenix.groupblog.model.dao.User">
 		SELECT uid, blog_type, blog_arg
 		FROM `user`
@@ -29,7 +34,7 @@
 	</select>
 	
 	<select id="getUserDesc" resultType="top.xcphoenix.groupblog.model.dao.User">
-		SELECT uid, username, signature
+		SELECT uid, username, qq, signature
 		FROM `user`
 		WHERE uid = #{uid}
 	</select>
@@ -40,12 +45,12 @@
 		WHERE uid = #{uid}
 	</select>
 	
-	<select id="getUsersAsCategory" resultType="top.xcphoenix.groupblog.model.dao.User">
-		SELECT uid,
-		       username,
-		       qq
-		FROM `user`
-		WHERE category_id = #{categoryId}
+	<select id="getUserItem" resultMap="userItem">
+		SELECT
+			uid
+		FROM user
+		WHERE
+			category_id = #{categoryId}
 	</select>
 
 </mapper>
