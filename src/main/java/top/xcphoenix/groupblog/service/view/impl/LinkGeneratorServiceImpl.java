@@ -15,6 +15,7 @@ public class LinkGeneratorServiceImpl implements LinkGeneratorService {
     private static final String BLOG_LINK_PREFIX = "/blog";
     private static final String USER_LINK_PREFIX = "/user";
     private static final String CATEGORY_LINK_PREFIX = "/category";
+    private static final String ARCHIVE_LINK_PREFIX = "/archive";
 
     @Override
     public String getIndexLinkPrefix() {
@@ -45,6 +46,11 @@ public class LinkGeneratorServiceImpl implements LinkGeneratorService {
     @Override
     public String getCategoryLink(int categoryId) {
         return CATEGORY_LINK_PREFIX + "/" + categoryId;
+    }
+
+    @Override
+    public String getArchiveLinkPrefix() {
+        return ARCHIVE_LINK_PREFIX;
     }
 
 }

@@ -40,7 +40,10 @@
 <div class="content-wrap" th:fragment="content">
     <div id="content" class="content" th:with="type=${pageType.getType()}">
         <!-- 博客概要 -->
-        <div id="posts" class="posts-expand" th:with="type=${type == 0 ? 5 : type}">
+        <div th:id="${type != 4 ? 'posts' : null}"
+             th:class="${type != 4 ? 'posts-expand' : 'post-block archive'}"
+             th:with="type=${type == 0 ? 5 : type}"
+             th:style="${type != 4 ? null : 'opacity: 1; display: block;'}">
             <div th:remove="tag"
                  th:switch="${type}">
 
@@ -143,9 +146,9 @@
                                 <ul>
                                     <li th:each="item, itemCount: ${postData.getPostBody()}">
                                         <h3>
-<!--                                        <a class="extra-a" th:href="@{${item.getCategoryLink()}}" target="_blank">-->
-                                                [[${item.getCategoryName()}]]
-<!--                                        </a>-->
+                                            <!--                                        <a class="extra-a" th:href="@{${item.getCategoryLink()}}" target="_blank">-->
+                                            [[${item.getCategoryName()}]]
+                                            <!--                                        </a>-->
                                         </h3>
                                         <div th:each="userItem, userItemCount : ${item.getUserItemList()}">
                                             <a class="extra-a" th:href="@{${userItem.getUserLink()}}" target="_blank">
@@ -159,12 +162,46 @@
                     </div>
                 </div>
 
+                <div th:case="4" th:remove="tag">
+                    <div id="posts" class="posts-collapse">
+                        <span class="archive-move-on">
+                        </span>
+                        <span class="archive-page-counter">
+                            目前共计 [[${siteSchema.getNumStatics().getBlogNum()}]] 篇博客。继续努力!
+                        </span>
+                        <div th:each="archiveBlog, itemCount : ${archiveData}" th:remove="tag">
+                            <div class="collection-title" style="opacity: 1; display: block; transform: translateX(0px);">
+                                <h1 class="archive-year" th:id="${'archive-year-' + archiveBlog.getYear()}"
+                                    style="opacity: 1; display: block; transform: translateX(0px);">
+                                    [[${archiveBlog.getYear()}]]
+                                </h1>
+                            </div>
+                            <article class="post post-type-normal" th:each="blog, subItemCount : ${archiveBlog.getBlogItems()}">
+                                <header class="post-header" style="opacity: 1; display: block; transform: translateY(0px);">
+                                    <h2 class="post-title">
+                                        <a class="post-title-link" th:href="@{${blog.getBlogLink()}}">
+                                        <span itemprop="name">
+                                            [[${blog.getTitle()}]]
+                                        </span>
+                                        </a>
+                                    </h2>
+                                    <div class="post-meta">
+                                        <time class="post-time">
+                                            [[${blog.getMonthDay()}]]
+                                        </time>
+                                    </div>
+                                </header>
+                            </article>
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
         </div>
 
         <!-- 分页 -->
-        <div th:if="${(type == 0 or type == 5) and blogDataList.size() != 0}" th:remove="tag">
+        <div th:if="${(type == 0 or type == 5 or type == 4) and page != null}" th:remove="tag">
             <nav th:replace="~{common/pagination::pagination}"></nav>
         </div>
 

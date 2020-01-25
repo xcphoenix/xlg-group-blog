@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="top.xcphoenix.groupblog.mapper.ArchiveMapper">
+	
+	<select id="getBaseBlogIds" resultType="top.xcphoenix.groupblog.model.dto.ArchiveBlogs">
+		SELECT
+			GROUP_CONCAT(blog_id) as blogIds,
+			`year`
+		FROM
+			(
+				SELECT
+					blog_id,
+					DATE_FORMAT(pub_time, '%Y') as 'year'
+				FROM
+					`blog`
+				ORDER BY
+					`pub_time` DESC
+				LIMIT
+					#{pageSize} OFFSET #{pageOffset}
+			) as P
+		GROUP BY
+			P.`year`
+	</select>
+	
+	<select id="getBlogsFromGroup" resultType="top.xcphoenix.groupblog.model.dto.ArchiveBlogItem">
+		SELECT
+			`blog_id`,
+			`uid`,
+			(
+				SELECT
+					`username`
+				FROM
+					`user`
+				WHERE
+					`blog`.`uid` = `user`.`uid`
+			) as 'username',
+			`title`,
+			DATE_FORMAT(`pub_time`, '%m-%d') as 'month_day'
+		FROM
+			`blog`
+		WHERE
+				`blog_id` IN (
+				              ${blogIds}
+				)
+		ORDER BY `pub_time` DESC
+	</select>
+	
+</mapper>

@@ -48,7 +48,9 @@ public class IndexController {
 
         map.put("siteSchema", siteSchema);
         map.put("blogDataList", blogDataList);
-        map.put("page", pagination);
+        if (blogDataList.size() != 0) {
+            map.put("page", pagination);
+        }
         map.put("pageType", request.getParameterMap().size() == 0 ?
                     PageType.INDEX :
                     PageType.OVERVIEW);

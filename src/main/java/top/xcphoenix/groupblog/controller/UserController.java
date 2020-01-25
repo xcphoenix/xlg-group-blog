@@ -51,7 +51,9 @@ public class UserController {
 
         map.put("siteSchema", siteSchema);
         map.put("blogDataList", blogDataList);
-        map.put("page", pagination);
+        if (blogDataList.size() != 0) {
+            map.put("page", pagination);
+        }
         map.put("pageType", PageType.OVERVIEW);
 
         return "index";

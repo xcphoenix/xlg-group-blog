@@ -54,4 +54,6 @@ public interface LinkGeneratorService {
      * @return 分类链接
      */
     String getCategoryLink(int categoryId);
+
+    String getArchiveLinkPrefix();
 }
