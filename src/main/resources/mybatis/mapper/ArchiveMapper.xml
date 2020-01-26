@@ -20,6 +20,7 @@
 			) as P
 		GROUP BY
 			P.`year`
+		ORDER BY P.`year`DESC
 	</select>
 	
 	<select id="getBlogsFromGroup" resultType="top.xcphoenix.groupblog.model.dto.ArchiveBlogItem">
