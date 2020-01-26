@@ -38,6 +38,12 @@ public class SearchManagerImpl implements SearchManager {
             key = key.replace(booleanSpecialFlag.charAt(i), '*');
         }
         key = key.replaceAll("\\*+", "*");
+        if (key.startsWith("*")) {
+            key = key.substring(1);
+        }
+        if (!key.endsWith("*")) {
+            key = key + "*";
+        }
         return key;
     }
 
