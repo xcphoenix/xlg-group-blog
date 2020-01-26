@@ -108,7 +108,7 @@ optgroup,
 select,
 textarea {
     color: inherit; /* 1 */
-    font: inherit; /* 2 */
+    /*font: inherit; !* 2 *!*/
     margin: 0; /* 3 */
 }
 button {
@@ -1186,6 +1186,7 @@ pre .javascript .function {
 }
 .menu {
     margin-top: 20px;
+    margin-bottom: 0;
     padding-left: 0;
     text-align: center;
 }

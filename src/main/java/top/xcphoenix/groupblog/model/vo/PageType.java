@@ -34,7 +34,15 @@ public enum PageType {
     /**
      * 博客页面
      */
-    POST(6);
+    POST(6),
+    /**
+     * 搜索页
+     */
+    SEARCH(7),
+    /**
+     * 其他
+     */
+    OTHER(999);
 
     private int type;
 

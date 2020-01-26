@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="zh-cn"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<aside  th:fragment="search"
+        id="sidebar" class="sidebar" style="margin-top: 341px; margin-left: initial;">
+    <div class="sidebar-inner" style="opacity: 1; display: block; transform: initial;">
+        <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+            <div class="site-overview" style="max-height: 643px;">
+                <form class="custom-search" action="#">
+                    <input type="text" placeholder="Search here..." />
+                    <button type="submit"><i class="menu-item-icon fa fa-search fa-fw"></i></button>
+                </form>
+            </div>
+        </section>
+    </div>
+</aside>
+
+</body>
+</html>

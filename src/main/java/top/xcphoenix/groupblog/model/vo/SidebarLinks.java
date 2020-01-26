@@ -17,5 +17,6 @@ public class SidebarLinks {
     private String tagUrl;
     private String categoryUrl;
     private String archiveUrl;
+    private String searchUrl;
 
 }

@@ -12,6 +12,7 @@ site:
     tag-url: /tag
     category-url: /category
     archive-url: /archive
+    search-url: /search
   friend-links:
     - desc: 小组官网
       link: https://www.xiyoulinux.org/

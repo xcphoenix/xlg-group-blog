@@ -33,7 +33,6 @@
                 </button>
             </div>
         </div>
-
         <nav class="site-nav">
             <ul id="menu" class="menu">
                 <li class="menu-item menu-item-home">
@@ -73,6 +72,12 @@
                     </a>
                 </li>
             </ul>
+            <form class="custom-search menu" th:action="@{/search}">
+                <label>
+                    <input type="text" name="keyword" placeholder="Search here...">
+                </label>
+                <button type="submit"><i class="menu-item-icon fa fa-search fa-fw"></i></button>
+            </form>
         </nav>
     </div>
     <script th:inline="javascript">

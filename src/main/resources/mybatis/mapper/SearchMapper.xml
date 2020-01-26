@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="top.xcphoenix.groupblog.mapper.SearchMapper">
+	
+	<select id="searchBlogsAsKeyword" resultType="top.xcphoenix.groupblog.model.vo.BlogData">
+		SELECT
+			`blog_id`,
+			`user`.`uid`,
+			`username`,
+			`category`.`category_id`,
+			`name` as category,
+			`title`,
+			`is_original` as original,
+			`pub_time`,
+			`summary`
+		FROM
+			(
+				SELECT
+					`blog_id`,
+					`uid`,
+					`title`,
+					`is_original`,
+					`pub_time`,
+					`summary`,
+					MATCH(`title`, `content`) AGAINST(#{keyword} in boolean mode) as 'score'
+				FROM
+					`blog`
+				WHERE
+					MATCH(`title`, `content`) AGAINST(#{keyword} in boolean mode)
+				ORDER BY
+					`score` DESC
+				LIMIT
+					#{pageSize} OFFSET #{pageOffset}
+			) as P
+				LEFT JOIN `user` ON `user`.`uid` = P.`uid`
+				LEFT JOIN `category` ON `category`.`category_id` = `user`.`category_id`
+	</select>
+	
+	<select id="getSearchNum" resultType="java.lang.Integer">
+		SELECT COUNT(*)
+		FROM
+			`blog`
+		WHERE
+			MATCH(`title`, `content`) AGAINST(#{keyword} in boolean mode)
+	</select>
+	
+</mapper>

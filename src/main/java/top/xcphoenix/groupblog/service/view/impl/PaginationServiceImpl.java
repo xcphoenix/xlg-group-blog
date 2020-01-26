@@ -1,6 +1,7 @@
 package top.xcphoenix.groupblog.service.view.impl;
 
 import org.springframework.stereotype.Service;
+import top.xcphoenix.groupblog.manager.dao.SearchManager;
 import top.xcphoenix.groupblog.manager.dao.StaticsNumsManager;
 import top.xcphoenix.groupblog.model.vo.Pagination;
 import top.xcphoenix.groupblog.service.view.PaginationService;
@@ -14,9 +15,11 @@ import top.xcphoenix.groupblog.service.view.PaginationService;
 public class PaginationServiceImpl implements PaginationService {
 
     private StaticsNumsManager staticsNumsManager;
+    private SearchManager searchManager;
 
-    public PaginationServiceImpl(StaticsNumsManager staticsNumsManager) {
+    public PaginationServiceImpl(StaticsNumsManager staticsNumsManager, SearchManager searchManager) {
         this.staticsNumsManager = staticsNumsManager;
+        this.searchManager = searchManager;
     }
 
     @Override
@@ -33,5 +36,11 @@ public class PaginationServiceImpl implements PaginationService {
         return new Pagination(pageTotal, pageNum, pageSize, baseLink);
     }
 
+    @Override
+    public Pagination getPaginationAsSearch(int pageNum, int pageSize, String baseLink, String keyword) {
+        long blogNums = searchManager.getSearchDataNum(keyword);
+        int pageTotal = (int)(blogNums / pageSize);
+        return new Pagination(pageTotal, pageNum, pageSize, baseLink);
+    }
 
 }

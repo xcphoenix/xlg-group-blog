@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html class="theme-next pisces use-motion" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" lang="zh-Hans">
+
+<head>
+    <div th:replace="common/_head::head('GroupBlog')"></div>
+    <style>
+        .custom-search input,button{
+            outline: none;
+        }
+        .custom-search {
+            font-size:0;
+        }
+        .custom-search input{
+            height: 40px;
+            background-color: #eee;
+            border: none;
+            border-radius: 4px 0 0 4px;
+            padding: 0 0 0 10px;
+        }
+        .custom-search button{
+            height: 40px;
+            background-color: #262a30;
+            border: none;
+            position: relative;
+            border-radius: 0 4px 4px 0;
+            color: #fff;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .custom-search input::-webkit-input-placeholder{
+            font-style: italic;
+        }
+        .custom-search input:-moz-placeholder{
+            font-style: italic;
+        }
+        .custom-search input:-ms-input-placeholder{
+            font-style: italic;
+        }
+        .custom-search button:before{
+            content: "";
+            display: inline-block;
+            border: 6px solid transparent;
+            border-right-color:#262a30;
+            position: absolute;
+            right:100%;
+            top:14px;
+        }
+    </style>
+</head>
+
+<body lang="zh-Hans">
+
+<div class="container sidebar-position-left
+  page-home">
+    <div class="headband"></div>
+
+    <header th:replace="common/_header::header(${siteSchema})"></header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div th:replace="common/content::content"></div>
+            <div th:replace="common/_sidebar::sidebar-toggle"></div>
+            <div th:replace="common/_sidebar::sidebar"></div>
+        </div>
+    </main>
+
+    <!-- 脚注 -->
+    <footer th:replace="common/_footer::_footer"></footer>
+
+    <!-- 回到开头 -->
+    <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+    </div>
+
+</div>
+
+<div th:replace="common/_script::script"></div>
+
+</body>
+</html>

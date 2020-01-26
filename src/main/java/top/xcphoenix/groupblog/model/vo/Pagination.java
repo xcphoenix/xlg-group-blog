@@ -29,7 +29,13 @@ public class Pagination {
         this.pageTotal = pageTotal;
         this.currentPage = currentPage;
         this.pageSize = pageSize;
-        this.baseLink = baseLink;
+
+        if (!baseLink.contains("?")) {
+            this.baseLink = baseLink + "?";
+        } else {
+            this.baseLink = baseLink + "&";
+        }
+
         this.hasPrev = currentPage - 1 > 0;
         this.hasNext = currentPage + 1 <= pageTotal;
         this.pageLinks = makeLinks();
@@ -44,7 +50,7 @@ public class Pagination {
     }
 
     private String getLink(int page) {
-        return baseLink + "?pageNum=" + page + "&pageSize=" + this.pageSize;
+        return baseLink + "pageNum=" + page + "&pageSize=" + this.pageSize;
     }
 
     private List<PageLink> makeLinks() {

@@ -29,4 +29,17 @@ public interface PaginationService {
      * @return 分页数据
      */
     Pagination getPaginationAsUser(int pageNum, int pageSize, String baseLink, long uid);
+
+
+    /**
+     * 根据检索数据条数获取分页信息
+     *
+     * @param pageNum 页数
+     * @param pageSize 页大小
+     * @param baseLink 基础链接
+     * @param keyword 关键字
+     * @return 分页数据
+     */
+    Pagination getPaginationAsSearch(int pageNum, int pageSize, String baseLink, String keyword);
+
 }

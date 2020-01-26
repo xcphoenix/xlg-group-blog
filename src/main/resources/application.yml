@@ -43,3 +43,5 @@ mybatis:
 pagehelper:
   offset-as-page-num: true
   reasonable: true
+  
+debug: true

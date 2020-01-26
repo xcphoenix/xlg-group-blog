@@ -79,4 +79,13 @@ public interface BlogDataService {
      */
     List<BlogData> getBlogDataByCategory(int categoryId, long pageNum, int pageSize);
 
+    /**
+     * 将原始的数据加工
+     *
+     * @param blogDataList 原始博客列表
+     * @param prefix 博客链接前缀
+     * @return 加工后的博客数据
+     */
+    List<BlogData> generateBlogDataLists(List<BlogData> blogDataList, String prefix);
+
 }

@@ -16,6 +16,7 @@ public class LinkGeneratorServiceImpl implements LinkGeneratorService {
     private static final String USER_LINK_PREFIX = "/user";
     private static final String CATEGORY_LINK_PREFIX = "/category";
     private static final String ARCHIVE_LINK_PREFIX = "/archive";
+    private static final String SEARCH_LINK_PREFIX = "/search";
 
     @Override
     public String getIndexLinkPrefix() {
@@ -56,6 +57,11 @@ public class LinkGeneratorServiceImpl implements LinkGeneratorService {
     @Override
     public String getArchiveLinkAsUser(long uid) {
         return getArchiveLinkPrefix() + "/user/" + uid;
+    }
+
+    @Override
+    public String getSearchLink(String keyword) {
+        return SEARCH_LINK_PREFIX + "?keyword=" + keyword;
     }
 
 }

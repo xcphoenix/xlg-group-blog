@@ -79,7 +79,8 @@ public class BlogDataServiceImpl implements BlogDataService {
         return null;
     }
 
-    private List<BlogData> generateBlogDataLists(List<BlogData> blogDataList, String prefix) {
+    @Override
+    public List<BlogData> generateBlogDataLists(List<BlogData> blogDataList, String prefix) {
         for (BlogData blogData : blogDataList) {
             blogData.setBlogLink(linkGeneratorService.getBlogLink(prefix, blogData.getBlogId()));
             blogData.setUserLink(linkGeneratorService.getUserLink(blogData.getUid()));

@@ -69,4 +69,5 @@ public interface LinkGeneratorService {
      */
     String getArchiveLinkAsUser(long uid);
 
+    String getSearchLink(String keyword);
 }
