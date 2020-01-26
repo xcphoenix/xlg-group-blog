@@ -2,6 +2,7 @@ package top.xcphoenix.groupblog.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import top.xcphoenix.groupblog.model.dto.ArchiveBlogs;
 import top.xcphoenix.groupblog.model.vo.PageType;
@@ -50,6 +51,27 @@ public class ArchiveController {
 
         map.put("siteSchema", siteSchema);
         map.put("archiveData", archiveBlogs);
+        map.put("page", pagination);
+        map.put("pageType", PageType.ARCHIVE);
+
+        return "archive";
+    }
+
+    @GetMapping("/archive/user/{uid}")
+    public String archive(Map<String, Object> map,
+                          @PathVariable("uid") long uid,
+                          @RequestParam(value = "pageSize", required = false, defaultValue = "10")
+                                  int pageSize,
+                          @RequestParam(value = "pageNum", required = false, defaultValue = "1")
+                                  int pageNum) throws CloneNotSupportedException {
+        SiteSchema siteSchema = siteService.getSiteSchemaWithUser(uid);
+        List<ArchiveBlogs> archiveBlogs = archiveService.getArchiveAsUser(uid, pageNum, pageSize);
+        Pagination pagination = paginationService.getPaginationAsUser(pageNum, pageSize,
+                linkGeneratorService.getArchiveLinkPrefix(), uid);
+
+        map.put("siteSchema", siteSchema);
+        map.put("archiveData", archiveBlogs);
+        map.put("archiveHiddenUser", true);
         map.put("page", pagination);
         map.put("pageType", PageType.ARCHIVE);
 

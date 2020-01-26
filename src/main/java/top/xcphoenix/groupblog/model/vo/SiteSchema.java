@@ -33,6 +33,7 @@ public class SiteSchema implements Cloneable {
 
     private AuthorSchema authorSchema;
     private SidebarLinks sidebarLinks;
+    private SidebarLinks userLinks;
     private List<Links> friendLinks;
 
     /**

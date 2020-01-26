@@ -43,4 +43,21 @@ public class ArchiveServiceImpl implements ArchiveService {
         return archiveBlogs;
     }
 
+    @Override
+    public List<ArchiveBlogs> getArchiveAsUser(long uid, int pageNum, int pageSize) {
+        List<ArchiveBlogs> archiveBlogs = archiveMapper
+                .getBaseBlogIdsAsUser(pageSize, (pageNum - 1) * pageSize, uid);
+        for (ArchiveBlogs archive : archiveBlogs) {
+            archive.setBlogItems(
+                    archiveMapper.getBlogsFromGroup(archive.getBlogIds())
+            );
+            // set url
+            for (ArchiveBlogItem item : archive.getBlogItems()) {
+                long blogId = item.getBlogId();
+                item.setBlogLink(linkGeneratorService.getBlogLink(blogId));
+            }
+        }
+        return archiveBlogs;
+    }
+
 }

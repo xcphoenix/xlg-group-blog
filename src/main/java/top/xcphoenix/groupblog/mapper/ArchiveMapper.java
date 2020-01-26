@@ -30,9 +30,9 @@ public interface ArchiveMapper {
      * @param uid        用户id
      * @return 归档数据
      */
-    // List<ArchiveBlogs> getBaseBlogIdsAsUser(@Param("pageSize") int pageSize,
-    //                                         @Param("pageOffset") int pageOffset,
-    //                                         @Param("uid") long uid);
+    List<ArchiveBlogs> getBaseBlogIdsAsUser(@Param("pageSize") int pageSize,
+                                            @Param("pageOffset") int pageOffset,
+                                            @Param("uid") long uid);
 
     /**
      * 获取归档显示博客数据

@@ -23,6 +23,28 @@
 		ORDER BY P.`year`DESC
 	</select>
 	
+	<select id="getBaseBlogIdsAsUser" resultType="top.xcphoenix.groupblog.model.dto.ArchiveBlogs">
+		SELECT
+			GROUP_CONCAT(blog_id) as blogIds,
+			`year`
+		FROM
+			(
+				SELECT
+					blog_id,
+					DATE_FORMAT(pub_time, '%Y') as 'year'
+				FROM
+					`blog`
+				WHERE `uid` = #{uid}
+				ORDER BY
+					`pub_time` DESC
+				LIMIT
+					#{pageSize} OFFSET #{pageOffset}
+			) as P
+		GROUP BY
+			P.`year`
+		ORDER BY P.`year`DESC
+	</select>
+	
 	<select id="getBlogsFromGroup" resultType="top.xcphoenix.groupblog.model.dto.ArchiveBlogItem">
 		SELECT
 			`blog_id`,
@@ -45,5 +67,5 @@
 				)
 		ORDER BY `pub_time` DESC
 	</select>
-	
+
 </mapper>

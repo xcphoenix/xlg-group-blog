@@ -53,4 +53,9 @@ public class LinkGeneratorServiceImpl implements LinkGeneratorService {
         return ARCHIVE_LINK_PREFIX;
     }
 
+    @Override
+    public String getArchiveLinkAsUser(long uid) {
+        return getArchiveLinkPrefix() + "/user/" + uid;
+    }
+
 }

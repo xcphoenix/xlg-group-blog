@@ -55,5 +55,18 @@ public interface LinkGeneratorService {
      */
     String getCategoryLink(int categoryId);
 
+    /**
+     * 获取归档url前缀
+     *
+     * @return url
+     */
     String getArchiveLinkPrefix();
+
+    /**
+     * 获取用户归档链接
+     * @param uid 用户id
+     * @return 用户归档链接
+     */
+    String getArchiveLinkAsUser(long uid);
+
 }

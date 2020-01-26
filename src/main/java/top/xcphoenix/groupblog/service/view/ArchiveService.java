@@ -20,4 +20,13 @@ public interface ArchiveService {
      */
     List<ArchiveBlogs> getArchive(int pageNum, int pageSize);
 
+    /**
+     * 获取用户归档数据
+     *
+     * @param uid 用户id
+     * @param pageNum 页数
+     * @param pageSize 大小
+     * @return 归档数据
+     */
+    List<ArchiveBlogs> getArchiveAsUser(long uid, int pageNum, int pageSize);
 }

@@ -35,7 +35,7 @@
                     </p>
                 </div>
 
-                <nav class="site-state motion-element">
+                <nav class="site-state motion-element" th:unless="${siteSchema.isInAuthor()}">
                     <div class="site-state-item site-state-posts" th:if="${siteSchema.getNumStatics().getBlogNum() != 0}">
                         <a th:href="@{${siteSchema.getSidebarLinks().getArchiveUrl()}}">
                             <span class="site-state-item-count" th:text="${siteSchema.getNumStatics().getBlogNum()}"></span>
@@ -52,6 +52,14 @@
                         <a th:href="@{${siteSchema.getSidebarLinks().getTagUrl()}}">
                             <span class="site-state-item-count" th:text="${siteSchema.getNumStatics().getTagNum()}"></span>
                             <span class="site-state-item-name">标签</span>
+                        </a>
+                    </div>
+                </nav>
+                <nav class="site-state motion-element" th:if="${siteSchema.isInAuthor()}">
+                    <div class="site-state-item site-state-posts" th:if="${siteSchema.getNumStatics().getBlogNum() != 0}">
+                        <a th:href="@{${siteSchema.getUserLinks().getArchiveUrl()}}">
+                            <span class="site-state-item-count" th:text="${siteSchema.getNumStatics().getBlogNum()}"></span>
+                            <span class="site-state-item-name">博客</span>
                         </a>
                     </div>
                 </nav>

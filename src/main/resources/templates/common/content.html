@@ -41,7 +41,7 @@
     <div id="content" class="content" th:with="type=${pageType.getType()}">
         <!-- 博客概要 -->
         <div th:id="${type != 4 ? 'posts' : null}"
-             th:class="${type != 4 ? 'posts-expand' : 'post-block archive'}"
+             th:class="${type != 4 ? 'posts-expand' : 'post-block page-archive'}"
              th:with="type=${type == 0 ? 5 : type}"
              th:style="${type != 4 ? null : 'opacity: 1; display: block;'}">
             <div th:remove="tag"
@@ -162,12 +162,13 @@
                     </div>
                 </div>
 
+                <!-- 归档 -->
                 <div th:case="4" th:remove="tag">
                     <div id="posts" class="posts-collapse">
                         <span class="archive-move-on">
                         </span>
                         <span class="archive-page-counter">
-                            目前共计 [[${siteSchema.getNumStatics().getBlogNum()}]] 篇博客。继续努力!
+                            目前共计 [[${siteSchema.getNumStatics().getBlogNum()}]] 篇博客。继续努力呀o(*≧▽≦)ツ!
                         </span>
                         <div th:each="archiveBlog, itemCount : ${archiveData}" th:remove="tag">
                             <div class="collection-title" style="opacity: 1; display: block; transform: translateX(0px);">
@@ -180,10 +181,16 @@
                                 <header class="post-header" style="opacity: 1; display: block; transform: translateY(0px);">
                                     <h2 class="post-title">
                                         <a class="post-title-link" th:href="@{${blog.getBlogLink()}}">
-                                        <span itemprop="name">
-                                            [[${blog.getTitle()}]]
-                                        </span>
+                                            <span>
+                                                [[${blog.getTitle()}]]
+                                            </span>
                                         </a>
+                                        <div th:if="${archiveHiddenUser == null or archiveHiddenUser == false}" class="archive-author">
+                                            &nbsp;&nbsp;
+                                                <a th:href="@{${blog.getUserLink()}}" target="__blank">
+                                                    [[${blog.getUsername()}]]
+                                                </a>
+                                        </div>
                                     </h2>
                                     <div class="post-meta">
                                         <time class="post-time">
