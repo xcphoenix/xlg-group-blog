@@ -29,6 +29,7 @@ public class SearchManagerImpl implements SearchManager {
 
     @Override
     public int getSearchDataNum(String keyword) {
+        keyword = keyConvert(keyword);
         return searchMapper.getSearchNum(keyword);
     }
 
