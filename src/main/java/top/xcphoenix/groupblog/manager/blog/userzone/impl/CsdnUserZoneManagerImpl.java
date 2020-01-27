@@ -7,6 +7,8 @@ import org.jsoup.nodes.Element;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
+import top.xcphoenix.groupblog.expection.blog.BlogParseException;
+import top.xcphoenix.groupblog.expection.processor.ProcessorException;
 import top.xcphoenix.groupblog.model.dao.Blog;
 import top.xcphoenix.groupblog.model.dto.PageBlogs;
 import top.xcphoenix.groupblog.processor.Processor;
@@ -47,44 +49,51 @@ public class CsdnUserZoneManagerImpl implements UserZoneManager {
     private String noDataFlag;
 
     @Override
-    public PageBlogs getPageBlogUrls(String userZoneUrl) throws Exception {
+    public PageBlogs getPageBlogUrls(String userZoneUrl) throws ProcessorException, BlogParseException {
         List<Blog> blogs = new ArrayList<>();
+        Timestamp oldTime = new Timestamp(System.currentTimeMillis());
+        Timestamp newTime = new Timestamp(0L);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(dateFormat);
+        boolean hasData;
+        List<Element> elements;
 
         // use selenium
         String webContent = (String) processor.processor(userZoneUrl);
-        Document document = Jsoup.parse(webContent);
-        List<Element> elements = document.getElementsByClass(blogTagRule);
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(dateFormat);
 
-        boolean hasData = document.select(noDataFlag).size() == 0;
+        try {
+            Document document = Jsoup.parse(webContent);
+            elements = document.getElementsByClass(blogTagRule);
 
-        Timestamp oldTime = new Timestamp(System.currentTimeMillis());
-        Timestamp newTime = new Timestamp(0L);
+            hasData = document.select(noDataFlag).size() == 0;
 
-        for (Element element : elements) {
-            Blog blog = new Blog();
-            String originalLink = element.select(linkRule).first().attr("href");
-            blog.setOriginalLink(originalLink);
-            blog.setSummary(element.select(summaryRule).first().text());
-            blog.setBlogId(Long.parseLong(originalLink.substring(originalLink.lastIndexOf("/") + 1)));
+            for (Element element : elements) {
+                Blog blog = new Blog();
+                String originalLink = element.select(linkRule).first().attr("href");
+                blog.setOriginalLink(originalLink);
+                blog.setSummary(element.select(summaryRule).first().text());
+                blog.setBlogId(Long.parseLong(originalLink.substring(originalLink.lastIndexOf("/") + 1)));
 
-            Timestamp currentTime = new Timestamp(
-                    simpleDateFormat.parse(
-                        element.select(dateRule).first().text()
-                    ).getTime()
-            );
-            blog.setPubTime(currentTime);
+                Timestamp currentTime = new Timestamp(
+                        simpleDateFormat.parse(
+                                element.select(dateRule).first().text()
+                        ).getTime()
+                );
+                blog.setPubTime(currentTime);
 
-            long timeValue = currentTime.getTime();
-            if (timeValue > newTime.getTime()) {
-                newTime = currentTime;
+                long timeValue = currentTime.getTime();
+                if (timeValue > newTime.getTime()) {
+                    newTime = currentTime;
+                }
+                if (timeValue < oldTime.getTime()) {
+                    oldTime = currentTime;
+                }
+
+                blogs.add(blog);
             }
-            if (timeValue < oldTime.getTime()) {
-                oldTime = currentTime;
-            }
-
-            blogs.add(blog);
+        } catch (Exception ex) {
+            throw new BlogParseException("blog parse error, userZone url: " + userZoneUrl, ex);
         }
+
         if (!hasData || elements.size() == 0) {
             return null;
         }

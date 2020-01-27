@@ -9,19 +9,16 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.CapabilityType;
+import org.openqa.selenium.remote.ErrorHandler;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
-import top.xcphoenix.groupblog.expection.ProcessorException;
+import top.xcphoenix.groupblog.expection.processor.SeleniumProcessorException;
 import top.xcphoenix.groupblog.processor.Processor;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import java.io.File;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.nio.charset.StandardCharsets;
-import java.util.Objects;
 
 /**
  * @author xuanc
@@ -50,7 +47,7 @@ public class SeleniumProcessor implements Processor {
     }
 
     @PostConstruct
-    private void init() throws UnsupportedEncodingException {
+    private void init() throws SeleniumProcessorException {
         log.info("processor[" + this.getClass() + "] init");
 
         File driverFile;
@@ -60,7 +57,7 @@ public class SeleniumProcessor implements Processor {
         driverFile = new File(driverLocation);
 
         if (!driverFile.exists()) {
-            throw new ProcessorException("driver not found, file: " + driverLocation);
+            throw new SeleniumProcessorException("driver not found, file: " + driverLocation);
         }
         System.setProperty("webdriver.chrome.driver", driverFile.getAbsolutePath());
 

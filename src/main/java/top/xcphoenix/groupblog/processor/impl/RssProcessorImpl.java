@@ -1,13 +1,12 @@
 package top.xcphoenix.groupblog.processor.impl;
 
-import com.rometools.rome.feed.atom.Feed;
 import com.rometools.rome.feed.synd.SyndFeed;
 import com.rometools.rome.io.FeedException;
 import com.rometools.rome.io.SyndFeedInput;
 import com.rometools.rome.io.XmlReader;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import top.xcphoenix.groupblog.expection.RssProcessorException;
+import top.xcphoenix.groupblog.expection.processor.RssProcessorException;
 import top.xcphoenix.groupblog.processor.Processor;
 
 import java.io.IOException;

@@ -2,6 +2,8 @@ package top.xcphoenix.groupblog.manager.blog.content.impl;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import top.xcphoenix.groupblog.expection.blog.BlogParseException;
+import top.xcphoenix.groupblog.expection.processor.ProcessorException;
 import top.xcphoenix.groupblog.model.dao.Blog;
 import top.xcphoenix.groupblog.manager.blog.content.BlogContentManager;
 
@@ -16,7 +18,7 @@ public class HexoBlogContentManagerImpl implements BlogContentManager {
 
 
     @Override
-    public Blog getBlog(String url, Blog blog) throws Exception {
+    public Blog getBlog(String url, Blog blog) throws ProcessorException, BlogParseException {
         return null;
     }
 

@@ -34,7 +34,7 @@ public class ScheduleCrawlService {
      * 定时增量抓取
      */
     @Scheduled(cron = "0 20 9,21 * * *")
-    public void crawlIncr() throws Exception {
+    public void crawlIncr() {
         log.info("exec cron task...");
 
         List<UserSummary> summaryList = userManager.getUsersSummary();

@@ -1,5 +1,7 @@
 package top.xcphoenix.groupblog.manager.blog.userzone;
 
+import top.xcphoenix.groupblog.expection.blog.BlogParseException;
+import top.xcphoenix.groupblog.expection.processor.ProcessorException;
 import top.xcphoenix.groupblog.model.dto.PageBlogs;
 
 /**
@@ -14,8 +16,9 @@ public interface UserZoneManager {
      *
      * @param userZoneUrl 用户博客主页
      * @return blog url
-     * @throws Exception 时间解析异常
+     * @throws ProcessorException 页面获取异常
+     * @throws BlogParseException 页面解析异常
      */
-    PageBlogs getPageBlogUrls(String userZoneUrl) throws Exception;
+    PageBlogs getPageBlogUrls(String userZoneUrl) throws BlogParseException, ProcessorException;
 
 }

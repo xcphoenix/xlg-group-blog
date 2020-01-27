@@ -17,13 +17,13 @@ import top.xcphoenix.groupblog.service.crawl.CrawlBlogService;
 @Service("crawl-csdn")
 class CsdnCrawlBlogServiceImpl implements CrawlBlogService {
 
-    private BlogService blogManager;
+    private BlogService blogService;
     private UserMapper userMapper;
     private BlogTypeMapper blogTypeMapper;
 
     public CsdnCrawlBlogServiceImpl(@Qualifier("service-csdn") BlogService blogManager,
                                     UserMapper userMapper, BlogTypeMapper blogTypeMapper) {
-        this.blogManager = blogManager;
+        this.blogService = blogManager;
         this.userMapper = userMapper;
         this.blogTypeMapper = blogTypeMapper;
     }
@@ -32,14 +32,14 @@ class CsdnCrawlBlogServiceImpl implements CrawlBlogService {
     public void crawlAll(long uid) throws Exception {
         User user = userMapper.getUserBlogArgs(uid);
         BlogType blogType = blogTypeMapper.getBlogType(user.getBlogType());
-        blogManager.execFull(user, blogType);
+        blogService.execFull(user, blogType);
     }
 
     @Override
-    public void crawlIncrement(long uid) throws Exception {
+    public void crawlIncrement(long uid) {
         User user = userMapper.getUserBlogArgs(uid);
         BlogType blogType = blogTypeMapper.getBlogType(user.getBlogType());
-        blogManager.execIncrement(user, blogType);
+        blogService.execIncrement(user, blogType);
     }
 
 }

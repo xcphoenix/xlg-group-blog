@@ -1,6 +1,7 @@
 package top.xcphoenix.groupblog.processor;
 
 import com.rometools.rome.io.FeedException;
+import top.xcphoenix.groupblog.expection.processor.ProcessorException;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -10,6 +11,7 @@ import java.net.MalformedURLException;
  * @version 1.0
  * @date 2020/1/10 下午7:06
  */
+@FunctionalInterface
 public interface Processor {
 
     /**
@@ -17,8 +19,8 @@ public interface Processor {
      *
      * @param url 待处理的页面
      * @return result data
-     * @throws Exception rss、selenium处理产生的异常
+     * @throws ProcessorException 页面处理产生的异常
      */
-    Object processor(String url) throws Exception;
+    Object processor(String url) throws ProcessorException;
 
 }

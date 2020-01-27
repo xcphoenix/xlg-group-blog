@@ -18,6 +18,7 @@
 		UPDATE `user`
 		SET last_pub_time = #{lastPubTime}
 		WHERE uid = #{uid}
+			AND `last_pub_time` &lt; #{lastPubTime}
 	</update>
 	
 	<select id="getLastPubTime" resultType="java.sql.Timestamp">

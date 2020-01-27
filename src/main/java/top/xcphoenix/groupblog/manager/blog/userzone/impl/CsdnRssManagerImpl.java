@@ -3,6 +3,8 @@ package top.xcphoenix.groupblog.manager.blog.userzone.impl;
 import com.rometools.rome.feed.synd.SyndEntry;
 import com.rometools.rome.feed.synd.SyndFeed;
 import org.springframework.stereotype.Service;
+import top.xcphoenix.groupblog.expection.blog.BlogParseException;
+import top.xcphoenix.groupblog.expection.processor.ProcessorException;
 import top.xcphoenix.groupblog.model.dao.Blog;
 import top.xcphoenix.groupblog.model.dto.PageBlogs;
 import top.xcphoenix.groupblog.processor.Processor;
@@ -25,44 +27,47 @@ public class CsdnRssManagerImpl implements UserZoneManager {
     private Processor processor;
 
     @Override
-    public PageBlogs getPageBlogUrls(String userZoneUrl) throws Exception {
+    public PageBlogs getPageBlogUrls(String userZoneUrl) throws BlogParseException, ProcessorException {
         SyndFeed feed = (SyndFeed) processor.processor(userZoneUrl);
         List<Blog> blogs = new ArrayList<>();
 
         Timestamp oldTime = new Timestamp(System.currentTimeMillis());
         Timestamp newTime = new Timestamp(0L);
 
-        for (SyndEntry entry : feed.getEntries()) {
-            Blog blog = new Blog();
-            blog.setAuthor(entry.getAuthor());
-            String link = entry.getLink();
-            blog.setOriginalLink(link);
+        try {
+            for (SyndEntry entry : feed.getEntries()) {
+                Blog blog = new Blog();
+                blog.setAuthor(entry.getAuthor());
+                String link = entry.getLink();
+                blog.setOriginalLink(link);
 
-            // csdn 开启 其他不开启
-            blog.setBlogId(Long.parseLong(link.substring(link.lastIndexOf("/") + 1)));
+                // csdn 开启 其他不开启
+                blog.setBlogId(Long.parseLong(link.substring(link.lastIndexOf("/") + 1)));
 
-            Timestamp currentTime = new Timestamp(entry.getPublishedDate().getTime());
-            blog.setPubTime(currentTime);
-            long timeValue = currentTime.getTime();
-            if (timeValue > newTime.getTime()) {
-                newTime = currentTime;
-            }
-            if (timeValue < oldTime.getTime()) {
-                oldTime = currentTime;
-            }
-
-            String desc = entry.getDescription().getValue();
-            if (desc != null) {
-                String[] strings = desc.split("<div[^>]*?>[\\s\\S]*?</div>");
-                if (strings.length > 0) {
-                    blog.setSummary(strings[0].trim());
+                Timestamp currentTime = new Timestamp(entry.getPublishedDate().getTime());
+                blog.setPubTime(currentTime);
+                long timeValue = currentTime.getTime();
+                if (timeValue > newTime.getTime()) {
+                    newTime = currentTime;
                 }
+                if (timeValue < oldTime.getTime()) {
+                    oldTime = currentTime;
+                }
+
+                String desc = entry.getDescription().getValue();
+                if (desc != null) {
+                    String[] strings = desc.split("<div[^>]*?>[\\s\\S]*?</div>");
+                    if (strings.length > 0) {
+                        blog.setSummary(strings[0].trim());
+                    }
+                }
+                blogs.add(blog);
             }
-            blogs.add(blog);
+        } catch (Exception ex) {
+            throw new BlogParseException("blog parse error", ex);
         }
 
         return new PageBlogs(oldTime, newTime, blogs);
     }
-
 
 }

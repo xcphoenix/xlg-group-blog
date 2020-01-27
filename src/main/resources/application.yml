@@ -45,3 +45,5 @@ pagehelper:
   reasonable: true
   
 debug: true
+
+config-dir: "/home/xuanc/桌面/GroupBlog/src/main/resources/config"

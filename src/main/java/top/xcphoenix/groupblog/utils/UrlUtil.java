@@ -1,7 +1,7 @@
 package top.xcphoenix.groupblog.utils;
 
 import com.alibaba.fastjson.JSONObject;
-import top.xcphoenix.groupblog.expection.BlogArgException;
+import top.xcphoenix.groupblog.expection.blog.BlogArgException;
 import top.xcphoenix.groupblog.model.dao.BlogType;
 
 import java.util.Map;
@@ -26,7 +26,7 @@ public class UrlUtil {
         userArgs = JSONObject.parseObject(userBlogArgs).getInnerMap();
     }
 
-    private String parseUrlByRule(String url) {
+    private String parseUrlByRule(String url) throws BlogArgException {
         Matcher argMatcher = argPattern.matcher(url);
         while (argMatcher.find()) {
             String value = (String) userArgs.get(argMatcher.group(1));
@@ -39,7 +39,7 @@ public class UrlUtil {
         return url;
     }
 
-    public String getUserZoneUrl() {
+    public String getUserZoneUrl() throws BlogArgException {
         if (userZoneUrl != null) {
             return userZoneUrl;
         }
@@ -47,7 +47,7 @@ public class UrlUtil {
         return parseUrlByRule(userZoneUrl);
     }
 
-    public String getRssUrl() {
+    public String getRssUrl() throws BlogArgException {
         if (rssUrl != null) {
             return rssUrl;
         }

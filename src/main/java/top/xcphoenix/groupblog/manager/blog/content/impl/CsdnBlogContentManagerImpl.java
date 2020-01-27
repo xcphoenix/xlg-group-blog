@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
+import top.xcphoenix.groupblog.expection.blog.BlogParseException;
+import top.xcphoenix.groupblog.expection.processor.ProcessorException;
 import top.xcphoenix.groupblog.model.dao.Blog;
 import top.xcphoenix.groupblog.processor.Processor;
 import top.xcphoenix.groupblog.manager.blog.content.BlogContentManager;
@@ -50,44 +52,43 @@ public class CsdnBlogContentManagerImpl implements BlogContentManager {
     }
 
     @Override
-    public Blog getBlog(String url, Blog blog) throws Exception {
-
+    public Blog getBlog(String url, Blog blog) throws ProcessorException, BlogParseException {
         log.info("get blog data from web content");
 
-        String webContent = (String) processor.processor(url);
-
-        if (blog == null) {
-            blog = new Blog();
-        }
-        Document document = Jsoup.parse(webContent);
-
         SimpleDateFormat pubDateFormat = new SimpleDateFormat(pubTimeFormat);
+        String webContent = (String) processor.processor(url);
+        blog = blog == null ? new Blog() : blog;
 
-        if (blog.getTitle() == null) {
-            blog.setTitle(document.select(titleRule).first().text());
+        try {
+            Document document = Jsoup.parse(webContent);
+
+            if (blog.getTitle() == null) {
+                blog.setTitle(document.select(titleRule).first().text());
+            }
+            if (blog.getAuthor() == null) {
+                blog.setAuthor(document.select(authorRule).first().text());
+            }
+            if (blog.getPubTime() == null) {
+                String timeStr = document.select(pubTimeRule).first().text();
+                blog.setPubTime(new Timestamp(pubDateFormat.parse(timeStr).getTime()));
+            }
+
+            String content = document.select(contentRule).first().html();
+            blog.setContent(content);
+
+            if (blog.getSummary() == null) {
+                blog.setSummary(
+                        HtmlUtil.delSpace(
+                                HtmlUtil.delHtmlTag(content)
+                        ).substring(0, summaryWordLimit)
+                );
+            }
+
+            blog.setOriginal(originalFlag.equals(document.select(isOriginalRule).first().text()));
+        } catch (Exception ex) {
+            throw new BlogParseException("blog parse error", ex);
         }
-        if (blog.getAuthor() == null) {
-            blog.setAuthor(document.select(authorRule).first().text());
-        }
-        if (blog.getPubTime() == null) {
-            String timeStr = document.select(pubTimeRule).first().text();
-            blog.setPubTime(new Timestamp(pubDateFormat.parse(timeStr).getTime()));
-        }
 
-        String content = document.select(contentRule).first().html();
-        blog.setContent(content);
-
-        if (blog.getSummary() == null) {
-            blog.setSummary(
-                    HtmlUtil.delSpace(
-                            HtmlUtil.delHtmlTag(content)
-                    ).substring(0, summaryWordLimit)
-            );
-        }
-
-        blog.setOriginal(originalFlag.equals(document.select(isOriginalRule).first().text()));
-
-        log.debug(JSON.toJSONString(blog));
         return blog;
     }
 
