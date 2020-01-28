@@ -1,0 +1,10 @@
+-------------------------------------------------------------------------------
+Test set: top.xcphoenix.groupblog.CrawlTest
+-------------------------------------------------------------------------------
+Tests run: 3, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 16.566 s <<< FAILURE! - in top.xcphoenix.groupblog.CrawlTest
+testBlogParse  Time elapsed: 2.429 s  <<< ERROR!
+top.xcphoenix.groupblog.expection.blog.BlogParseException: blog parse error
+	at top.xcphoenix.groupblog.CrawlTest.testBlogParse(CrawlTest.java:51)
+Caused by: java.lang.NullPointerException
+	at top.xcphoenix.groupblog.CrawlTest.testBlogParse(CrawlTest.java:51)
+
