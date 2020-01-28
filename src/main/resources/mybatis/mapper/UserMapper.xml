@@ -5,7 +5,7 @@
 	
 	<resultMap id="userItem" type="top.xcphoenix.groupblog.model.vo.UserItem">
 		<collection property="user" column="uid"
-		             select="getUserDesc" />
+		            select="getUserDesc" />
 	</resultMap>
 	
 	<select id="getUserBlogArgs" resultType="top.xcphoenix.groupblog.model.dao.User">
@@ -18,7 +18,7 @@
 		UPDATE `user`
 		SET last_pub_time = #{lastPubTime}
 		WHERE uid = #{uid}
-			AND `last_pub_time` &lt; #{lastPubTime}
+		  AND `last_pub_time` &lt; #{lastPubTime}
 	</update>
 	
 	<select id="getLastPubTime" resultType="java.sql.Timestamp">
@@ -47,11 +47,29 @@
 	</select>
 	
 	<select id="getUserItem" resultMap="userItem">
-		SELECT
-			uid
+		SELECT uid
 		FROM user
-		WHERE
-			category_id = #{categoryId}
+		WHERE category_id = #{categoryId}
 	</select>
+	
+	<update id="updateUserDesc">
+		UPDATE `user`
+		<set>
+			<if test="user.qq != null and user.qq != ''">
+				`qq` = #{user.qq},
+			</if>
+			<if test="user.signature != null and user.signature != ''">
+				`signature` = #{user.signature},
+			</if>
+		</set>
+		WHERE `uid` = #{user.uid}
+	</update>
+	
+	<update id="updateUserBlogParams">
+		UPDATE `user`
+		SET `blog_type` = #{blogType},
+		    `blog_arg`  = #{blogParams}
+		WHERE `uid` = #{uid}
+	</update>
 
 </mapper>

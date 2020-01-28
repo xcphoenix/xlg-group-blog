@@ -14,8 +14,6 @@ import top.xcphoenix.groupblog.model.dao.Blog;
 import top.xcphoenix.groupblog.service.crawl.CrawlBlogService;
 import top.xcphoenix.groupblog.service.dispatch.ScheduleCrawlService;
 
-import javax.annotation.Resource;
-
 /**
  * @author      xuanc
  * @date        2020/1/15 下午3:44

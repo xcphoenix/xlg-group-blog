@@ -48,7 +48,7 @@ public interface UserMapper {
     List<UserSummary> getUsersSummary();
 
     /**
-     * 获取用户描述：用户名、用户个性签名
+     * 获取用户描述：用户名、QQ、用户个性签名
      *
      * @param uid 用户id
      * @return 用户描述
@@ -70,5 +70,15 @@ public interface UserMapper {
      * @return 用户数据
      */
     List<UserItem> getUserItem(@Param("categoryId") int categoryId);
+
+    /**
+     * 更新用户 qq、个性签名
+     *
+     * @param user 用户信息
+     */
+    void updateUserDesc(@Param("user") User user);
+
+    void updateUserBlogParams(@Param("uid") long uid, @Param("blogType") int blogType,
+                              @Param("blogParams") String blogParams);
 
 }

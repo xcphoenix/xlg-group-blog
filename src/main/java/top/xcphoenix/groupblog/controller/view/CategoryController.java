@@ -1,4 +1,4 @@
-package top.xcphoenix.groupblog.controller;
+package top.xcphoenix.groupblog.controller.view;
 
 import com.google.common.collect.ImmutableMap;
 import org.springframework.stereotype.Controller;

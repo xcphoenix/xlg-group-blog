@@ -20,18 +20,18 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 public class User {
 
-    long uid;
+    Long uid;
     String username;
     String password;
     String qq;
     String signature;
-    int blogType;
+    Integer blogType;
     /**
      * use json str
      */
     String blogArg;
     Timestamp lastPubTime;
-    int categoryId;
-    int authority;
+    Integer categoryId;
+    Integer authority;
 
 }

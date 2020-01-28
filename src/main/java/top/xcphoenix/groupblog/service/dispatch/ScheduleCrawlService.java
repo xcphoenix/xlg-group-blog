@@ -33,7 +33,7 @@ public class ScheduleCrawlService {
     /**
      * 定时增量抓取
      */
-    @Scheduled(cron = "0 20 9,21 * * *")
+    @Scheduled(cron = "0 8 9,23 * * *")
     public void crawlIncr() {
         log.info("exec cron task...");
 
