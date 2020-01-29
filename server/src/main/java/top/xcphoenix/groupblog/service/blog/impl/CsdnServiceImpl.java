@@ -16,7 +16,7 @@ import top.xcphoenix.groupblog.model.dao.BlogType;
 import top.xcphoenix.groupblog.model.dao.User;
 import top.xcphoenix.groupblog.model.dto.PageBlogs;
 import top.xcphoenix.groupblog.manager.blog.content.BlogContentManager;
-import top.xcphoenix.groupblog.manager.blog.userzone.UserZoneManager;
+import top.xcphoenix.groupblog.manager.blog.overview.BlogOverviewManager;
 import top.xcphoenix.groupblog.manager.dao.UserManager;
 import top.xcphoenix.groupblog.service.blog.BlogService;
 import top.xcphoenix.groupblog.utils.UrlUtil;
@@ -34,14 +34,14 @@ import java.util.List;
 public class CsdnServiceImpl implements BlogService {
 
     private BlogContentManager blogContentManager;
-    private UserZoneManager seleniumUserZoneService;
-    private UserZoneManager rssZoneService;
+    private BlogOverviewManager seleniumUserZoneService;
+    private BlogOverviewManager rssZoneService;
     private BlogManager blogManager;
     private UserManager userManager;
 
     public CsdnServiceImpl(@Qualifier("content-csdn") BlogContentManager blogContentManager,
-                           @Qualifier("zone-csdn") UserZoneManager seleniumUserZoneService,
-                           @Qualifier("rss-csdn") UserZoneManager rssZoneService,
+                           @Qualifier("zone-csdn") BlogOverviewManager seleniumUserZoneService,
+                           @Qualifier("rss-csdn") BlogOverviewManager rssZoneService,
                            BlogManager blogManager, UserManager userManager) {
 
         this.blogContentManager = blogContentManager;
@@ -88,7 +88,7 @@ public class CsdnServiceImpl implements BlogService {
             return;
         }
 
-        log.info("begin get blogs from url: " + urlBuilder);
+        log.info("begin get blogs from url: " + rssUrl);
 
         Timestamp lastPubTime = userManager.getLastPubTime(user.getUid());
         PageBlogs pageBlogs;
@@ -96,7 +96,7 @@ public class CsdnServiceImpl implements BlogService {
         try {
             pageBlogs = rssZoneService.getPageBlogUrls(rssUrl);
         } catch (ProcessorException | BlogParseException ex) {
-            log.warn("get userzone blogs error, userzone url: " + rssUrl, ex);
+            log.warn("get overview blogs error, overview url: " + rssUrl, ex);
             return;
         }
 
@@ -122,7 +122,7 @@ public class CsdnServiceImpl implements BlogService {
     }
 
     private Blog getBlogContent(Blog blog) {
-        if (blogManager.exists(blog.getBlogId())) {
+        if (blogManager.exists(blog.getSourceId())) {
             log.warn("blog exists, jump");
             /*
              * 防止在时间错误的情况下，不更新博客前时间无法修正
@@ -160,7 +160,7 @@ public class CsdnServiceImpl implements BlogService {
             try {
                 pageBlogs = seleniumUserZoneService.getPageBlogUrls(url);
             } catch (ProcessorException | BlogParseException ex) {
-                log.warn("get userzone blogs error, userzone url: " + url, ex);
+                log.warn("get overview blogs error, overview url: " + url, ex);
                 return;
             }
 

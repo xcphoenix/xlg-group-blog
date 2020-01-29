@@ -1,4 +1,4 @@
-package top.xcphoenix.groupblog.manager.blog.userzone;
+package top.xcphoenix.groupblog.manager.blog.overview;
 
 import top.xcphoenix.groupblog.expection.blog.BlogParseException;
 import top.xcphoenix.groupblog.expection.processor.ProcessorException;
@@ -9,7 +9,7 @@ import top.xcphoenix.groupblog.model.dto.PageBlogs;
  * @date        2020/1/13 下午3:47
  * @version     1.0
  */ 
-public interface UserZoneManager {
+public interface BlogOverviewManager {
 
     /**
      * 获取用户中心博客 url

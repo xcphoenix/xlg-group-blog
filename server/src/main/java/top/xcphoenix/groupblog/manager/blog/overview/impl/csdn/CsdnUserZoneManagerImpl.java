@@ -1,4 +1,4 @@
-package top.xcphoenix.groupblog.manager.blog.userzone.impl;
+package top.xcphoenix.groupblog.manager.blog.overview.impl.csdn;
 
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
@@ -12,7 +12,7 @@ import top.xcphoenix.groupblog.expection.processor.ProcessorException;
 import top.xcphoenix.groupblog.model.dao.Blog;
 import top.xcphoenix.groupblog.model.dto.PageBlogs;
 import top.xcphoenix.groupblog.processor.Processor;
-import top.xcphoenix.groupblog.manager.blog.userzone.UserZoneManager;
+import top.xcphoenix.groupblog.manager.blog.overview.BlogOverviewManager;
 
 import javax.annotation.Resource;
 import java.sql.Timestamp;
@@ -27,8 +27,8 @@ import java.util.List;
  */
 @Slf4j
 @Service("zone-csdn")
-@PropertySource(value = "file:${config-dir}/userzone/csdnBlogRule.properties", encoding = "utf-8")
-public class CsdnUserZoneManagerImpl implements UserZoneManager {
+@PropertySource(value = "file:${config-dir}/overview/csdnBlogRule.properties", encoding = "utf-8")
+public class CsdnUserZoneManagerImpl implements BlogOverviewManager {
 
     @Resource(name = "selenium")
     private Processor processor;
@@ -47,6 +47,8 @@ public class CsdnUserZoneManagerImpl implements UserZoneManager {
     private String dateFormat;
     @Value("${zone.blog.nodata.flag}")
     private String noDataFlag;
+    @Value("${zone.blog.filter.class}")
+    private String filterFlag;
 
     @Override
     public PageBlogs getPageBlogUrls(String userZoneUrl) throws ProcessorException, BlogParseException {
@@ -67,11 +69,16 @@ public class CsdnUserZoneManagerImpl implements UserZoneManager {
             hasData = document.select(noDataFlag).size() == 0;
 
             for (Element element : elements) {
+                // 移除过滤标签
+                // if (element.getElementsByClass(filterFlag).size() != 0) {
+                //     continue;
+                // }
+
                 Blog blog = new Blog();
                 String originalLink = element.select(linkRule).first().attr("href");
                 blog.setOriginalLink(originalLink);
                 blog.setSummary(element.select(summaryRule).first().text());
-                blog.setBlogId(Long.parseLong(originalLink.substring(originalLink.lastIndexOf("/") + 1)));
+                blog.setSourceId(originalLink.substring(originalLink.lastIndexOf("/") + 1));
 
                 Timestamp currentTime = new Timestamp(
                         simpleDateFormat.parse(

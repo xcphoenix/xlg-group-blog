@@ -1,4 +1,4 @@
-package top.xcphoenix.groupblog.manager.blog.userzone.impl;
+package top.xcphoenix.groupblog.manager.blog.overview.impl.csdn;
 
 import com.rometools.rome.feed.synd.SyndEntry;
 import com.rometools.rome.feed.synd.SyndFeed;
@@ -8,7 +8,7 @@ import top.xcphoenix.groupblog.expection.processor.ProcessorException;
 import top.xcphoenix.groupblog.model.dao.Blog;
 import top.xcphoenix.groupblog.model.dto.PageBlogs;
 import top.xcphoenix.groupblog.processor.Processor;
-import top.xcphoenix.groupblog.manager.blog.userzone.UserZoneManager;
+import top.xcphoenix.groupblog.manager.blog.overview.BlogOverviewManager;
 
 import javax.annotation.Resource;
 import java.sql.Timestamp;
@@ -21,7 +21,7 @@ import java.util.List;
  * @date 2020/1/17 下午1:30
  */
 @Service("rss-csdn")
-public class CsdnRssManagerImpl implements UserZoneManager {
+public class CsdnRssManagerImpl implements BlogOverviewManager {
 
     @Resource(name = "rss")
     private Processor processor;
@@ -40,9 +40,7 @@ public class CsdnRssManagerImpl implements UserZoneManager {
                 blog.setAuthor(entry.getAuthor());
                 String link = entry.getLink();
                 blog.setOriginalLink(link);
-
-                // csdn 开启 其他不开启
-                blog.setBlogId(Long.parseLong(link.substring(link.lastIndexOf("/") + 1)));
+                blog.setSourceId(link.substring(link.lastIndexOf("/") + 1));
 
                 Timestamp currentTime = new Timestamp(entry.getPublishedDate().getTime());
                 blog.setPubTime(currentTime);

@@ -17,9 +17,8 @@ public interface BlogService {
      *
      * @param user 用户信息
      * @param blogType 博客类型
-     * @throws Exception 产生的异常
      */
-    void execFull(User user, BlogType blogType) throws Exception;
+    void execFull(User user, BlogType blogType);
 
     /**
      * 增量更新

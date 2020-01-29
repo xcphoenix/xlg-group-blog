@@ -1,12 +1,11 @@
 package top.xcphoenix.groupblog;
 
-import jdk.nashorn.internal.ir.annotations.Ignore;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import top.xcphoenix.groupblog.service.blog.impl.CsdnServiceImpl;
-import top.xcphoenix.groupblog.manager.blog.userzone.UserZoneManager;
+import top.xcphoenix.groupblog.manager.blog.overview.BlogOverviewManager;
 
 import javax.annotation.Resource;
 
@@ -20,7 +19,7 @@ import javax.annotation.Resource;
 public class UserZoneTest {
 
     @Resource(name = "zone-csdn")
-    private UserZoneManager userZoneService;
+    private BlogOverviewManager userZoneService;
 
     @Resource(name = "service-csdn")
     private CsdnServiceImpl csdnManager;

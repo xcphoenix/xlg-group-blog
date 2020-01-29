@@ -37,8 +37,8 @@ public class BlogManagerImpl implements BlogManager {
     }
 
     @Override
-    public boolean exists(long blogId) {
-        return blogMapper.exists(blogId);
+    public boolean exists(String sourceId) {
+        return blogMapper.exists(sourceId);
     }
 
     @Override

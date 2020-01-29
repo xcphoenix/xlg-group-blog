@@ -23,10 +23,10 @@ public interface BlogManager {
     /**
      * 博客是否存在
      *
-     * @param blogId 博客id
+     * @param sourceId 博客来源id
      * @return 博客存在否
      */
-    boolean exists(long blogId);
+    boolean exists(String sourceId);
 
     /**
      * 依据时间获取博客摘要信息

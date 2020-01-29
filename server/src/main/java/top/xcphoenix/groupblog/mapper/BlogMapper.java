@@ -25,10 +25,10 @@ public interface BlogMapper {
     /**
      * 检索博客是否存在
      *
-     * @param blogId 博客id
+     * @param sourceId 博客id
      * @return 博客是否存在
      */
-    boolean exists(@Param("blogId") long blogId);
+    boolean exists(@Param("sourceId") String sourceId);
 
     /**
      * 依据时间获取博客摘要信息

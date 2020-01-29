@@ -11,4 +11,8 @@ public class ProcessorException extends Exception {
         super(message);
     }
 
+    public ProcessorException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
 }
