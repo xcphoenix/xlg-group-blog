@@ -46,7 +46,9 @@ public class LinkGeneratorServiceImpl implements LinkGeneratorService {
 
     @Override
     public String getCategoryLink(int categoryId) {
-        return CATEGORY_LINK_PREFIX + "/" + categoryId;
+        // TODO 单独分类
+        // return CATEGORY_LINK_PREFIX + "/" + categoryId;
+        return CATEGORY_LINK_PREFIX;
     }
 
     @Override

@@ -44,4 +44,10 @@ public class LoginApiController {
         }
     }
 
+    @PostMapping("/logout")
+    public Result logout(@SessionAttribute("user") long uid, HttpSession session) {
+        session.removeAttribute("user");
+        return Result.success("注销成功", null);
+    }
+
 }

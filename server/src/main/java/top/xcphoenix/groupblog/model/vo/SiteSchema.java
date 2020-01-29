@@ -6,6 +6,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 import top.xcphoenix.groupblog.config.MixPropertySourceFactory;
+import top.xcphoenix.groupblog.model.dao.Links;
 import top.xcphoenix.groupblog.model.dto.NumStatics;
 
 import java.util.List;

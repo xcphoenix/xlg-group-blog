@@ -1,4 +1,4 @@
-package top.xcphoenix.groupblog.model.vo;
+package top.xcphoenix.groupblog.model.dao;
 
 import lombok.Data;
 
@@ -12,6 +12,7 @@ import lombok.Data;
 @Data
 public class Links {
 
+    private Long linkId;
     private String desc;
     private String link;
     /**

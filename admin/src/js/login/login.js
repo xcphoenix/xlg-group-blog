@@ -50,5 +50,8 @@ layui.use(['element', 'layer'], function () {
         return false;
     });
 
+    $('#logout').click(function () {
+        console.log('click')
+    });
 
 });

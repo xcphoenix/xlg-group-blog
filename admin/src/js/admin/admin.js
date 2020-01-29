@@ -237,4 +237,29 @@ layui.use(['table', 'form', 'element', 'layer'], function () {
 
     });
 
+    $(document).on('click', '#logout', function () {
+        $.ajax({
+            url: domain + "/api/logout",
+            type: 'POST',
+            xhrFields: {
+                withCredentials: true
+            },
+            dataType: 'json',
+            contentType: 'application/json;charset=UTF-8',
+            success: function (data) {
+                console.log(data);
+                showMsg(data.msg);
+                setTimeout(
+                    function () {
+                        location.href = '/index.html';
+                    },
+                    2000
+                );
+            },
+            error: function (err) {
+                errorDealWith(err);
+            }
+        });
+    })
+
 });

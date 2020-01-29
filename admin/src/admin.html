@@ -17,7 +17,7 @@
                 <a href="javascript:;">其它系统</a>
                 <dl class="layui-nav-child">
                     <dd><a href="https://www.xiyoulinux.org" target="_blank">小组官网</a></dd>
-                    <dd><a href="https://cs.xiyoulinux.org" target="_blank">CS平台</a></dd>
+                    <dd><a href="http://cs.xiyoulinux.org" target="_blank">CS平台</a></dd>
                     <dd><a href="https://exmail.qq.com/cgi-bin/loginpage" target="_blank">企业邮快速登录</a></dd>
                 </dl>
             </li>
@@ -31,7 +31,7 @@
                     <span id="user_name"></span>
                 </a>
             </li>
-            <li class="layui-nav-item"><a href="">注销</a></li>
+            <li class="layui-nav-item"><span id="logout" style="color: rgba(255,255,255,.7);">注销</span></li>
         </ul>
     </div>
     
@@ -128,12 +128,15 @@
                                                 <input type="password" name="newPasswd" required lay-verify="required"
                                                        placeholder="请输入要修改的密码" autocomplete="off" class="layui-input">
                                             </div>
-                                            <div class="layui-form-mid layui-word-aux">密码长度在6~20间，至少包含数字、字母、特殊字符（除空格）其中的两种</div>
+                                            <div class="layui-form-mid layui-word-aux">
+                                                密码长度在6~20间，至少包含数字、字母、特殊字符（除空格）其中的两种
+                                            </div>
                                         </div>
                                         <div class="layui-form-item">
                                             <label class="layui-form-label">密码确认</label>
                                             <div class="layui-input-inline">
-                                                <input type="password" name="confirmPasswd" required lay-verify="required"
+                                                <input type="password" name="confirmPasswd" required
+                                                       lay-verify="required"
                                                        placeholder="请确认输入的密码" autocomplete="off" class="layui-input">
                                             </div>
                                             <div class="layui-form-mid layui-word-aux">请再一次确认密码</div>
