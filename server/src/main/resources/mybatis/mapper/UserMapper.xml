@@ -71,5 +71,18 @@
 		    `blog_arg`  = #{blogParams}
 		WHERE `uid` = #{uid}
 	</update>
+	
+	<select id="checkPasswd" resultType="integer">
+		SELECT COUNT(*)
+		FROM `user`
+		WHERE uid = #{uid}
+		  AND `password` = #{passwd}
+	</select>
+	
+	<update id="updatePasswd">
+		UPDATE `user`
+		SET `password` = #{newPasswd}
+		WHERE `uid` = #{uid}
+	</update>
 
 </mapper>

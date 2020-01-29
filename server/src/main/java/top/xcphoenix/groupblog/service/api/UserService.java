@@ -33,4 +33,29 @@ public interface UserService {
      */
     void updateUserBlogParams(long uid, int blogType, String blogParams);
 
+    /**
+     * 正则校验密码是否符合要求
+     *
+     * @param passwdArray 密码数组
+     * @return 是否合法
+     */
+    boolean validatePasswd(String ... passwdArray);
+
+    /**
+     * 检查密码是否匹配
+     *
+     * @param uid 用户id
+     * @param passwd 用户密码
+     * @return 是否匹配
+     */
+    boolean checkPasswd(long uid, String passwd);
+
+    /**
+     * 更新用户密码
+     *
+     * @param uid 用户id
+     * @param newPasswd 新密码
+     */
+    void updatePasswd(long uid, String newPasswd);
+
 }

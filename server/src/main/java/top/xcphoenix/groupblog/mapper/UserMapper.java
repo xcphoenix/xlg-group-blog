@@ -78,7 +78,31 @@ public interface UserMapper {
      */
     void updateUserDesc(@Param("user") User user);
 
+    /**
+     * 更新博客参数
+     *
+     * @param uid        用户id
+     * @param blogType   博客类型
+     * @param blogParams 博客参数
+     */
     void updateUserBlogParams(@Param("uid") long uid, @Param("blogType") int blogType,
                               @Param("blogParams") String blogParams);
+
+    /**
+     * 校验密码
+     *
+     * @param uid    用户id
+     * @param passwd 密码
+     * @return 密码是否正确
+     */
+    int checkPasswd(@Param("uid") long uid, @Param("passwd") String passwd);
+
+    /**
+     * 更新用户密码
+     *
+     * @param uid       用户id
+     * @param newPasswd 新的密码
+     */
+    void updatePasswd(@Param("uid") long uid, @Param("newPasswd") String newPasswd);
 
 }

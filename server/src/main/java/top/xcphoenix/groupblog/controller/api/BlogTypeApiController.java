@@ -18,12 +18,12 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/api")
-public class BlogTypeController {
+public class BlogTypeApiController {
 
     private BlogTypeService blogTypeService;
     private UserManager userManager;
 
-    public BlogTypeController(BlogTypeService blogTypeService, UserManager userManager) {
+    public BlogTypeApiController(BlogTypeService blogTypeService, UserManager userManager) {
         this.blogTypeService = blogTypeService;
         this.userManager = userManager;
     }

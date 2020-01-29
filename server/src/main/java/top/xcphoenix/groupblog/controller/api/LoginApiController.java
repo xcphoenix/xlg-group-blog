@@ -15,11 +15,11 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/api")
-public class LoginController {
+public class LoginApiController {
 
     private LoginService loginService;
 
-    public LoginController(LoginService loginService) {
+    public LoginApiController(LoginService loginService) {
         this.loginService = loginService;
     }
 

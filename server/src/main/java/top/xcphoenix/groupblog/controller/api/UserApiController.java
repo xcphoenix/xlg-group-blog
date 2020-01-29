@@ -1,12 +1,16 @@
 package top.xcphoenix.groupblog.controller.api;
 
+import com.alibaba.fastjson.JSONObject;
 import org.springframework.web.bind.annotation.*;
 import top.xcphoenix.groupblog.manager.dao.UserManager;
 import top.xcphoenix.groupblog.model.Result;
 import top.xcphoenix.groupblog.model.dao.User;
 import top.xcphoenix.groupblog.model.dto.BlogTypeParam;
 import top.xcphoenix.groupblog.service.api.BlogTypeService;
+import top.xcphoenix.groupblog.service.api.LoginService;
 import top.xcphoenix.groupblog.service.api.UserService;
+
+import java.lang.reflect.Array;
 
 /**
  * @author      xuanc
@@ -20,11 +24,13 @@ public class UserApiController {
     private UserService userService;
     private UserManager userManager;
     private BlogTypeService blogTypeService;
+    private LoginService loginService;
 
-    public UserApiController(UserService userService, UserManager userManager, BlogTypeService blogTypeService) {
+    public UserApiController(UserService userService, UserManager userManager, BlogTypeService blogTypeService, LoginService loginService) {
         this.userService = userService;
         this.userManager = userManager;
         this.blogTypeService = blogTypeService;
+        this.loginService = loginService;
     }
 
     @GetMapping("/data")
@@ -68,6 +74,28 @@ public class UserApiController {
         }
         userService.updateUserBlogParams(uid, blogTypeParam.getBlogType(), userBlogParams);
         return Result.success("修改成功", null);
+    }
+
+    @PutMapping("/passwd")
+    public Result updateUserPasswd(@SessionAttribute("user") long uid,
+                                   @RequestBody JSONObject jsonObject) {
+        String currPasswd = jsonObject.getString("currentPasswd");
+        String newPasswd = jsonObject.getString("newPasswd");
+
+        if (currPasswd == null || newPasswd == null) {
+            return Result.error(-1, "缺少必要的数据");
+        }
+        if (!userService.validatePasswd(newPasswd)) {
+            return Result.error(-1, "密码不符合要求");
+        }
+
+        if (userService.checkPasswd(uid, currPasswd)) {
+            userService.updatePasswd(uid, newPasswd);
+            return Result.success("修改成功", null);
+        } else {
+            return Result.error(-1, "密码错误");
+        }
+
     }
 
 }
