@@ -53,7 +53,7 @@
                                     <header th:replace="this::post-header(true)"></header>
                                     <!-- 博客概要 -->
                                     <div class="post-body" style="opacity: 1; display: block; transform: translateY(0px);">
-                                        [[${blogData.getSummary()}]]
+                                        [(${blogData.getSummary()})]
                                         <!-- 阅读全文按钮 -->
                                         <div class="post-button text-center">
                                             <a class="btn" th:href="@{${blogData.getBlogLink()}}">阅读全文 »</a>
