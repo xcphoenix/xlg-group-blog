@@ -1,10 +1,13 @@
 package top.xcphoenix.groupblog.service.api.impl;
 
 import org.springframework.stereotype.Service;
+import top.xcphoenix.groupblog.mapper.BlogMapper;
 import top.xcphoenix.groupblog.mapper.UserMapper;
+import top.xcphoenix.groupblog.model.dao.BlogType;
 import top.xcphoenix.groupblog.model.dao.User;
 import top.xcphoenix.groupblog.service.api.UserService;
 
+import java.sql.Timestamp;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -17,10 +20,12 @@ import java.util.regex.Pattern;
 public class UserServiceImpl implements UserService {
 
     private UserMapper userMapper;
+    private BlogMapper blogMapper;
     private Pattern pattern = Pattern.compile("^(?![\\d]+$)(?![a-zA-Z]+$)(?![^\\da-zA-Z]+$).{6,20}$");
 
-    public UserServiceImpl(UserMapper userMapper) {
+    public UserServiceImpl(UserMapper userMapper, BlogMapper blogMapper) {
         this.userMapper = userMapper;
+        this.blogMapper = blogMapper;
     }
 
     @Override
@@ -35,7 +40,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void updateUserBlogParams(long uid, int blogType, String blogParams) {
-        userMapper.updateUserBlogParams(uid, blogType, blogParams);
+        User user = userMapper.getUserBlogArgs(uid);
+        if (user.getBlogType() != blogType || !user.getBlogArg().equals(blogParams)) {
+            // 重设时间
+            userMapper.resetPubTime(uid, new Timestamp(0));
+            userMapper.updateUserBlogParams(uid, blogType, blogParams);
+        }
     }
 
     @Override

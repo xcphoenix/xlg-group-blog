@@ -14,6 +14,12 @@
 		WHERE uid = #{uid}
 	</select>
 	
+	<update id="resetPubTime">
+		UPDATE `user`
+		SET last_pub_time = #{resetTime}
+		WHERE uid = #{uid}
+	</update>
+	
 	<update id="updateLastPubTime">
 		UPDATE `user`
 		SET last_pub_time = #{lastPubTime}

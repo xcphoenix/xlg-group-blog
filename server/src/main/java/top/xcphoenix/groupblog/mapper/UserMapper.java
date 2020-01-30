@@ -25,6 +25,14 @@ public interface UserMapper {
     User getUserBlogArgs(@Param("uid") long uid);
 
     /**
+     * 重设博客更新时间
+     *
+     * @param uid 用户id
+     * @param resetTime 重设时间
+     */
+    void resetPubTime(@Param("uid") long uid, @Param("resetTime") Timestamp resetTime);
+
+    /**
      * 更新最新博客时间
      *
      * @param uid         用户id

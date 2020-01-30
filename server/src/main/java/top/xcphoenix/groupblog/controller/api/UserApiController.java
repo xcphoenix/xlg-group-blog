@@ -24,13 +24,11 @@ public class UserApiController {
     private UserService userService;
     private UserManager userManager;
     private BlogTypeService blogTypeService;
-    private LoginService loginService;
 
-    public UserApiController(UserService userService, UserManager userManager, BlogTypeService blogTypeService, LoginService loginService) {
+    public UserApiController(UserService userService, UserManager userManager, BlogTypeService blogTypeService) {
         this.userService = userService;
         this.userManager = userManager;
         this.blogTypeService = blogTypeService;
-        this.loginService = loginService;
     }
 
     @GetMapping("/data")
