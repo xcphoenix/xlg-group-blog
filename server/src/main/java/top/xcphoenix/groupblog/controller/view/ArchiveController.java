@@ -67,7 +67,7 @@ public class ArchiveController {
         SiteSchema siteSchema = siteService.getSiteSchemaWithUser(uid);
         List<ArchiveBlogs> archiveBlogs = archiveService.getArchiveAsUser(uid, pageNum, pageSize);
         Pagination pagination = paginationService.getPaginationAsUser(pageNum, pageSize,
-                linkGeneratorService.getArchiveLinkPrefix(), uid);
+                linkGeneratorService.getArchiveLinkAsUser(uid), uid);
 
         map.put("siteSchema", siteSchema);
         map.put("archiveData", archiveBlogs);
