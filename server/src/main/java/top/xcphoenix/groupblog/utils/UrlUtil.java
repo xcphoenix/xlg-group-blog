@@ -17,8 +17,8 @@ public class UrlUtil {
 
     private BlogType blogType;
     private Map<String, Object> userArgs;
-    private String userZoneUrl;
-    private String rssUrl;
+    private String overviewUrl;
+    private String feedUrl;
     private static Pattern argPattern = Pattern.compile("\\{\\{(\\w+)}}");
 
     public UrlUtil(String userBlogArgs, BlogType blogType) {
@@ -27,6 +27,9 @@ public class UrlUtil {
     }
 
     private String parseUrlByRule(String url) throws BlogArgException {
+        if (url == null) {
+            throw new BlogArgException("invalid url");
+        }
         Matcher argMatcher = argPattern.matcher(url);
         while (argMatcher.find()) {
             String value = (String) userArgs.get(argMatcher.group(1));
@@ -39,20 +42,20 @@ public class UrlUtil {
         return url;
     }
 
-    public String getUserZoneUrl() throws BlogArgException {
-        if (userZoneUrl != null) {
-            return userZoneUrl;
+    public String getOverviewUrl() throws BlogArgException {
+        if (overviewUrl != null) {
+            return overviewUrl;
         }
-        userZoneUrl = blogType.getUserZoneRule();
-        return parseUrlByRule(userZoneUrl);
+        overviewUrl = blogType.getOverviewRule();
+        return parseUrlByRule(overviewUrl);
     }
 
-    public String getRssUrl() throws BlogArgException {
-        if (rssUrl != null) {
-            return rssUrl;
+    public String getFeedUrl() throws BlogArgException {
+        if (feedUrl != null) {
+            return feedUrl;
         }
-        rssUrl = blogType.getRssRule();
-        return parseUrlByRule(rssUrl);
+        feedUrl = blogType.getFeedRule();
+        return parseUrlByRule(feedUrl);
     }
 
 }

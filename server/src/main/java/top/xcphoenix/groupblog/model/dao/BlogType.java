@@ -18,9 +18,9 @@ public class BlogType {
 
     private int typeId;
     private String typeName;
-    private String userZoneRule;
+    private String overviewRule;
     private String blogPageRule;
-    private String rssRule;
+    private String feedRule;
     /**
      * split by ','
      */

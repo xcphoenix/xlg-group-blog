@@ -51,7 +51,7 @@ public class CsdnUserZoneManagerImpl implements BlogOverviewManager {
     private String filterFlag;
 
     @Override
-    public PageBlogs getPageBlogUrls(String userZoneUrl) throws ProcessorException, BlogParseException {
+    public PageBlogs getPageBlogUrls(String overviewUrl) throws ProcessorException, BlogParseException {
         List<Blog> blogs = new ArrayList<>();
         Timestamp oldTime = new Timestamp(System.currentTimeMillis());
         Timestamp newTime = new Timestamp(0L);
@@ -60,7 +60,7 @@ public class CsdnUserZoneManagerImpl implements BlogOverviewManager {
         List<Element> elements;
 
         // use selenium
-        String webContent = (String) processor.processor(userZoneUrl);
+        String webContent = (String) processor.processor(overviewUrl);
 
         try {
             Document document = Jsoup.parse(webContent);
@@ -98,7 +98,7 @@ public class CsdnUserZoneManagerImpl implements BlogOverviewManager {
                 blogs.add(blog);
             }
         } catch (Exception ex) {
-            throw new BlogParseException("blog parse error, userZone url: " + userZoneUrl, ex);
+            throw new BlogParseException("blog parse error, userZone url: " + overviewUrl, ex);
         }
 
         if (!hasData || elements.size() == 0) {

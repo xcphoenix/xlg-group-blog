@@ -30,6 +30,7 @@ public class CrawlTest {
     private ScheduleCrawlService scheduleCrawlService;
 
     @Autowired
+    @Qualifier("crawl-csdn")
     private CrawlBlogService crawlBlogService;
 
     @Autowired
@@ -48,7 +49,7 @@ public class CrawlTest {
 
     @Test
     void testCrawlUser() {
-        crawlBlogService.crawlIncrement(10080);
+        crawlBlogService.crawlIncrement(10074);
     }
 
     @Test

@@ -3,7 +3,7 @@
 <mapper namespace="top.xcphoenix.groupblog.mapper.BlogTypeMapper">
 	
 	<select id="getBlogType" resultType="top.xcphoenix.groupblog.model.dao.BlogType">
-		SELECT type_id, type_name, user_zone_rule, blog_page_rule, rss_rule, need_arg
+		SELECT type_id, type_name, overview_rule, blog_page_rule, feed_rule, need_arg
 		FROM blog_type
 		WHERE type_id = #{typeId}
 	</select>

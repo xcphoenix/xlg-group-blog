@@ -5,9 +5,9 @@ package top.xcphoenix.groupblog.expection.processor;
  * @date        2020/1/17 下午1:20
  * @version     1.0
  */ 
-public class RssProcessorException extends ProcessorException {
+public class FeedProcessorException extends ProcessorException {
 
-    public RssProcessorException(String message) {
+    public FeedProcessorException(String message) {
         super(message);
     }
 

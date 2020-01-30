@@ -14,11 +14,11 @@ public interface BlogOverviewManager {
     /**
      * 获取用户中心博客 url
      *
-     * @param userZoneUrl 用户博客主页
+     * @param overviewUrl 用户博客主页
      * @return blog url
      * @throws ProcessorException 页面获取异常
      * @throws BlogParseException 页面解析异常
      */
-    PageBlogs getPageBlogUrls(String userZoneUrl) throws BlogParseException, ProcessorException;
+    PageBlogs getPageBlogUrls(String overviewUrl) throws BlogParseException, ProcessorException;
 
 }

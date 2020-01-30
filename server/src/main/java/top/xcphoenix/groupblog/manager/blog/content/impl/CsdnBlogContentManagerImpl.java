@@ -1,6 +1,5 @@
 package top.xcphoenix.groupblog.manager.blog.content.impl;
 
-import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -79,7 +78,7 @@ public class CsdnBlogContentManagerImpl implements BlogContentManager {
             if (blog.getSummary() == null) {
                 blog.setSummary(
                         HtmlUtil.delSpace(
-                                HtmlUtil.delHtmlTag(content)
+                                HtmlUtil.htmlToText(content)
                         ).substring(0, summaryWordLimit)
                 );
             }

@@ -1,5 +1,8 @@
 package top.xcphoenix.groupblog.manager.blog.overview.impl.csdn;
 
+import com.rometools.rome.feed.WireFeed;
+import com.rometools.rome.feed.rss.Channel;
+import com.rometools.rome.feed.rss.Item;
 import com.rometools.rome.feed.synd.SyndEntry;
 import com.rometools.rome.feed.synd.SyndFeed;
 import org.springframework.stereotype.Service;
@@ -23,26 +26,26 @@ import java.util.List;
 @Service("rss-csdn")
 public class CsdnRssManagerImpl implements BlogOverviewManager {
 
-    @Resource(name = "rss")
+    @Resource(name = "feed")
     private Processor processor;
 
     @Override
-    public PageBlogs getPageBlogUrls(String userZoneUrl) throws BlogParseException, ProcessorException {
-        SyndFeed feed = (SyndFeed) processor.processor(userZoneUrl);
+    public PageBlogs getPageBlogUrls(String overviewUrl) throws BlogParseException, ProcessorException {
+        Channel feed = (Channel) processor.processor(overviewUrl);
         List<Blog> blogs = new ArrayList<>();
 
         Timestamp oldTime = new Timestamp(System.currentTimeMillis());
         Timestamp newTime = new Timestamp(0L);
 
         try {
-            for (SyndEntry entry : feed.getEntries()) {
+            for (Item item : feed.getItems()) {
                 Blog blog = new Blog();
-                blog.setAuthor(entry.getAuthor());
-                String link = entry.getLink();
+                blog.setAuthor(item.getAuthor());
+                String link = item.getLink();
                 blog.setOriginalLink(link);
                 blog.setSourceId(link.substring(link.lastIndexOf("/") + 1));
 
-                Timestamp currentTime = new Timestamp(entry.getPublishedDate().getTime());
+                Timestamp currentTime = new Timestamp(item.getPubDate().getTime());
                 blog.setPubTime(currentTime);
                 long timeValue = currentTime.getTime();
                 if (timeValue > newTime.getTime()) {
@@ -52,7 +55,7 @@ public class CsdnRssManagerImpl implements BlogOverviewManager {
                     oldTime = currentTime;
                 }
 
-                String desc = entry.getDescription().getValue();
+                String desc = item.getDescription().getValue();
                 if (desc != null) {
                     String[] strings = desc.split("<div[^>]*?>[\\s\\S]*?</div>");
                     if (strings.length > 0) {

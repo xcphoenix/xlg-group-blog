@@ -1,5 +1,6 @@
 package top.xcphoenix.groupblog.manager.dao.impl;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import top.xcphoenix.groupblog.mapper.BlogMapper;
 import top.xcphoenix.groupblog.mapper.UserMapper;
@@ -15,6 +16,7 @@ import java.util.List;
  * @date        2020/1/17 下午6:20
  * @version     1.0
  */
+@Slf4j
 @Service
 public class BlogManagerImpl implements BlogManager {
 
@@ -28,9 +30,12 @@ public class BlogManagerImpl implements BlogManager {
 
     @Override
     public void addBlog(Blog blog) {
+        log.info("add blog");
+
         if (blogMapper.addBlog(blog) != 0) {
             Timestamp lastPubTime = userMapper.getLastPubTime(blog.getUid());
             if (lastPubTime.getTime() < blog.getPubTime().getTime()) {
+                log.info("update user pubTime");
                 userMapper.updateLastPubTime(blog.getPubTime(), blog.getUid());
             }
         }

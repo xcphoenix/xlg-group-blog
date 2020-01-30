@@ -59,7 +59,7 @@ public class CsdnServiceImpl implements BlogService {
         String userzoneUrl;
 
         try {
-            userzoneUrl = urlUtil.getUserZoneUrl();
+            userzoneUrl = urlUtil.getOverviewUrl();
         } catch (BlogArgException bae) {
             log.warn("error happened in exec full, user: " + user.getUid(), bae);
             return;
@@ -81,8 +81,8 @@ public class CsdnServiceImpl implements BlogService {
         String rssUrl;
 
         try {
-            urlBuilder = new UrlBuilder(urlUtil.getUserZoneUrl());
-            rssUrl = urlUtil.getRssUrl();
+            urlBuilder = new UrlBuilder(urlUtil.getOverviewUrl());
+            rssUrl = urlUtil.getFeedUrl();
         } catch (BlogArgException bae) {
             log.warn("error happened in exec increment, user: " + user.getUid(), bae);
             return;
@@ -182,7 +182,7 @@ public class CsdnServiceImpl implements BlogService {
 
 }
 
-@PropertySource(value = "classpath:config/manager/csdnManager.properties", encoding = "utf-8")
+@PropertySource(value = "file:${config-dir}/manager/csdnManager.properties", encoding = "utf-8")
 class UrlBuilder {
 
     private String initUrl;
