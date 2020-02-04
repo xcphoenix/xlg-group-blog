@@ -15,7 +15,7 @@
 		<!-- encoder 默认配置为PatternLayoutEncoder -->
 		<!--定义控制台输出格式-->
 		<encoder>
-			<pattern>%gray(%date{yy-MM-dd HH:mm:ss,SSS}) %highlight(%-4level) :: [%t] %cyan(%logger{10})@%white(%line) %gray(~) %white(%m%n)</pattern>
+			<pattern>%gray(%date{yy-MM-dd HH:mm:ss.Asia/Shanghai}) %highlight(%-4level) :: [%t] %cyan(%logger{10})@%white(%line) %gray(~) %white(%m%n)</pattern>
 		</encoder>
 	</appender>
 	
@@ -46,7 +46,7 @@
 		
 		<!--定义输出格式-->
 		<encoder>
-			<pattern>%d{yyyy-MM-dd HH:mm:ss,SSS} %-4level :: [%t] %logger{10}@%line ~ %n%m%n</pattern>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.Asia/Shanghai} %-4level :: [%t] %logger{10}@%line ~ %n%m%n</pattern>
 		</encoder>
 		
 	</appender>
