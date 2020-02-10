@@ -49,7 +49,7 @@ public class CrawlTest {
 
     @Test
     void testCrawlUser() {
-        crawlBlogService.crawlIncrement(10074);
+        crawlBlogService.crawlIncrement(10067);
     }
 
     @Test

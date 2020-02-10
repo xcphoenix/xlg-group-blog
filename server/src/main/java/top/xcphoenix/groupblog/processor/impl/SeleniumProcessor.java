@@ -6,6 +6,7 @@ import net.lightbody.bmp.BrowserMobProxyServer;
 import net.lightbody.bmp.client.ClientUtil;
 import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.CapabilityType;
@@ -13,6 +14,7 @@ import org.openqa.selenium.remote.ErrorHandler;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
+import top.xcphoenix.groupblog.expection.processor.ProcessorException;
 import top.xcphoenix.groupblog.expection.processor.SeleniumProcessorException;
 import top.xcphoenix.groupblog.processor.Processor;
 
@@ -33,14 +35,31 @@ public class SeleniumProcessor implements Processor {
     private WebDriver driver;
     @Value("${processor.selenium.chrome-driver.location:./chromedriver}")
     private String driverLocation;
+    private BrowserMobProxy proxy;
 
     @Override
-    public String processor(String url) {
+    public String processor(String url) throws SeleniumProcessorException {
+        int maxTryTime = 3;
+
+        for (int tryTime = 0; tryTime <= maxTryTime; tryTime++) {
+            try {
+                return getWebContent(url);
+            } catch (WebDriverException wde) {
+                log.warn("webdriver error, tryTime: " + tryTime, wde);
+                this.destroy();
+                this.init();
+                log.info("restart chromedriver again");
+            }
+        }
+        throw new SeleniumProcessorException("webdriver error, try " + maxTryTime + " time");
+    }
+
+    private String getWebContent(String url) {
         long startTime = System.currentTimeMillis();
         log.info("processor[" + this.getClass() + "] get url page content: " + url);
 
         driver.get(url);
-        String webContent =  driver.getPageSource();
+        String webContent = driver.getPageSource();
 
         log.info("processor[" + this.getClass() + "] get web content finished, time used " + (System.currentTimeMillis() - startTime));
         return webContent;
@@ -62,12 +81,11 @@ public class SeleniumProcessor implements Processor {
         System.setProperty("webdriver.chrome.driver", driverFile.getAbsolutePath());
 
         // https://github.com/lightbody/browsermob-proxy#using-with-selenium
-        BrowserMobProxy proxy = new BrowserMobProxyServer();
+        proxy = new BrowserMobProxyServer();
         proxy.blacklistRequests("https://.*/.*.css.*", 200);
         proxy.blacklistRequests("https://.*/.*.js.*", 200);
         proxy.blacklistRequests("https://.*/.*.ico.*", 200);
         proxy.blacklistRequests("https://adaccount.csdn.net/", 200);
-        proxy.blacklistRequests("http://www/.google/.*.css.*", 200);
         proxy.start();
         Proxy seleniumProxy = ClientUtil.createSeleniumProxy(proxy);
 
@@ -86,6 +104,7 @@ public class SeleniumProcessor implements Processor {
     private void destroy() {
         log.info("processor[" + this.getClass() + "] destroy");
         driver.quit();
+        proxy.start();
     }
 
 }
