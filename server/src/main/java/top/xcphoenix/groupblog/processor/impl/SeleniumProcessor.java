@@ -104,7 +104,7 @@ public class SeleniumProcessor implements Processor {
     private void destroy() {
         log.info("processor[" + this.getClass() + "] destroy");
         driver.quit();
-        proxy.start();
+        proxy.stop();
     }
 
 }

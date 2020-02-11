@@ -29,9 +29,23 @@ spring:
     type: org.apache.tomcat.jdbc.pool.DataSource
   thymeleaf:
     # 生产环境中开启
-    cache: false
+    cache: true
     check-template-location: true
     mode: HTML
+  # 启用缓存
+  resources:
+    cache:
+      # 缓存时间 7 天
+      period: 604800
+    chain:
+      # 启用压缩
+      compressed: true
+      # 启用 md5 内容版本策略
+      strategy:
+        content:
+          enabled: true
+          paths: /**
+
 # mybatis
 mybatis:
   #  configuration:
