@@ -1,73 +1,17 @@
 <!DOCTYPE html>
 <html class="theme-next pisces use-motion" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org" lang="zh-Hans">
-
 <head>
-    <div th:replace="common/_head::head('GroupBlog')"></div>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
 </head>
-
-<body lang="zh-Hans">
-
-<div class="container sidebar-position-left
-  page-home">
-    <div class="headband"></div>
-
-    <main id="main" class="main">
-        <div class="main-inner">
-
-            <section class="accordion">
-                <div>
-                    <input id="ac-1" name="ac-radio" type="radio" onclick="doAccordion(this)">
-                    <label class="category-title" for="ac-1">
-                        Item Title
-                    </label>
-                    <div class="sub-content">
-                        <div>sub content</div>
-                        <div>sub content</div>
-                        <div>sub content</div>
-                    </div>
-                </div>
-                <div>
-                    <input id="ac-2" name="ac-radio" type="radio" onclick="doAccordion(this)">
-                    <label class="category-title" for="ac-2">Item Title</label>
-                    <div class="sub-content">
-                        <div>sub content</div>
-                        <div>sub content</div>
-                        <div>sub content</div>
-                        <div>sub content</div>
-                        <div>sub content</div>
-                        <div>sub content</div>
-                    </div>
-                </div>
-            </section>
-
-        </div>
-    </main>
-
-    <!-- 脚注 -->
-    <footer th:replace="common/_footer::_footer"></footer>
-
-    <!-- 回到开头 -->
-    <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-    </div>
-
+<body>
+<div>
+    <span th:text="${test}"
+          th:onclick="alert([[${test}]]);"></span>
 </div>
-
-<script>
-    var openSubContent = self.parentNode.querySelector(".sub-content")
-    openSubContent.style.height = openSubContent.scrollHeight + "px";
-
-    var allSubContent = document.querySelector(".accordion")
-        .querySelectorAll(".sub-content");
-    var i = 0;
-    while (i < allSubContent.length) {
-        allSubContent[i].style.height = 0;
-        i++;
-    }
-</script>
-
-<div th:replace="common/_script::script"></div>
-
 </body>
 </html>

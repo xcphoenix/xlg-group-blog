@@ -34,18 +34,18 @@ import java.util.List;
 public class CsdnServiceImpl implements BlogService {
 
     private BlogContentManager blogContentManager;
-    private BlogOverviewManager seleniumUserZoneService;
+    private BlogOverviewManager userZoneService;
     private BlogOverviewManager rssZoneService;
     private BlogManager blogManager;
     private UserManager userManager;
 
     public CsdnServiceImpl(@Qualifier("content-csdn") BlogContentManager blogContentManager,
-                           @Qualifier("zone-csdn") BlogOverviewManager seleniumUserZoneService,
+                           @Qualifier("zone-csdn") BlogOverviewManager userZoneService,
                            @Qualifier("rss-csdn") BlogOverviewManager rssZoneService,
                            BlogManager blogManager, UserManager userManager) {
 
         this.blogContentManager = blogContentManager;
-        this.seleniumUserZoneService = seleniumUserZoneService;
+        this.userZoneService = userZoneService;
         this.rssZoneService = rssZoneService;
         this.blogManager = blogManager;
         this.userManager = userManager;
@@ -158,7 +158,7 @@ public class CsdnServiceImpl implements BlogService {
             PageBlogs pageBlogs;
 
             try {
-                pageBlogs = seleniumUserZoneService.getPageBlogUrls(url);
+                pageBlogs = userZoneService.getPageBlogUrls(url);
             } catch (ProcessorException | BlogParseException ex) {
                 log.warn("get overview blogs error, overview url: " + url, ex);
                 return;

@@ -24,7 +24,7 @@ public class LoginApiController {
     }
 
     @PostMapping("/login")
-    public Result login(@RequestBody JSONObject jsonObject, HttpSession session) {
+    public Result<Long> login(@RequestBody JSONObject jsonObject, HttpSession session) {
         String username = jsonObject.getString("username");
         String password = jsonObject.getString("password");
 

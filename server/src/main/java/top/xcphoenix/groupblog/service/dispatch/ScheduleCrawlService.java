@@ -12,10 +12,6 @@ import top.xcphoenix.groupblog.utils.BeanUtil;
 import java.util.List;
 
 /**
- * TODO
- *   - 全量更新（CSDN全量更新策略）
- *   - 随机延迟
- *
  * @author      xuanc
  * @date        2020/1/19 下午1:27
  * @version     1.0

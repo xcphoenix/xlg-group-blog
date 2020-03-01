@@ -23,7 +23,7 @@ public class ScheduleController {
     }
 
     @GetMapping("/schedule")
-    public Result execSchedule(@SessionAttribute("user") long uid) {
+    public Result<Void> execSchedule(@SessionAttribute("user") long uid) {
         if (uid == 10074L) {
             scheduleCrawlService.crawlIncr();
             return Result.success("定时任务开启...", null);

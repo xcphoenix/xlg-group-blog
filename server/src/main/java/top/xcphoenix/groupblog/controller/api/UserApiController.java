@@ -32,7 +32,7 @@ public class UserApiController {
     }
 
     @GetMapping("/data")
-    public Result getUserData(@SessionAttribute("user") long uid) {
+    public Result<User> getUserData(@SessionAttribute("user") long uid) {
         User user = userService.getUserData(uid);
         if (user == null) {
             return Result.error(-1, "用户不存在");
@@ -41,7 +41,7 @@ public class UserApiController {
     }
 
     @PutMapping("/data")
-    public Result updateUserData(@SessionAttribute("user") long uid,
+    public Result<Void> updateUserData(@SessionAttribute("user") long uid,
                                  @RequestBody User user) {
         user.setUid(uid);
         if (user.getSignature() != null && user.getSignature().length() >= 25) {
@@ -52,13 +52,13 @@ public class UserApiController {
     }
 
     @GetMapping("/blog/params")
-    public Result getUserBlogTypeData(@SessionAttribute("user") long uid) {
+    public Result<User> getUserBlogTypeData(@SessionAttribute("user") long uid) {
         User user = userManager.getUserBlogArgs(uid);
         return Result.success(user);
     }
 
     @PutMapping("/blog/params")
-    public Result updateUserBlogParam(@SessionAttribute("user") long uid,
+    public Result<Void> updateUserBlogParam(@SessionAttribute("user") long uid,
                                       @RequestBody BlogTypeParam blogTypeParam) {
 
         String needParams = blogTypeService.getParams(blogTypeParam.getBlogType());
@@ -75,7 +75,7 @@ public class UserApiController {
     }
 
     @PutMapping("/passwd")
-    public Result updateUserPasswd(@SessionAttribute("user") long uid,
+    public Result<Void> updateUserPasswd(@SessionAttribute("user") long uid,
                                    @RequestBody JSONObject jsonObject) {
         String currPasswd = jsonObject.getString("currentPasswd");
         String newPasswd = jsonObject.getString("newPasswd");

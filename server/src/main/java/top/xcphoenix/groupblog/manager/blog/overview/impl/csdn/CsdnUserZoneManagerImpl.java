@@ -30,7 +30,7 @@ import java.util.List;
 @PropertySource(value = "file:${config-dir}/overview/csdnBlogRule.properties", encoding = "utf-8")
 public class CsdnUserZoneManagerImpl implements BlogOverviewManager {
 
-    @Resource(name = "selenium")
+    @Resource(name = "direct")
     private Processor processor;
 
     @Value("${zone.blog.tag.rule}")

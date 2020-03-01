@@ -93,6 +93,7 @@ public class SeleniumProcessor implements Processor {
         chromeOptions.setHeadless(true);
         chromeOptions.addArguments("--disable-gpu");
         chromeOptions.addArguments("--no-sandbox");
+        chromeOptions.addArguments("--whitelisted-ips");
         chromeOptions.addArguments("blink-settings=imagesEnabled=false");
         chromeOptions.setCapability(CapabilityType.PROXY, seleniumProxy);
 

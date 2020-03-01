@@ -24,7 +24,7 @@ layui.use(['element', 'layer'], function () {
         console.log(req_data);
 
         $.ajax({
-            url: "http://localhost:6789/api/login",
+            url: "http://groupblog.xcphoenix.top/api/login",
             type: 'POST',
             data: JSON.stringify(req_data),
             dataType: 'json',

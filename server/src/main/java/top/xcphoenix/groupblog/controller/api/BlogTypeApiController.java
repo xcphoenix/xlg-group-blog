@@ -29,7 +29,7 @@ public class BlogTypeApiController {
     }
 
     @GetMapping("/type/{typeId}/args")
-    public Result getTypeNeedArgs(@SessionAttribute("user") long uid,
+    public Result<JSONArray> getTypeNeedArgs(@SessionAttribute("user") long uid,
                                   @PathVariable("typeId") int typeId) {
         String params = blogTypeService.getParams(typeId);
         User userArgs = userManager.getUserBlogArgs(uid);

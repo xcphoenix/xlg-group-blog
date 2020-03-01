@@ -11,7 +11,7 @@ layui.use(['table', 'form', 'element', 'layer'], function () {
         }
     });
 
-    let domain = "http://localhost:6789";
+    let domain = "http://groupblog.xcphoenix.top";
     let getQQImage = function (qq) {
         let qqImageApiPrefix = "http://q1.qlogo.cn/g?b=qq&nk=";
         let qqImageApiSuffix = "&s=100";
