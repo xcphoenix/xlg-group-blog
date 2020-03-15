@@ -6,9 +6,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
- * TODO
- *  - 将数量统计分离至 StaticsService
- *  - 处理归档
  *
  * @author xuanc
  */

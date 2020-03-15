@@ -8,7 +8,7 @@
 		WHERE type_id = #{typeId}
 	</select>
 	
-	<select id="getBlogCrawlBean" resultType="String">
+	<select id="getBlogCrawlBean" resultType="java.lang.String">
 		SELECT bean_name
 		FROM blog_type
 		WHERE type_id = #{typeId}

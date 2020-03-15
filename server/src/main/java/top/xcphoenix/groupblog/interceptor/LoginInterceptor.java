@@ -24,7 +24,7 @@ public class LoginInterceptor implements HandlerInterceptor {
             return true;
         }
         response.setContentType("application/json;charset=UTF-8");
-        response.setStatus(401);
+        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         String resp = JSON.toJSONString(Result.error(-2, "用户未登录"));
         response.getWriter().write(resp);
         return false;

@@ -20,6 +20,9 @@ public class HtmlUtil {
 
     private HtmlUtil() {}
 
+    /**
+     * html 转换为普通文本
+     */
     public static String htmlToText(String htmlStr) {
         Matcher mScript = PATTERN_SCRIPT.matcher(htmlStr);
         htmlStr = mScript.replaceAll("");
@@ -33,10 +36,16 @@ public class HtmlUtil {
         return htmlStr.trim();
     }
 
+    /**
+     * html 转换为普通文本并压缩
+     */
     public static String htmlToCompressedText(String htmlStr) {
         return delSpace(htmlToText(htmlStr));
     }
 
+    /**
+     * 删除 html 中的空白
+     */
     public static String delSpace(String htmlStr) {
         htmlStr = htmlStr.replaceAll("\n", "");
         htmlStr = htmlStr.replaceAll("\t", "");

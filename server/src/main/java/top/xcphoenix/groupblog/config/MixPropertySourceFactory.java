@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 /**
+ * 自定义yml位置
  * @author      xuanc
  * @date        2020/1/20 下午5:56
  * @version     1.0

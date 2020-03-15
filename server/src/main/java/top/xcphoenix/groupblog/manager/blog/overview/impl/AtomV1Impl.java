@@ -21,7 +21,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * 使用 atom1.0 规范处理:
+ * 基于 atom1.0 规范:
  *    https://validator.w3.org/feed/docs/atom.html#sampleFeed
  *
  * @author      xuanc

@@ -57,7 +57,7 @@ public class BeanUtil implements ApplicationContextAware {
     }
 
     /**
-     * 通过name,以及Clazz返回指定的Bean
+     * 通过name,以及class返回指定的Bean
      *
      * @param name  名字
      * @param clazz 类型
