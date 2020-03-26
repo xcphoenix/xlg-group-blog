@@ -7,10 +7,10 @@ import top.xcphoenix.groupblog.model.vo.Pagination;
 import top.xcphoenix.groupblog.service.view.PaginationService;
 
 /**
- * @author      xuanc
- * @date        2020/1/25 下午2:23
- * @version     1.0
- */ 
+ * @author xuanc
+ * @version 1.0
+ * @date 2020/1/25 下午2:23
+ */
 @Service
 public class PaginationServiceImpl implements PaginationService {
 
@@ -25,21 +25,21 @@ public class PaginationServiceImpl implements PaginationService {
     @Override
     public Pagination getPagination(int pageNum, int pageSize, String baseLink) {
         long blogNums = staticsNumsManager.getSiteStaticsNum().getBlogNum();
-        int pageTotal = (int)(blogNums / pageSize);
+        int pageTotal = (int) Math.ceil(1.0 * blogNums / pageSize);
         return new Pagination(pageTotal, pageNum, pageSize, baseLink);
     }
 
     @Override
     public Pagination getPaginationAsUser(int pageNum, int pageSize, String baseLink, long uid) {
         long blogNums = staticsNumsManager.getUserStaticsNum(uid);
-        int pageTotal = (int)(blogNums / pageSize);
+        int pageTotal = (int) Math.ceil(1.0 * blogNums / pageSize);
         return new Pagination(pageTotal, pageNum, pageSize, baseLink);
     }
 
     @Override
     public Pagination getPaginationAsSearch(int pageNum, int pageSize, String baseLink, String keyword) {
         long blogNums = searchManager.getSearchDataNum(keyword);
-        int pageTotal = (int)(blogNums / pageSize);
+        int pageTotal = (int) Math.ceil(1.0 * blogNums / pageSize);
         return new Pagination(pageTotal, pageNum, pageSize, baseLink);
     }
 
