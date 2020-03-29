@@ -84,6 +84,15 @@ public class AtomV1BlogServiceImpl implements BlogService {
                 }
                 if (blogManager.exists(blog.getSourceId())) {
                     log.warn("blog had been crawled, jump");
+                    /*
+                     * 防止在时间错误的情况下，不更新博客前时间无法修正
+                     */
+                    if (blog.getPubTime() != null) {
+                        userManager.updateLastPubTime(user.getUid(), blog.getPubTime());
+                        lastPubTime = new Timestamp(
+                                Math.max(lastPubTime.getTime(), blog.getPubTime().getTime())
+                        );
+                    }
                     continue;
                 }
                 blog.setUid(user.getUid());
