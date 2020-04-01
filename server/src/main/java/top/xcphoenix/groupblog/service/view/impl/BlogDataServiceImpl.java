@@ -99,6 +99,8 @@ public class BlogDataServiceImpl implements BlogDataService {
             if (blogs.get(0).getPubTime().getTime() < time.getTime()) {
                 blogs.add(blogs.get(0));
                 blogs.set(0, null);
+            } else {
+                blogs.add(null);
             }
         }
         return blogs;
