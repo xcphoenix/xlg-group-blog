@@ -3040,3 +3040,14 @@ header.post-header {
         text-align: justify;
     }
 }
+
+/* gray website for 2020.04.04 */
+/*html {*/
+/*    filter: progid:DXImageTransform.Microsoft.BasicImage(grayscale=1);*/
+/*    -webkit-filter: grayscale(100%);*/
+/*    -moz-filter: grayscale(100%);*/
+/*    -ms-filter: grayscale(100%);*/
+/*    -o-filter: grayscale(100%);*/
+/*    filter: grayscale(100%);*/
+/*    filter: gray;*/
+/*}*/
