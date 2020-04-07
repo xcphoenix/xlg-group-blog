@@ -60,10 +60,9 @@ public class CsdnUserZoneManagerImpl implements BlogOverviewManager {
         List<Element> elements;
 
         // use selenium
-        String webContent = (String) processor.processor(overviewUrl);
+        Document document = (Document) processor.processor(overviewUrl);
 
         try {
-            Document document = Jsoup.parse(webContent);
             elements = document.getElementsByClass(blogTagRule);
 
             hasData = document.select(noDataFlag).size() == 0;
