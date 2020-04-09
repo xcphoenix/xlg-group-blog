@@ -78,12 +78,14 @@
 
 2. 本机需安装 ***google-chrome*** 浏览器，并查看版本信息，在谷歌官网上下载适合本机谷歌浏览器版本的 ChromeDriver
 
-3. 使用 Maven 打包项目为 jar 包
+3. 根据实际情况更改 `resource/config/view` 下面的配置文件设置站点和关于页面的数据信息
 
-4. 运行：
+4. 使用 Maven 打包项目为 jar 包
+
+5. 运行：
 
    ```shell
-   nohup java -jar -Dconfig-dir="[配置文件目录]" [jar包路径].jar > nohup.log &
+   nohup java -jar -Dconfig-dir="[配置文件目录]" [jar包路径] > nohup.log &
    ```
 
    - `-Dconfig-dir` 
