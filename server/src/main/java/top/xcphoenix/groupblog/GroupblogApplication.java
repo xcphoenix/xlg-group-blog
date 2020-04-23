@@ -11,7 +11,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
  */
 @SpringBootApplication
 @EnableScheduling
-@MapperScan("top.xcphoenix.groupblog.mapper")
+@MapperScan("top.xcphoenix.groupblog.mybatis.mapper")
 public class GroupblogApplication {
 
     public static void main(String[] args) {

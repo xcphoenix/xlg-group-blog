@@ -1,7 +1,7 @@
 package top.xcphoenix.groupblog.manager.dao.impl;
 
 import org.springframework.stereotype.Service;
-import top.xcphoenix.groupblog.mapper.BlogTypeMapper;
+import top.xcphoenix.groupblog.mybatis.mapper.BlogTypeMapper;
 import top.xcphoenix.groupblog.model.dao.BlogType;
 import top.xcphoenix.groupblog.manager.dao.BlogTypeManager;
 

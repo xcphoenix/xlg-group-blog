@@ -1,7 +1,7 @@
 package top.xcphoenix.groupblog.service.view.impl;
 
 import org.springframework.stereotype.Service;
-import top.xcphoenix.groupblog.mapper.ArchiveMapper;
+import top.xcphoenix.groupblog.mybatis.mapper.ArchiveMapper;
 import top.xcphoenix.groupblog.model.dto.ArchiveBlogItem;
 import top.xcphoenix.groupblog.model.dto.ArchiveBlogs;
 import top.xcphoenix.groupblog.service.view.ArchiveService;

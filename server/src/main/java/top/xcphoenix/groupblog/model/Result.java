@@ -14,6 +14,9 @@ import java.sql.ResultSet;
 @NoArgsConstructor
 public class Result<T> {
 
+    public static final int UN_LOGIN = -2;
+    public static final int UN_AUTH = -3;
+
     private int code;
     private String msg;
     private T data;

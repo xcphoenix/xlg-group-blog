@@ -1,9 +1,8 @@
 package top.xcphoenix.groupblog.service.api.impl;
 
 import org.springframework.stereotype.Service;
-import top.xcphoenix.groupblog.mapper.BlogMapper;
-import top.xcphoenix.groupblog.mapper.UserMapper;
-import top.xcphoenix.groupblog.model.dao.BlogType;
+import top.xcphoenix.groupblog.mybatis.mapper.BlogMapper;
+import top.xcphoenix.groupblog.mybatis.mapper.UserMapper;
 import top.xcphoenix.groupblog.model.dao.User;
 import top.xcphoenix.groupblog.service.api.UserService;
 

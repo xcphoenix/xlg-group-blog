@@ -1,11 +1,10 @@
 package top.xcphoenix.groupblog;
 
-import jdk.nashorn.internal.ir.annotations.Ignore;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import top.xcphoenix.groupblog.mapper.UserMapper;
+import top.xcphoenix.groupblog.mybatis.mapper.UserMapper;
 import top.xcphoenix.groupblog.model.dao.User;
 
 /**

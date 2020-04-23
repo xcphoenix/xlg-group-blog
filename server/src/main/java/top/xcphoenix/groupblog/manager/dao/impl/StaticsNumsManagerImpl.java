@@ -2,10 +2,8 @@ package top.xcphoenix.groupblog.manager.dao.impl;
 
 import org.springframework.stereotype.Service;
 import top.xcphoenix.groupblog.manager.dao.StaticsNumsManager;
-import top.xcphoenix.groupblog.mapper.StaticsNumsMapper;
+import top.xcphoenix.groupblog.mybatis.mapper.StaticsNumsMapper;
 import top.xcphoenix.groupblog.model.dto.NumStatics;
-
-import java.util.List;
 
 /**
  * @author      xuanc

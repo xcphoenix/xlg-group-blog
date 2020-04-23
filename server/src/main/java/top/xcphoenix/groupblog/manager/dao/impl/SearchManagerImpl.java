@@ -2,7 +2,7 @@ package top.xcphoenix.groupblog.manager.dao.impl;
 
 import org.springframework.stereotype.Service;
 import top.xcphoenix.groupblog.manager.dao.SearchManager;
-import top.xcphoenix.groupblog.mapper.SearchMapper;
+import top.xcphoenix.groupblog.mybatis.mapper.SearchMapper;
 import top.xcphoenix.groupblog.model.vo.BlogData;
 
 import java.util.List;

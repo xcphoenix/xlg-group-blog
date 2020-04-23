@@ -1,8 +1,6 @@
 package top.xcphoenix.groupblog.model.dao;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.sql.Timestamp;
 
@@ -32,6 +30,6 @@ public class User {
     String blogArg;
     Timestamp lastPubTime;
     Integer categoryId;
-    Integer authority;
+    Auth authority;
 
 }

@@ -1,7 +1,8 @@
 package top.xcphoenix.groupblog.service.api.impl;
 
 import org.springframework.stereotype.Service;
-import top.xcphoenix.groupblog.mapper.LoginMapper;
+import top.xcphoenix.groupblog.model.dao.User;
+import top.xcphoenix.groupblog.mybatis.mapper.LoginMapper;
 import top.xcphoenix.groupblog.service.api.LoginService;
 
 /**
@@ -19,7 +20,7 @@ public class LoginServiceImpl implements LoginService {
     }
 
     @Override
-    public Long login(String username, String password) {
+    public User login(String username, String password) {
         return loginMapper.login(username, password);
     }
 

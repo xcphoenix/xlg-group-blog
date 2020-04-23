@@ -1,7 +1,7 @@
 package top.xcphoenix.groupblog.service.view.impl;
 
 import org.springframework.stereotype.Service;
-import top.xcphoenix.groupblog.mapper.CategoryMapper;
+import top.xcphoenix.groupblog.mybatis.mapper.CategoryMapper;
 import top.xcphoenix.groupblog.model.vo.CategoryData;
 import top.xcphoenix.groupblog.model.vo.UserItem;
 import top.xcphoenix.groupblog.service.view.CategoryService;

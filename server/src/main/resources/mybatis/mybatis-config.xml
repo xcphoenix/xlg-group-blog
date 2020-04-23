@@ -16,5 +16,10 @@
 		<!-- print sql on stdout -->
 		<!--<setting name="logImpl" value="STDOUT_LOGGING" />-->
 	</settings>
+	
+	<typeHandlers>
+		<typeHandler handler="top.xcphoenix.groupblog.mybatis.typehandler.AuthHandler"
+		             javaType="top.xcphoenix.groupblog.model.dao.Auth" />
+	</typeHandlers>
 
 </configuration>

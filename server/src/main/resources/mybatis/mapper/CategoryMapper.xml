@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="top.xcphoenix.groupblog.mapper.CategoryMapper">
+<mapper namespace="top.xcphoenix.groupblog.mybatis.mapper.CategoryMapper">
 	
 	<resultMap id="categoryData" type="top.xcphoenix.groupblog.model.vo.CategoryData">
 		<result column="category_id" property="categoryId" />
 		<result column="name" property="categoryName" />
 		<association property="userItemList" column="category_id"
-		             select="top.xcphoenix.groupblog.mapper.UserMapper.getUserItem" />
+		             select="top.xcphoenix.groupblog.mybatis.mapper.UserMapper.getUserItem" />
 	</resultMap>
 	
 	<select id="getCategory" resultType="top.xcphoenix.groupblog.model.dao.Category">
