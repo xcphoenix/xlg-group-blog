@@ -1,5 +1,7 @@
 package top.xcphoenix.groupblog.utils;
 
+import org.apache.commons.text.StringEscapeUtils;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -32,6 +34,9 @@ public class HtmlUtil {
 
         Matcher mHtml = PATTERN_TAG.matcher(htmlStr);
         htmlStr = mHtml.replaceAll("");
+
+        // html转义
+        htmlStr = StringEscapeUtils.escapeHtml4(htmlStr);
 
         return htmlStr.trim();
     }
