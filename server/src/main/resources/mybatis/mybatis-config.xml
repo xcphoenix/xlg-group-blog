@@ -6,7 +6,7 @@
 		<!-- Globally enables or disables any caches configured in any mapper under this configuration -->
 		<setting name="cacheEnabled" value="false" />
 		<!-- Sets the number of seconds the driver will wait for a response from the database -->
-		<setting name="defaultStatementTimeout" value="5" />
+		<setting name="defaultStatementTimeout" value="60" />
 		<!-- Enables automatic mapping from classic database column names A_COLUMN to camel case classic Java property names aColumn -->
 		<setting name="mapUnderscoreToCamelCase" value="true" />
 		<!-- Allows JDBC support for generated keys. A compatible driver is required.
