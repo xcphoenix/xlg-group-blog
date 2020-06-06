@@ -83,7 +83,11 @@ public class CsdnBlogContentManagerImpl implements BlogContentManager {
                 );
             }
 
-            blog.setOriginal(originalFlag.equals(document.select(isOriginalRule).first().text()));
+            blog.setOriginal(
+                    document.getElementsByClass("article-type-img")
+                            .first().attr("src")
+                            .contains(originalFlag)
+            );
         } catch (Exception ex) {
             throw new BlogParseException("blog parse error", ex);
         }

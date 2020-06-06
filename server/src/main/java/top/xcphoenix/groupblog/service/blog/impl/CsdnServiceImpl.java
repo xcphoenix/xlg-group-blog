@@ -112,7 +112,7 @@ public class CsdnServiceImpl implements BlogService {
                 if (blog.getPubTime().getTime() <= lastPubTime.getTime()) {
                     continue;
                 }
-                addInvalidBlog(blog, user.getUid());
+                addValidBlog(blog, user.getUid());
             }
         }
         else {
@@ -143,7 +143,7 @@ public class CsdnServiceImpl implements BlogService {
         return blog;
     }
 
-    private void addInvalidBlog(Blog blog, long uid) {
+    private void addValidBlog(Blog blog, long uid) {
         blog.setUid(uid);
         blog = getBlogContent(blog);
 
@@ -170,7 +170,7 @@ public class CsdnServiceImpl implements BlogService {
 
             List<Blog> blogList = pageBlogs.getBlogs();
             for (Blog blog : blogList) {
-                addInvalidBlog(blog, uid);
+                addValidBlog(blog, uid);
             }
             log.debug("blogs >> " + JSON.toJSONString(blogList, SerializerFeature.PrettyFormat));
         }
