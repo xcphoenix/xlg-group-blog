@@ -57,8 +57,6 @@ mybatis:
 pagehelper:
   offset-as-page-num: true
   reasonable: true
-  
-debug: true
 
 # 配置文件位置
 config-dir: "/home/xuanc/桌面/GroupBlog/server/src/main/resources/config"
