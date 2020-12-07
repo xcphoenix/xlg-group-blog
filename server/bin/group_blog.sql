@@ -27,40 +27,6 @@ SET time_zone = "+00:00";
 CREATE DATABASE IF NOT EXISTS `group_blog` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 USE `group_blog`;
 
-DELIMITER $$
---
--- 存储过程
---
-CREATE DEFINER=`root`@`localhost` PROCEDURE `reset_id`()
-BEGIN 
-
-DECLARE new_id int;
-DECLARE ori_id int;
-DECLARE done int DEFAULT false;
-
-DECLARE my_cursor CURSOR FOR 
-    SELECT blog_id FROM blog;
-
-DECLARE CONTINUE HANDLER FOR SQLSTATE '02000' SET done=1;
-
-SET new_id = 1;
-
-OPEN my_cursor;
-
-REPEAT 
-    FETCH my_cursor INTO ori_id;
-
-    UPDATE blog set blog_id = new_id WHERE blog_id = ori_id;
-    
-    SET new_id = new_id + 1;
-
-    UNTIL done END REPEAT;
-
-    CLOSE my_cursor;
-END$$
-
-DELIMITER ;
-
 -- --------------------------------------------------------
 
 --
