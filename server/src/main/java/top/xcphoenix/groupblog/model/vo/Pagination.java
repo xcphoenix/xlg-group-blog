@@ -16,7 +16,6 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 public class Pagination {
-
     private int pageSize;
     private int pageTotal;
     private int currentPage;
@@ -84,4 +83,11 @@ public class Pagination {
         return pageLinks;
     }
 
+    public String getFirstPage() {
+        return hasPrev ? getLink(1) : null;
+    }
+
+    public String getEndPage() {
+        return hasNext ? getLink(pageTotal) : null;
+    }
 }

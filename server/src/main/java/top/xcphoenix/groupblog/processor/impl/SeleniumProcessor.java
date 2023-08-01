@@ -10,17 +10,16 @@ import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.CapabilityType;
-import org.openqa.selenium.remote.ErrorHandler;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
-import top.xcphoenix.groupblog.expection.processor.ProcessorException;
 import top.xcphoenix.groupblog.expection.processor.SeleniumProcessorException;
 import top.xcphoenix.groupblog.processor.Processor;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import java.io.File;
+import java.net.URL;
 
 /**
  * @author xuanc
@@ -29,10 +28,9 @@ import java.io.File;
  */
 @Slf4j
 @Component("selenium")
-@PropertySource("file:${config-dir}/processor.properties")
+@PropertySource("${config-dir}/processor.properties")
 public class SeleniumProcessor implements Processor {
-
-    private WebDriver driver;
+    public WebDriver driver;
     @Value("${processor.selenium.chrome-driver.location:./chromedriver}")
     private String driverLocation;
     private BrowserMobProxy proxy;
@@ -70,13 +68,25 @@ public class SeleniumProcessor implements Processor {
         log.info("processor[" + this.getClass() + "] init");
 
         File driverFile;
-        /*
+        /**
          * Jar包无法获取文件
          */
         driverFile = new File(driverLocation);
 
         if (!driverFile.exists()) {
-            throw new SeleniumProcessorException("driver not found, file: " + driverLocation);
+            //同级目录找
+            driverFile = new File("chromedriver");
+            if(!driverFile.exists()){
+                log.warn("没有发现chromedriver");
+                try{
+                    //jar包内情况下必定throw
+                    log.info("test");
+                    driverLocation = getPath();
+                    driverFile = new File(driverLocation);
+                }catch (Exception e){
+                    throw new SeleniumProcessorException("driver not found, file: " + driverLocation);
+                }
+            }
         }
         System.setProperty("webdriver.chrome.driver", driverFile.getAbsolutePath());
 
@@ -95,6 +105,9 @@ public class SeleniumProcessor implements Processor {
         chromeOptions.addArguments("--no-sandbox");
         chromeOptions.addArguments("--whitelisted-ips");
         chromeOptions.addArguments("blink-settings=imagesEnabled=false");
+        //过滤SSL证书
+        chromeOptions.addArguments("--ignore-ssl-errors=yes");
+        chromeOptions.addArguments("--ignore-certificate-errors");
         chromeOptions.setCapability(CapabilityType.PROXY, seleniumProxy);
 
         driver = new ChromeDriver(chromeOptions);
@@ -108,4 +121,14 @@ public class SeleniumProcessor implements Processor {
         proxy.stop();
     }
 
+    // 测试环境下
+    private String getPath() {
+        URL chromedriver = this.getClass().getClassLoader().getResource("chromedriver");
+        assert chromedriver != null;
+        String path = chromedriver.getPath();
+        if(path.startsWith("files:")){
+            path = path.substring(6);
+        }
+        return path;
+    }
 }

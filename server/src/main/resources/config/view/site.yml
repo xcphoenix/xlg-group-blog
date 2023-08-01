@@ -15,7 +15,7 @@ site:
     search-url: /search
   friend-links:
     - desc: 小组官网
-      link: https://www.xiyoulinux.org/
+      link: https://www.xiyoulinux.com/
       icon-class: fa fa-fw fa-chrome
     - desc: 邮件列表
       link: https://groups.google.com/forum/#!forum/xiyoulinux

@@ -21,7 +21,7 @@
 ```shell
 ./admin
 └── src
-    ├── admin.html // 管理页面
+    ├── user.html // 管理页面
     ├── css
     ├── images
     ├── index.html // 登录界面
@@ -35,10 +35,9 @@
 ```shell
 ./server
 ├── bin
-│   ├── ca-certificate-rsa.cer 	// BrowserMobProxy需要的CA证书
-│   ├── chromedriver            // chromedriver 需要与本地google-chrome兼容
-│   ├── group_blog.sql          // 数据库建立文件
-│   └── importCert.sh           // 导入CA证书脚本
+│   ├── ca-certificate-rsa.cer 	// BrowserMobProxy需要的CA证书(old)
+│   ├── old_group_blog.sql          // 数据库建立文件
+│   └── importCert.sh           // 导入CA证书脚本(old)
 └── src
     ├── main
     │   ├── java				// 源码
@@ -51,7 +50,8 @@
     │       ├── application.yml  		 // 服务相关配置
     │       ├── config              	 // 配置
     │       │   ├── content				 // 博客内容抓取的xpath等
-    │       │   │   └── csdnBlogRule.properties
+    │       │   │   ├── articleBlogRule.yml  普遍rss与atom抓取配置
+    │       │   │   └── csdnBlogRule.properties csdn抓取配置
     │       │   ├── manager         	 // csdn原文属性等配置
     │       │   │   └── csdnManager.properties
     │       │   ├── overview        	 // csdn用户中心的xpath等
@@ -73,24 +73,41 @@
 ```
 
 ## 项目配置
+![img.png](deploy_structure.png)
+> 上图为部署时的目录结构：  
+> - google-chrome-stable_current_amd64.deb为google-chrome浏览器，为不必要手动添加项，Dockerfile中有安装，如无正常安装，则需要注释掉Dockerfile中的`RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+> `,手动加入该包。  
+> -
+> - chromeedriver为chrome驱动，需要手动添加，注意与chrome浏览器的版本对应关系，该处chrome浏览器直接下载最新版本。
+> - 
+> - groupblog-1.0.1-SNAPSHOT.jar为该项目的jar包，推荐使用mvn打包，记得把lib文件夹也放入，因为mvn打包配置信息将第三方库与主程序分开了。
+> - 
+> - 根据实际情况更改 `resource/config/view` 下面的配置文件设置站点和关于页面的数据信息
+> - 
+> - 注意修改`resource/config/processor.properties`配置文件中的信息。
+> - 
+> - blog_nginx.config为该项目nginx的配置文件，使用include导入即可，因为本次nginx使用OpenResty部署，所以没有写nginx的docker。
+> - 注意： 如要使用头像，OpenResty部署的nginx要关闭缓存，否则头像无法替换，nginx.conf位置一般为`/usr/local/openresty/nginx/conf/nginx.conf`.
+> - 
+> - init.sql为数据库文件
 
-1. 导入数据库文件，添加用户数据
+![img_1.png](properies.png)
+>上图为`resource/config/processor.properties`文件
+> - processor.selenium.chrome-driver.location为chromedriver驱动的位置，一般默认查找运行程序的同级目录下的chromedriver文件
+> - picture.service-name为图片服务器的域名或是ip地址
+> - picture.down为是否获取博客时是否下载图片的选项
+> - picture.address为存放图片的文件夹名，存放图片的文件夹与运行的java程序是同级目录的。
 
-2. 本机需安装 ***google-chrome*** 浏览器，并查看版本信息，在谷歌官网上下载适合本机谷歌浏览器版本的 ChromeDriver
+### server文件--docker部署
+按格式放好部署目录文件后,在docker-compose.yml文件所在目录直接运行
+```shell
+docker-compose up -d
+```
+- ~~`-Dconfig-dir` 可选】 指定项目的配置文件，对应项目结构中的 `resources/config` 目录~~
 
-3. 根据实际情况更改 `resource/config/view` 下面的配置文件设置站点和关于页面的数据信息
-
-4. 使用 Maven 打包项目为 jar 包
-
-5. 运行：
-
-   ```shell
-   nohup java -jar -Dconfig-dir="[配置文件目录]" [jar包路径] > nohup.log &
-   ```
-
-   - `-Dconfig-dir` 
-
-     【可选】 指定项目的配置文件，对应项目结构中的 `resources/config` 目录
+### admin文件--直接部署
+> 对于admin文件按照nginx配置文件中的位置加入nginx的docker中即可   
+> 例如这里是：![img.png](admin-web.png)
 
 ## 项目演示
 
@@ -110,7 +127,7 @@
 
 ![](https://gitee.com/PhoenixXc/FigureBed/raw/picgo/img/20200220162258.png)
 
-具体可查看线上地址：http://groupblog.xcphoenix.top/
+具体可查看线上地址：https://blog.xiyoulinux.com/
 
 管理端：
 
@@ -158,9 +175,9 @@
 
 ### 博客抓取
 
-目前适配了 CSDN 以及基于 atomv1.0 规则的 Feed 订阅。
+目前适配了 CSDN(都可以抓取)、有Rss订阅的博客（只能获取rss订阅内的博客，按照article规则获取主要内容） 以及基于 atomv1.0 规则的 Feed 订阅。
 
-- 对于 AtomV1.0 
+- AtomV1.0 
 
   直接依据 Atomv1.0 规范获取博客的对应信息。
 

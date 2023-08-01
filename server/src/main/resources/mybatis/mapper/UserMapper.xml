@@ -7,8 +7,12 @@
 		<collection property="user" column="uid"
 		            select="getUserDesc" />
 	</resultMap>
-	
-	<select id="getUserBlogArgs" resultType="top.xcphoenix.groupblog.model.dao.User">
+    <insert id="createNewUser" parameterType="top.xcphoenix.groupblog.model.dao.User">
+		INSERT INTO `user`(username, password, blog_type, blog_arg, last_pub_time, category_id, authority)
+		VALUES (#{user.username},123456, #{user.blogType}, #{user.blogArg},#{user.lastPubTime},#{user.categoryId},1);
+	</insert>
+
+    <select id="getUserBlogArgs" resultType="top.xcphoenix.groupblog.model.dao.User">
 		SELECT uid, blog_type, blog_arg
 		FROM `user`
 		WHERE uid = #{uid}
@@ -39,9 +43,17 @@
 		     `blog_type`
 		WHERE `user`.`blog_type` = `blog_type`.`type_id`
 	</select>
-	
+
+	<select id="getUserSummaryByUid" resultType="top.xcphoenix.groupblog.model.dto.UserSummary">
+		SELECT `uid`, `bean_name`
+		FROM `user`,
+			 `blog_type`
+		WHERE `user`.`blog_type` = `blog_type`.`type_id` and
+		      `user`.uid = #{uid};
+	</select>
+
 	<select id="getUserDesc" resultType="top.xcphoenix.groupblog.model.dao.User">
-		SELECT uid, username, qq, signature
+		SELECT uid, username, qq, signature,avatar_url,authority
 		FROM `user`
 		WHERE uid = #{uid}
 	</select>
@@ -84,11 +96,35 @@
 		WHERE uid = #{uid}
 		  AND `password` = #{passwd}
 	</select>
-	
+
 	<update id="updatePasswd">
 		UPDATE `user`
 		SET `password` = #{newPasswd}
 		WHERE `uid` = #{uid}
 	</update>
+
+    <select id="getUsersInfo" resultType="top.xcphoenix.groupblog.model.dao.User">
+		SELECT `uid`,`username`,`signature`,`blog_type`,`blog_arg`,`last_pub_time`
+		From `user`
+		WHERE `category_id` = #{cid}
+	</select>
+
+	<update id="updateUserAvatar">
+		UPDATE `user`
+		SET `avatar_url` = #{avatar_url}
+		WHERE `uid` = #{uid}
+	</update>
+
+	<select id="checkUser" resultType="top.xcphoenix.groupblog.model.dao.User">
+		SELECT uid,password,authority
+		FROM `user`
+		WHERE uid = #{uid}
+	</select>
+
+    <select id="selectUserAvatar" resultType="java.lang.String">
+		SELECT avatar_url
+		FROM `user`
+		WHERE uid = #{uid}
+    </select>
 
 </mapper>

@@ -1,5 +1,8 @@
 package top.xcphoenix.groupblog.service.crawl;
 
+import top.xcphoenix.groupblog.expection.blog.BlogParseException;
+import top.xcphoenix.groupblog.expection.processor.ProcessorException;
+
 /**
  * @author xuanc
  * @version 1.0

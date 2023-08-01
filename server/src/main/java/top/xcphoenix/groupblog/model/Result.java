@@ -3,8 +3,6 @@ package top.xcphoenix.groupblog.model;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.sql.ResultSet;
-
 /**
  * @author      xuanc
  * @date        2020/1/27 下午6:19

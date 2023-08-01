@@ -27,7 +27,7 @@ import java.util.List;
  */
 @Slf4j
 @Service("zone-csdn")
-@PropertySource(value = "file:${config-dir}/overview/csdnBlogRule.properties", encoding = "utf-8")
+@PropertySource(value = "${config-dir}/overview/csdnBlogRule.properties", encoding = "utf-8")
 public class CsdnUserZoneManagerImpl implements BlogOverviewManager {
 
     @Resource(name = "direct")

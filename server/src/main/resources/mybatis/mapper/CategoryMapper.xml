@@ -8,8 +8,11 @@
 		<association property="userItemList" column="category_id"
 		             select="top.xcphoenix.groupblog.mybatis.mapper.UserMapper.getUserItem" />
 	</resultMap>
-	
-	<select id="getCategory" resultType="top.xcphoenix.groupblog.model.dao.Category">
+    <insert id="createNewGrade">
+		INSERT INTO `category`(name) values (#{grade})
+	</insert>
+
+    <select id="getCategory" resultType="top.xcphoenix.groupblog.model.dao.Category">
 		SELECT `category_id`, `name`
 		FROM `category`
 		WHERE `category_id` = #{categoryId}
@@ -18,6 +21,16 @@
 	<select id="getAllCategory" resultMap="categoryData">
 		SELECT `category_id`, `name`
 		FROM `category`
+	</select>
+
+	<select id="getGrade" resultType="String">
+		SELECT `name`
+		FROM `category`
+	</select>
+	<select id="getIdByGrade" resultType="Long">
+		SELECT `category_id`
+		FROM  `category`
+		where `name` = #{grade}
 	</select>
 
 </mapper>

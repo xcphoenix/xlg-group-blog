@@ -1,6 +1,7 @@
 package top.xcphoenix.groupblog.mybatis.mapper;
 
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Service;
 import top.xcphoenix.groupblog.model.dao.User;
 import top.xcphoenix.groupblog.model.dto.UserSummary;
 import top.xcphoenix.groupblog.model.vo.UserItem;
@@ -13,6 +14,7 @@ import java.util.List;
  * @version 1.0
  * @date 2020/1/15 下午1:28
  */
+@Service
 public interface UserMapper {
 
     /**
@@ -48,11 +50,18 @@ public interface UserMapper {
     Timestamp getLastPubTime(@Param("uid") long uid);
 
     /**
-     * 获取用户概要
+     * 获取全部用户概要
      *
      * @return 用户id, 用户对应博客的执行bean
      */
     List<UserSummary> getUsersSummary();
+
+    /**
+     * 根据用户id获取用户概要
+     * @param uid
+     * @return
+     */
+    UserSummary getUserSummaryByUid(@Param("uid") long uid);
 
     /**
      * 获取用户描述：用户名、QQ、用户个性签名
@@ -112,4 +121,37 @@ public interface UserMapper {
      */
     void updatePasswd(@Param("uid") long uid, @Param("newPasswd") String newPasswd);
 
+    /**
+     *  获取cid对应的用户信息
+     * @param cid grade对应的id
+     * @return 用户信息
+     */
+    List<User> getUsersInfo(@Param("cid") long cid);
+
+    /**
+     * 更新用户头像
+     * @param uid
+     * @param avatarUrl
+     */
+    void updateUserAvatar(@Param("uid")long uid,@Param("avatar_url") String avatarUrl);
+
+    /**
+     * 创建新用户
+     * @param user
+     */
+    void createNewUser(@Param("user") User user);
+
+    /**
+     * 检查用户信息
+     * @param uid
+     * @return
+     */
+    User checkUser(@Param("uid") long uid);
+
+    /**
+     * 获取上传的用户头像
+     * @param uid
+     * @return
+     */
+    String selectUserAvatar(@Param("uid") long uid);
 }

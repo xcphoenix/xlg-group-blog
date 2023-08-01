@@ -1,0 +1,14 @@
+blog:
+   title-rule: h1
+   pub-time-rule: time
+   pub-time-format:
+      - yyyy-MM-dd HH:mm:ss
+      - yyyy-MM-dd'T'HH:mm:ssZ
+      - yyyy-MM-dd'T'HH:mm:ss.SSSZ
+      - yyyy-MM-dd'T'HH:mm:ss.SSSXXX
+      - yyyy-MM-dd'T'HH:mm:ssXXX
+      - EEE, dd MMM yyyy HH:mm:ss z
+      - MMM dd, yyyy
+      - M/d/yyyy, hh:mm:ss a
+   content-rule: article
+   summary-word-limit: 250

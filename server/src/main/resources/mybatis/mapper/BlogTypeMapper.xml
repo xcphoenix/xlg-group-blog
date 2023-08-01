@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="top.xcphoenix.groupblog.mybatis.mapper.BlogTypeMapper">
 	
-	<select id="getBlogType" resultType="top.xcphoenix.groupblog.model.dao.BlogType">
+	<select id="getBlogTypeByTid" resultType="top.xcphoenix.groupblog.model.dao.BlogType">
 		SELECT type_id, type_name, overview_rule, blog_page_rule, feed_rule, need_arg
 		FROM blog_type
 		WHERE type_id = #{typeId}
@@ -13,5 +13,9 @@
 		FROM blog_type
 		WHERE type_id = #{typeId}
 	</select>
-	
+	<select id="getBlogType" resultType="top.xcphoenix.groupblog.model.dao.BlogType">
+		SELECT type_id, type_name
+		FROM blog_type
+	</select>
+
 </mapper>

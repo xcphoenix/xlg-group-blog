@@ -69,4 +69,8 @@ public class UserServiceImpl implements UserService {
         userMapper.updatePasswd(uid, newPasswd);
     }
 
+    public void updateUserAvatar(long uid,String avatarUrl){
+        userMapper.updateUserAvatar(uid,avatarUrl);
+    }
+
 }

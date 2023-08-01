@@ -1,9 +1,20 @@
 package top.xcphoenix.groupblog.utils;
 
 import com.alibaba.fastjson.JSONObject;
+import lombok.extern.slf4j.Slf4j;
 import top.xcphoenix.groupblog.expection.blog.BlogArgException;
 import top.xcphoenix.groupblog.model.dao.BlogType;
 
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.security.cert.X509Certificate;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -13,6 +24,7 @@ import java.util.regex.Pattern;
  * @date        2020/1/15 下午1:48
  * @version     1.0
  */ 
+@Slf4j
 public class UrlUtil {
 
     private BlogType blogType;
@@ -58,4 +70,32 @@ public class UrlUtil {
         return parseUrlByRule(feedUrl);
     }
 
+    public static String getAuthor(String overviewUrl) throws MalformedURLException {
+        URL url = new URL(overviewUrl);
+        String author = url.getHost();
+        if(author.startsWith("blog.")){
+            author = author.substring(5);
+        }
+        if(author.endsWith(".github.io")){
+            author = author.substring(0,author.length()-".github.io".length());
+        }else {
+            author = author.substring(0, author.lastIndexOf('.'));
+        }
+
+        return author;
+    }
+
+    public static boolean imgUrlValidate(String imageUrl) {
+        try {
+            // 开始查找
+            URL url = new URL(imageUrl);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("HEAD");
+            int responseCode = connection.getResponseCode();
+            log.warn(imageUrl+"图片检测结果："+responseCode);
+            return responseCode == HttpURLConnection.HTTP_OK || responseCode == HttpURLConnection.HTTP_MOVED_PERM;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 }

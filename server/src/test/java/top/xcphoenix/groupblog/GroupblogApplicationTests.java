@@ -1,16 +1,14 @@
 package top.xcphoenix.groupblog;
 
 import com.alibaba.fastjson.JSON;
-import jdk.nashorn.internal.ir.annotations.Ignore;
+//import jdk.nashorn.internal.ir.annotations.Ignore;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.Ignore;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import top.xcphoenix.groupblog.model.vo.SiteSchema;
-import top.xcphoenix.groupblog.processor.impl.SeleniumProcessor;
-import top.xcphoenix.groupblog.manager.blog.content.BlogContentManager;
 
-import javax.annotation.Resource;
 import java.text.ParseException;
 
 @Slf4j

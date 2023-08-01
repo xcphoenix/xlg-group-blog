@@ -10,6 +10,7 @@ import top.xcphoenix.groupblog.model.dto.BlogTypeParam;
 import top.xcphoenix.groupblog.service.api.BlogTypeService;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -28,7 +29,7 @@ public class BlogTypeServiceImpl implements BlogTypeService {
 
     @Override
     public String getParams(int typeId) {
-        BlogType blogType = blogTypeMapper.getBlogType(typeId);
+        BlogType blogType = blogTypeMapper.getBlogTypeByTid(typeId);
         if (blogType == null) {
             return null;
         }
@@ -51,6 +52,11 @@ public class BlogTypeServiceImpl implements BlogTypeService {
         }
 
         return JSON.toJSONString(userBlogParams);
+    }
+
+    @Override
+    public List<BlogType> getType() {
+        return blogTypeMapper.getBlogType();
     }
 
 }

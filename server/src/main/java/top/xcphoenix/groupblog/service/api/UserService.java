@@ -58,4 +58,5 @@ public interface UserService {
      */
     void updatePasswd(long uid, String newPasswd);
 
+    void updateUserAvatar(long uid,String avatarUrl);
 }

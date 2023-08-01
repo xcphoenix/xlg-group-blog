@@ -3,15 +3,18 @@ package top.xcphoenix.groupblog.manager.blog.content.impl;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 import top.xcphoenix.groupblog.expection.blog.BlogParseException;
 import top.xcphoenix.groupblog.expection.processor.ProcessorException;
+import top.xcphoenix.groupblog.manager.blog.content.BlogContentManager;
 import top.xcphoenix.groupblog.model.dao.Blog;
 import top.xcphoenix.groupblog.processor.Processor;
-import top.xcphoenix.groupblog.manager.blog.content.BlogContentManager;
+import top.xcphoenix.groupblog.service.picture.CrawPictureService;
 import top.xcphoenix.groupblog.utils.HtmlUtil;
 
 import java.sql.Timestamp;
@@ -24,7 +27,7 @@ import java.text.SimpleDateFormat;
  */
 @Service("content-csdn")
 @Slf4j
-@PropertySource(value = "file:${config-dir}/content/csdnBlogRule.properties", encoding = "UTF-8")
+@PropertySource(value = "${config-dir}/content/csdnBlogRule.properties", encoding = "UTF-8")
 public class CsdnBlogContentManagerImpl implements BlogContentManager {
 
     @Value("${blog.rule.title}")
@@ -43,10 +46,12 @@ public class CsdnBlogContentManagerImpl implements BlogContentManager {
     private String contentRule;
     @Value("${blog.summary.word.limit:200}")
     private int summaryWordLimit;
-
+    CrawPictureService crawPictureService;
     private Processor processor;
 
-    public CsdnBlogContentManagerImpl(@Qualifier("selenium") Processor processor) {
+    public CsdnBlogContentManagerImpl(@Qualifier("craw-picture") CrawPictureService crawPictureService,
+                                      @Qualifier("selenium") Processor processor) {
+        this.crawPictureService = crawPictureService;
         this.processor = processor;
     }
 
@@ -69,16 +74,20 @@ public class CsdnBlogContentManagerImpl implements BlogContentManager {
             }
             if (blog.getPubTime() == null) {
                 String timeStr = document.select(pubTimeRule).first().text();
+                //删除除时间外字
+                timeStr = timeStr.replaceAll("[\u4e00-\u9fa5]", "");
+                timeStr = timeStr.replaceAll("[a-zA-Z]","");
                 blog.setPubTime(new Timestamp(pubDateFormat.parse(timeStr).getTime()));
             }
 
-            String content = document.select(contentRule).first().html();
-            blog.setContent(content);
+            Element content = document.select(contentRule).first();
+            String contentHtml = crawPictureService.downPicture(content,url);
+            blog.setContent(contentHtml);
 
             if (blog.getSummary() == null) {
                 blog.setSummary(
                         HtmlUtil.delSpace(
-                                HtmlUtil.htmlToText(content)
+                                HtmlUtil.htmlToText(contentHtml)
                         ).substring(0, summaryWordLimit)
                 );
             }

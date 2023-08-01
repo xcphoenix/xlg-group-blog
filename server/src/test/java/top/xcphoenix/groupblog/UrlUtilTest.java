@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Map;
 
 /**
@@ -34,4 +36,9 @@ public class UrlUtilTest {
         Assertions.assertEquals(map.get("id"), "file");
     }
 
+    @Test
+    void test1() throws MalformedURLException {
+        URL url = new URL("https://blog.csdn.net/weixin_74056357/article/details/131844864");
+        System.out.println(url.getPath());
+    }
 }

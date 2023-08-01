@@ -26,7 +26,7 @@ public class HtmlUtilTest {
 
     @Test
     void testHtmlToText() throws ProcessorException {
-        Document document = (Document)processor.processor("http://47.94.5.149:6789/blog/104098607");
+        Document document = (Document)processor.processor("http://127.0.0.1:6789/blog/104106232");
         String html = document.html();
         String text = HtmlUtil.htmlToCompressedText(html);
         log.info(text);

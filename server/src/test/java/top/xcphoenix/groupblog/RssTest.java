@@ -32,7 +32,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class RssTest {
 
-    @Resource(name = "rss-csdn")
+    @Resource(name = "rss")
     private BlogOverviewManager userZoneService;
 
     @Autowired
@@ -62,4 +62,9 @@ public class RssTest {
         log.info(JSON.toJSONString(pageBlogs, SerializerFeature.PrettyFormat));
     }
 
+    @Test
+    void testRssBlog() throws ProcessorException, BlogParseException {
+        PageBlogs pageBlogUrls = userZoneService.getPageBlogUrls("https://daz-3ux.github.io/rss.xml");
+        System.out.println(pageBlogUrls);
+    }
 }

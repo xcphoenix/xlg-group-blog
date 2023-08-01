@@ -1,5 +1,7 @@
 package top.xcphoenix.groupblog.service.blog;
 
+import top.xcphoenix.groupblog.expection.blog.BlogParseException;
+import top.xcphoenix.groupblog.expection.processor.ProcessorException;
 import top.xcphoenix.groupblog.model.dao.BlogType;
 import top.xcphoenix.groupblog.model.dao.User;
 

@@ -1,12 +1,15 @@
 server:
   port: 6789
-  
+  tomcat:
+    max-http-form-post-size: 20MB
+    max-http-post-size: 20MB
+
 spring:
   datasource:
     # 返回影响的行数，设置时区为【上海】
-    url:               jdbc:mysql://47.94.5.149:3306/group_blog?useAffectedRows=true&serverTimezone=Asia/Shanghai
-    username:          group_blog
-    password:          grouppass
+    url:               jdbc:mysql://db:3306/group_blog?useAffectedRows=true&serverTimezone=Asia/Shanghai
+    username:          xiyouLinux
+    password:          Linux_Group_Server
     driver-class-name: com.mysql.cj.jdbc.Driver
     tomcat:
       # 说明参考：https://blog.csdn.net/xiaolyuh123/article/details/73331093
@@ -45,8 +48,18 @@ spring:
         content:
           enabled: true
           paths: /**
+    static-locations: [classpath:/static/,classpath:/templates/,file:picture/]
+  servlet:
+    multipart:
+      max-request-size: 20MB
+      max-file-size: 20MB
 
-# mybatis
+
+
+logging:
+  level:
+    root: INFO
+
 mybatis:
   #  configuration:
   #    # 开启驼峰命名
@@ -59,4 +72,5 @@ pagehelper:
   reasonable: true
 
 # 配置文件位置
-config-dir: "/home/xuanc/桌面/GroupBlog/server/src/main/resources/config"
+config-dir: classpath:config
+

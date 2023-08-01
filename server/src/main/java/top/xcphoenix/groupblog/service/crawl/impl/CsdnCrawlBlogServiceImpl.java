@@ -31,14 +31,14 @@ class CsdnCrawlBlogServiceImpl implements CrawlBlogService {
     @Override
     public void crawlAll(long uid) {
         User user = userMapper.getUserBlogArgs(uid);
-        BlogType blogType = blogTypeMapper.getBlogType(user.getBlogType());
+        BlogType blogType = blogTypeMapper.getBlogTypeByTid(user.getBlogType());
         blogService.execFull(user, blogType);
     }
 
     @Override
     public void crawlIncrement(long uid) {
         User user = userMapper.getUserBlogArgs(uid);
-        BlogType blogType = blogTypeMapper.getBlogType(user.getBlogType());
+        BlogType blogType = blogTypeMapper.getBlogTypeByTid(user.getBlogType());
         blogService.execIncrement(user, blogType);
     }
 

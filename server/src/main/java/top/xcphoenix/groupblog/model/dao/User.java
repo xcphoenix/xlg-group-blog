@@ -1,7 +1,11 @@
 package top.xcphoenix.groupblog.model.dao;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.lang.annotation.Repeatable;
 import java.sql.Timestamp;
 
 /**
@@ -31,5 +35,7 @@ public class User {
     Timestamp lastPubTime;
     Integer categoryId;
     Auth authority;
-
+    String avatarUrl;
+    // 添加成员时使用
+    String grade;
 }

@@ -1,6 +1,9 @@
 package top.xcphoenix.groupblog.service.api;
 
+import top.xcphoenix.groupblog.model.dao.BlogType;
 import top.xcphoenix.groupblog.model.dto.BlogTypeParam;
+
+import java.util.List;
 
 /**
  * @author      xuanc
@@ -25,4 +28,10 @@ public interface BlogTypeService {
      * @return 用户博客参数，null 表示数据不合法
      */
     String validateParams(long uid, BlogTypeParam blogTypeParam, String needParams);
+
+    /**
+     * 获取博客类型
+     * @return 博客类型
+     */
+    List<BlogType> getType();
 }

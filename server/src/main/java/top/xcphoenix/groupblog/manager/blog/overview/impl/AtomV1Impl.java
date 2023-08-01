@@ -5,16 +5,22 @@ import com.rometools.rome.feed.synd.SyndPerson;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Element;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import top.xcphoenix.groupblog.expection.blog.BlogParseException;
 import top.xcphoenix.groupblog.expection.processor.ProcessorException;
+import top.xcphoenix.groupblog.manager.blog.content.BlogContentManager;
 import top.xcphoenix.groupblog.manager.blog.overview.BlogOverviewManager;
 import top.xcphoenix.groupblog.model.dao.Blog;
 import top.xcphoenix.groupblog.model.dto.PageBlogs;
 import top.xcphoenix.groupblog.processor.Processor;
+import top.xcphoenix.groupblog.service.picture.CrawPictureService;
 import top.xcphoenix.groupblog.utils.HtmlUtil;
 
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
@@ -31,7 +37,6 @@ import java.util.List;
 @Slf4j
 @Service("atom-v1")
 public class AtomV1Impl implements BlogOverviewManager {
-
     private Processor feedProcessor;
     /**
      * summary 字数最小阀值
@@ -39,7 +44,11 @@ public class AtomV1Impl implements BlogOverviewManager {
     protected int summaryContentThreshold = 150;
     protected double summaryFactory = 0.4;
 
-    public AtomV1Impl(@Qualifier("feed") Processor feedProcessor) {
+    CrawPictureService crawPictureService;
+
+    public AtomV1Impl(@Qualifier("craw-picture") CrawPictureService crawPictureService,
+                      @Qualifier("feed") Processor feedProcessor) {
+        this.crawPictureService = crawPictureService;
         this.feedProcessor = feedProcessor;
     }
 
@@ -67,8 +76,8 @@ public class AtomV1Impl implements BlogOverviewManager {
 
                 // recommend
                 blog.setAuthor(getAuthor(entry, authorBk));
-                blog.setContent(getContent(entry));
                 blog.setOriginalLink(getLink(entry));
+                blog.setContent(getContent(entry,blog.getOriginalLink()));
                 blog.setSummary(getSummary(entry));
 
                 // optional
@@ -95,13 +104,17 @@ public class AtomV1Impl implements BlogOverviewManager {
         return authorBk;
     }
 
-    protected String getContent(Entry entry) {
+    protected String getContent(Entry entry,String url) throws IOException {
         List<Content> contents = entry.getContents();
         if (contents.size() == 0) {
             return null;
         }
         // 可能包含 xml 等内容
-        return contents.get(0).getValue();
+        if(url == null){
+            return contents.get(0).getValue();
+        }
+        Element element = Jsoup.parse(contents.get(0).getValue());
+        return crawPictureService.downPicture(element,url);
     }
 
     protected String getLink(Entry entry) {
@@ -112,7 +125,7 @@ public class AtomV1Impl implements BlogOverviewManager {
         return links.get(0).getHref();
     }
 
-    protected String getSummary(Entry entry) {
+    protected String getSummary(Entry entry) throws IOException {
         Content contentSummary = entry.getSummary();
         String summary;
         if (contentSummary == null) {
@@ -124,7 +137,7 @@ public class AtomV1Impl implements BlogOverviewManager {
             summary = contentSummary.getValue();
         }
         if (summary.length() < summaryFactory * summaryContentThreshold) {
-            String content = getContent(entry);
+            String content = getContent(entry,null);
             if (content != null) {
                 summary = HtmlUtil.htmlToCompressedText(content)
                         .substring(0, summaryContentThreshold)

@@ -21,7 +21,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @Component
-@PropertySource(value = {"file:${config-dir}/view/site.yml"}, factory = MixPropertySourceFactory.class)
+@PropertySource(value = {"${config-dir}/view/site.yml"}, factory = MixPropertySourceFactory.class)
 @ConfigurationProperties(prefix = "site")
 public class SiteSchema implements Cloneable {
 

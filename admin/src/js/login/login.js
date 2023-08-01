@@ -24,13 +24,20 @@ layui.use(['element', 'layer'], function () {
         console.log(req_data);
 
         $.ajax({
-            url: "http://groupblog.xcphoenix.top/api/login",
+            // url: "https://blog.xiyoulinux.com/api/login",
+            url: "http://127.0.0.1:6789/api/login",
             type: 'POST',
             data: JSON.stringify(req_data),
             dataType: 'json',
             contentType: 'application/json;charset=UTF-8',
             xhrFields: {
                 withCredentials: true
+            },
+            beforeSend: function(request) {
+                const token = localStorage.getItem('token');
+                if (token) {
+                    request.setRequestHeader('Authorization', 'Bearer 1122');
+                }
             },
             success: function (data) {
                 if (data.code !== 0) {
@@ -39,8 +46,9 @@ layui.use(['element', 'layer'], function () {
                     layer.open({
                         content: data.msg,
                     });
-                    document.cookie = "uid=" + data.data;
-                    $(location).attr('href', './admin.html');
+                    console.log(data.data)
+                    window.localStorage.setItem('token',data.data)
+                    $(location).attr('href', './user.html');
                 }
             },
             error: function (err) {
@@ -54,4 +62,9 @@ layui.use(['element', 'layer'], function () {
         console.log('click')
     });
 
+    function setCookie(name, value, days) {
+        const expires = new Date();
+        expires.setTime(expires.getTime() + (days * 24 * 60 * 60 * 1000));
+        document.cookie = name + '=' + value + ';expires=' + expires.toUTCString() + ';SameSite=None;Secure';
+    }
 });

@@ -2,6 +2,8 @@ package top.xcphoenix.groupblog.service.crawl.impl;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import top.xcphoenix.groupblog.expection.blog.BlogParseException;
+import top.xcphoenix.groupblog.expection.processor.ProcessorException;
 import top.xcphoenix.groupblog.mybatis.mapper.BlogTypeMapper;
 import top.xcphoenix.groupblog.mybatis.mapper.UserMapper;
 import top.xcphoenix.groupblog.model.dao.BlogType;
@@ -31,14 +33,14 @@ class AtomV1CrawlBlogServiceImpl implements CrawlBlogService {
     @Override
     public void crawlAll(long uid) {
         User user = userMapper.getUserBlogArgs(uid);
-        BlogType blogType = blogTypeMapper.getBlogType(user.getBlogType());
+        BlogType blogType = blogTypeMapper.getBlogTypeByTid(user.getBlogType());
         blogService.execFull(user, blogType);
     }
 
     @Override
-    public void crawlIncrement(long uid) {
+    public void crawlIncrement(long uid){
         User user = userMapper.getUserBlogArgs(uid);
-        BlogType blogType = blogTypeMapper.getBlogType(user.getBlogType());
+        BlogType blogType = blogTypeMapper.getBlogTypeByTid(user.getBlogType());
         blogService.execIncrement(user, blogType);
     }
 

@@ -21,7 +21,7 @@ public class BlogTypeManagerImpl implements BlogTypeManager {
 
     @Override
     public BlogType getBlogType(int typeId) {
-        return blogTypeMapper.getBlogType(typeId);
+        return blogTypeMapper.getBlogTypeByTid(typeId);
     }
 
 }

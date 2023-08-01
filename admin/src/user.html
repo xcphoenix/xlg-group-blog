@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>XiyouLinuxGroup - user </title>
     <link rel="stylesheet" type="text/css" href="lib/layui/css/layui.css">
 </head>
 
@@ -12,20 +12,20 @@
         <div class="layui-logo">GroupBlog 用户中心</div>
         <!-- 头部区域（可配合layui已有的水平导航） -->
         <ul class="layui-nav layui-layout-left">
-            <li class="layui-nav-item"><a href="">返回群博</a></li>
+            <li class="layui-nav-item"><a href="https://blog.iyeyr2.top">返回群博</a></li>
             <li class="layui-nav-item">
-                <a href="javascript:;">其它系统</a>
+                <a href="javascript:">其它系统</a>
                 <dl class="layui-nav-child">
-                    <dd><a href="https://www.xiyoulinux.org" target="_blank">小组官网</a></dd>
-                    <dd><a href="http://cs.xiyoulinux.org" target="_blank">CS平台</a></dd>
+                    <dd><a href="https://www.xiyoulinux.com" target="_blank">小组官网</a></dd>
+                    <dd><a href="https://cs.xiyoulinux.com" target="_blank">CS平台</a></dd>
                     <dd><a href="https://exmail.qq.com/cgi-bin/loginpage" target="_blank">企业邮快速登录</a></dd>
                 </dl>
             </li>
         </ul>
         <ul class="layui-nav layui-layout-right">
-            <li class="layui-nav-item">
+            <li class="layui-nav-item" id="userOwn">
                 <!-- 群博用户中心 -->
-                <a id="user_link" href="javascript:;">
+                <a id="user_link" href="javascript:">
                     <!-- 用户头像 -->
                     <img id="user_img" src="http://t.cn/RCzsdCq" class="layui-nav-img" alt="用户中心">
                     <span id="user_name"></span>
@@ -34,51 +34,62 @@
             <li class="layui-nav-item"><span id="logout" style="color: rgba(255,255,255,.7);">注销</span></li>
         </ul>
     </div>
-    
+
     <div class="layui-side layui-bg-black">
         <div class="layui-side-scroll">
             <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
             <ul class="layui-nav layui-nav-tree" lay-filter="test">
                 <li class="layui-nav-item layui-nav-itemed">
-                    <a class="" href="javascript:;">用户信息</a>
+                    <a class="userInfo" href="javascript:">用户</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;">列表一</a></dd>
-                        <dd><a href="javascript:;">列表二</a></dd>
-                        <dd><a href="javascript:;">列表三</a></dd>
-                        <dd><a href="">超链接</a></dd>
+                        <dd class="layui-show"><a id="用户信息" href="javascript:" class="">用户信息</a></dd>
+                        <dd class="layui-show"><a id="添加新成员" href="javascript:" class="">添加新成员</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a href="javascript:;">施工中</a>
-                    <dl class="layui-nav-child">
-                        <dd><a href="javascript:;">施工中...</a></dd>
+                    <a href="javascript:;">成员</a>
+                    <dl id="grade-list" class="layui-nav-child">
+                        <dd><a href="javascript:;">成员</a></dd>
                     </dl>
                 </li>
             </ul>
         </div>
     </div>
-    
+
     <div class="layui-body" style="background: #F0F0F0;">
         <!-- 内容主体区域 -->
-        
         <div class="layui-row" style="padding: 15px">
             <div class="layui-col-md12">
                 <div class="layui-card">
                     <div class="layui-card-body">
-                        <div class="layui-tab layui-tab-brief" lay-filter="tab">
+                        <div id="manage" class="layui-tab layui-tab-brief" lay-filter="tab" style="display: block">
                             <ul class="layui-tab-title">
                                 <li class="layui-this">我的资料</li>
-                                <li>博客设置</li>
+                                <li id="blogSetting">博客设置</li>
                                 <li>密码管理</li>
                             </ul>
                             <div class="layui-tab-content">
                                 <div class="layui-tab-item layui-show">
                                     <form class="layui-form layui-form-pane">
                                         <div class="layui-form-item">
+                                            <label class="layui-form-label">avatar</label>
+                                            <div class="layui-input-inline">
+                                                <div class="layui-upload">
+                                                    <button type="button" class="layui-btn" id="uploadBtn">你的自定义头像</button>
+                                                    <div id="avatar-image" class="layui-upload-list" style="display: none">
+                                                        <img class="layui-upload-img" id="uploadPreview" style="margin-top: 10px;">
+                                                        <p id="uploadText"></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="layui-form-mid layui-word-aux">优先使用(max:10MB)</div>
+                                        </div>
+                                        <div class="layui-form-item">
                                             <label class="layui-form-label">QQ</label>
                                             <div class="layui-input-inline">
                                                 <input type="text" name="qq" required lay-verify="required"
-                                                       placeholder="输入你的QQ号" autocomplete="off" class="layui-input">
+                                                       placeholder="输入你的QQ号" autocomplete="off"
+                                                       class="layui-input">
                                             </div>
                                             <div class="layui-form-mid layui-word-aux">QQ号用于获取头像</div>
                                         </div>
@@ -95,22 +106,23 @@
                                 <div class="layui-tab-item">
                                     <form class="layui-form layui-form-pane" action="" lay-filter="type">
                                         <div class="layui-form-item">
-                                            <label class="layui-form-label">博客类型</label>
+                                            <label class="layui-form-label" for="blog_type">博客类型</label>
                                             <div class="layui-input-inline">
-                                                <select name="blog_type" lay-filter="type_select">
+                                                <select id="blog_type" name="blog_type" lay-filter="type_select">
                                                     <option value="">请选择博客类型</option>
-                                                    <option value="1">CSDN</option>
-                                                    <option value="2">ATOMV1.0</option>
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="layui-form-item">
+                                        <div id="blogInfoTable" class="layui-form-item">
                                             <table class="layui-table" id="type_param" lay-filter="type_param">
                                             </table>
                                         </div>
                                         <div class="layui-form-item">
                                             <button type="button" class="layui-btn" id="submit">提交</button>
+                                            <button type="button" class="layui-btn" id="updateBlog">获取自己博客</button>
+                                            <button type="button" class="layui-btn" id="updateBlogs">获取所有人博客</button>
                                         </div>
+                                        <span>提交后才能抓取！！！</span>
                                     </form>
                                 </div>
                                 <div class="layui-tab-item">
@@ -119,14 +131,16 @@
                                             <label class="layui-form-label">当前密码</label>
                                             <div class="layui-input-inline">
                                                 <input type="password" name="currPasswd" required lay-verify="required"
-                                                       placeholder="请输入当前密码" autocomplete="off" class="layui-input">
+                                                       placeholder="请输入当前密码" autocomplete="off"
+                                                       class="layui-input">
                                             </div>
                                         </div>
                                         <div class="layui-form-item">
                                             <label class="layui-form-label">修改密码</label>
                                             <div class="layui-input-inline">
                                                 <input type="password" name="newPasswd" required lay-verify="required"
-                                                       placeholder="请输入要修改的密码" autocomplete="off" class="layui-input">
+                                                       placeholder="请输入要修改的密码" autocomplete="off"
+                                                       class="layui-input">
                                             </div>
                                             <div class="layui-form-mid layui-word-aux">
                                                 密码长度在6~20间，至少包含数字、字母、特殊字符（除空格）其中的两种
@@ -137,7 +151,8 @@
                                             <div class="layui-input-inline">
                                                 <input type="password" name="confirmPasswd" required
                                                        lay-verify="required"
-                                                       placeholder="请确认输入的密码" autocomplete="off" class="layui-input">
+                                                       placeholder="请确认输入的密码" autocomplete="off"
+                                                       class="layui-input">
                                             </div>
                                             <div class="layui-form-mid layui-word-aux">请再一次确认密码</div>
                                         </div>
@@ -146,19 +161,63 @@
                                 </div>
                             </div>
                         </div>
+                        <div id="newUser" class="layui-tab layui-tab-brief" lay-filter="tab" style="display: none">
+                            <div class="layui-container">
+                                <div class="layui-row">
+                                    <div class="layui-col-md-offset3 layui-col-md6">
+                                        <form class="layui-form layui-form-pane" action="" lay-filter="type">
+                                            <div class="layui-form-item">
+                                                <label class="layui-form-label">姓名</label>
+                                                <div class="layui-input-block">
+                                                    <input type="text" name="username" required lay-verify="required" placeholder="请输入姓名" autocomplete="off" class="layui-input">
+                                                </div>
+                                            </div>
+                                            <div class="layui-form-item">
+                                                <label class="layui-form-label">年级</label>
+                                                <div class="layui-input-block">
+                                                    <input id="addMember_grade" type="number" name="grade" required lay-verify="grade" placeholder="请输入年级(例如2023)" autocomplete="off" class="layui-input">
+                                                </div>
+                                            </div>
+                                            <div class="layui-form-item">
+                                                <label class="layui-form-label" for="addUser_blog_type">博客类型</label>
+                                                <div class="layui-input-block">
+                                                    <select id="addUser_blog_type" name="blog_type" lay-filter="type_select">
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="layui-form-item">
+                                                <label class="layui-form-label">博客地址</label>
+                                                <div class="layui-input-block">
+                                                    <input type="text" name="blog" lay-verify="url" placeholder="请输入博客rss或atom地址（可暂时不填）" autocomplete="off" class="layui-input">
+                                                </div>
+                                            </div>
+                                            <div class="layui-form-item">
+                                                <div class="layui-input-block">
+                                                    <button class="layui-btn" lay-submit lay-filter="addMember">添加</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="user" class="layui-tab layui-tab-brief" lay-filter="tab" style="display: none">
+                            <span id="m" class="layui-breadcrumb" lay-separator=">"></span>
+                            <table id="user-list"></table>
+                        </div>
+                        <br>
                     </div>
                 </div>
             </div>
         </div>
-    
     </div>
-    
+
     <div class="layui-footer">
         <!-- 底部固定区域 -->
         © GroupBlog - User Admin Zone
     </div>
 </div>
 <script src="lib/layui/layui.js"></script>
-<script src="js/admin/admin.js"></script>
+<script src="js/admin/user.js"></script>
 </body>
 </html>

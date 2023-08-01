@@ -30,7 +30,7 @@ public class ScheduleCrawlService {
      * 定时增量抓取
      */
     @Scheduled(cron = "0 8 9,23 * * *")
-    public void crawlIncr() {
+    public void crawlIncr(){
         log.info("exec cron task...");
 
         List<UserSummary> summaryList = userManager.getUsersSummary();
@@ -38,6 +38,9 @@ public class ScheduleCrawlService {
 
         for (UserSummary summary : summaryList) {
             log.info("uid: " + summary.getUid() + ", exec Bean [" + summary.getBeanName() + "]");
+            if(!summary.getBeanName().startsWith("crawl")){
+                continue;
+            }
 
             try {
                 crawlBlogService = BeanUtil.getBean(summary.getBeanName(), CrawlBlogService.class);
@@ -49,7 +52,28 @@ public class ScheduleCrawlService {
             log.info("exec crawl task...");
             crawlBlogService.crawlIncrement(summary.getUid());
         }
+        log.info("crawl finished...");
     }
 
+    public String crawlIncr(long uid){
+        log.info("craw uid's blog...");
 
+        UserSummary summary = userManager.getUserSummaryByUid(uid);
+        CrawlBlogService crawlBlogService;
+        if(!summary.getBeanName().startsWith("crawl")){
+            return "该类型不支持爬取";
+        }
+
+        log.info("uid: " + summary.getUid() + ", exec Bean [" + summary.getBeanName() + "]");
+
+        try {
+            crawlBlogService = BeanUtil.getBean(summary.getBeanName(), CrawlBlogService.class);
+            log.info("exec crawl task...");
+            crawlBlogService.crawlIncrement(summary.getUid());
+        } catch (BeansException be) {
+            log.warn("found bean error, bean: " + summary.getBeanName());
+        }
+        log.info("crawl finished...");
+        return null;
+    }
 }

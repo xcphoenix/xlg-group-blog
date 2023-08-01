@@ -1,6 +1,7 @@
 package top.xcphoenix.groupblog.mybatis.mapper;
 
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Service;
 import top.xcphoenix.groupblog.model.dao.Category;
 import top.xcphoenix.groupblog.model.vo.CategoryData;
 
@@ -11,6 +12,7 @@ import java.util.List;
  * @date        2020/1/21 下午8:37
  * @version     1.0
  */ 
+@Service
 public interface CategoryMapper {
 
     /**
@@ -28,4 +30,9 @@ public interface CategoryMapper {
      */
     List<CategoryData> getAllCategory();
 
+    List<String> getGrade();
+
+    Long getIdByGrade(@Param("grade") String grade);
+
+    Long createNewGrade(@Param("grade") String grade);
 }
